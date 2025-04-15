@@ -1,4 +1,4 @@
-# 03-video-rental-strategy
+# 03-streaming-service-launch-strategy
 Project File - CareerFoundry Data Analytics Course
 
 Excel | SQL
