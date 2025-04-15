@@ -3,6 +3,7 @@ Project File - CareerFoundry Data Analytics Course
 
 Excel | SQL
 
+
 # Overview
 Rockbuster Stealth LLC, a global movie rental company with stores around the world, is facing intense competition from streaming giants like Netflix and Amazon Prime. To remain competitive, management plans to leverage its existing movie licenses to launch an online video rental service.
 
