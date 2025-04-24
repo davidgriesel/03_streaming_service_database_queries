@@ -22,6 +22,7 @@ A legacy movie rental company is planning to re-enter the market with a new onli
 - **Excel** - Sharing Results
 - **DbVisualizer** - Entity Relationship Diagram
 - **Word** - Data Dictionary
+- **Tableau** - Visualisation 
 - **PowerPoint** - Presentation
 
 
