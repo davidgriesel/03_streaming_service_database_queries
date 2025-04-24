@@ -65,9 +65,7 @@ This project is licensed under the MIT License.
 ## Repository Structure
 
 ```text
-├── deliverables/         # Final Presentation
-├── workbooks/            # Excel Workbook (Query Outputs)
-├── data/                 # ERD & Data Dictionary
-├── sql-queries/          # SQL Scripts (Exercises & Final Queries)
+├── deliverables/         # ERD | Data Dictionary | Query Output | Presentation
+├── sql-queries/          # SQL Scripts
 ├── LICENSE               # Project License (MIT)
 └── README.md             # Project Overview
