@@ -19,20 +19,19 @@ A legacy movie rental company is planning to re-enter the market with a new onli
 ## Tools Used 
 
 - **PostgreSQL** - Relational Database
-- **Excel** - Sharing Results
 - **DbVisualizer** - Entity Relationship Diagram
+- **Tableau** - Visualisation
+- **Excel** - Sharing Results
 - **Word** - Data Dictionary
-- **Tableau** - Visualisation 
 - **PowerPoint** - Presentation
 
 
 ## Skills Demonstrated
 
-- Database Setup | Data Structure Interpretation | Data Dictionary Creation
-- SQL Querying | Filtering | Joining | Aggregating | Subqueries | CTEs
-- Data Profiling | Cleaning | Transformation
-- Descriptive Statistics | Segmentation | Trend Analysis
-- Deriving Insights | Data Visualisation | Presentation
+- Database Setup
+- Data Structure Interpretation | Data Dictionary Creation
+- **SQL Query Writing** - Filtering | Sorting | Joining | Aggregating | Subqueries | CTEs
+- Visualisation | Presentation
 
 
 ## Data Used
