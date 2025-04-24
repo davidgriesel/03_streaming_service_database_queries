@@ -66,5 +66,5 @@ This project is licensed under the MIT License.
 ```text
 ├── deliverables/         # ERD | Data Dictionary | Query Output | Presentation
 ├── sql-queries/          # SQL Scripts
-├── LICENSE               # Project License (MIT)
+├── LICENSE               # Project License
 └── README.md             # Project Overview
