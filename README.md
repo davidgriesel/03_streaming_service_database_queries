@@ -9,6 +9,7 @@ A legacy movie rental company is planning to re-enter the market with a new onli
 
 
 ## Key Questions
+
 1. Which movies contributed the most/least to revenue gain?
 2. What was the average rental duration for all videos?
 3. Which countries are Rockbuster customers based in?
@@ -40,6 +41,7 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
 
 - [**Rockbuster Dataset**](http://www.postgresqltutorial.com/wp-content/uploads/2019/05/dvdrental.zip) – Film, inventory, customer, payment, and rental records
 
+
 ## Deliverables
 
 - [**Entity Relationship Diagram**](https://github.com/davidgriesel/03-streaming-service-launch-strategy/tree/main/deliverables)
@@ -47,6 +49,7 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
 - **Query Output** *(link to be added)*
 - [**Tableau Visualisations**](https://public.tableau.com/shared/42BQNJMKK?:display_count=n&:origin=viz_share_link)
 - [**Presentation**](https://github.com/davidgriesel/03-streaming-service-launch-strategy/tree/main/deliverables)
+
 
 ## Takeaways
 
@@ -58,6 +61,7 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
 
 
 ## License
+
 This project is licensed under the MIT License.
 
 
