@@ -44,7 +44,7 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
 
 - [**Entity Relationship Diagram**](https://github.com/davidgriesel/03-streaming-service-launch-strategy/tree/main/deliverables)
 - [**Data Dictionary**](https://github.com/davidgriesel/03-streaming-service-launch-strategy/tree/main/deliverables)
-- **Query Output**
+- **Query Output** *(link to be added)*
 - [**Tableau Visualisations**](https://public.tableau.com/shared/42BQNJMKK?:display_count=n&:origin=viz_share_link)
 - [**Presentation**](https://github.com/davidgriesel/03-streaming-service-launch-strategy/tree/main/deliverables)
 
