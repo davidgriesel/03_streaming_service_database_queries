@@ -35,11 +35,11 @@ A legacy movie rental company is planning to re-enter the market with a new onli
 - Visualisation | Presentation
 
 
-## Data Used
+## Data Sourced
 
 This analysis uses a modified version of the DVD Rental dataset originally provided as a sample database for learning and testing SQL with **PostgreSQL**. The dataset was adapted and provided by **CareerFoundry** as part of their Data Analytics Course.
 
-- [**Rockbuster Dataset**](http://www.postgresqltutorial.com/wp-content/uploads/2019/05/dvdrental.zip) – Film, inventory, customer, payment, and rental records
+- [**Dataset**](http://www.postgresqltutorial.com/wp-content/uploads/2019/05/dvdrental.zip) – Film, inventory, customer, payment, and rental records
 
 
 ## Deliverables
