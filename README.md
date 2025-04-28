@@ -44,12 +44,11 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
 
 ## Links
 
-- [**Entity Relationship Diagram**](https://github.com/davidgriesel/03-streaming-service-launch-strategy/tree/main/deliverables)
-- [**Data Dictionary**](https://github.com/davidgriesel/03-streaming-service-launch-strategy/tree/main/deliverables)
+- [**Entity Relationship Diagram**](https://github.com/davidgriesel/03-streaming-service-database-queries/blob/main/deliverables/erd-dbvisualiser.png)
+- [**Data Dictionary**](https://github.com/davidgriesel/03-streaming-service-database-queries/blob/main/deliverables/data-dictionary.pdf)
+- [**Tableau Visualisations**](https://public.tableau.com/views/RockbusterStealth_17337132300590/Story1?:language=en-GB&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
+- [**Presentation**](https://github.com/davidgriesel/03-streaming-service-database-queries/blob/main/deliverables/presentation.pdf)
 <!-- - **Query Output** *(link to be added)* -->
-- [**Tableau Visualisations**](https://public.tableau.com/shared/42BQNJMKK?:display_count=n&:origin=viz_share_link)
-- [**Presentation**](https://github.com/davidgriesel/03-streaming-service-launch-strategy/tree/main/deliverables)
-
 
 <!--## Takeaways
 
@@ -60,7 +59,7 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
 **Way Forward** - Future projects could benefit from working with more interactive stakeholder contexts or simulated business scenarios to mirror the iterative nature of real-world decision-making. Expanding the reporting output to include automated dashboards or integrations with business intelligence platforms could also support more dynamic data consumption.-->
 
 
-<!--## License-->
+<!--## License
 
 This project is licensed under the MIT License.
 
@@ -71,4 +70,4 @@ This project is licensed under the MIT License.
 ├── deliverables/         # ERD | Data Dictionary | Query Output | Presentation
 ├── sql-queries/          # SQL Scripts
 ├── LICENSE               # Project License
-└── README.md             # Project Overview
+└── README.md             # Project Overview-->
