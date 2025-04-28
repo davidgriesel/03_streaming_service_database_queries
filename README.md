@@ -22,7 +22,7 @@ A legacy movie rental company is planning to re-enter the market with a new onli
 - **PostgreSQL** - Relational Database
 - **DbVisualizer** - Entity Relationship Diagram
 - **Tableau** - Visualisation
-- **Excel** - Sharing Results
+- **Excel** - Output
 - **Word** - Data Dictionary
 - **PowerPoint** - Presentation
 
