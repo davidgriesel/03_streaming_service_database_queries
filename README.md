@@ -27,7 +27,7 @@ A legacy movie rental company is planning to re-enter the market with a new onli
 ## Process
 - Database Setup
 - Data Structure Interpretation | Data Dictionary Creation
-- **SQL Query Writing** - Filtering | Sorting | Joining | Aggregating | Subqueries | CTEs
+- Filtering | Sorting | Joining | Aggregating | Subqueries | CTEs
 - Visualisation | Presentation
 
 
