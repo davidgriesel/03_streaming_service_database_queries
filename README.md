@@ -60,7 +60,7 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
 **Way Forward** - Future projects could benefit from working with more interactive stakeholder contexts or simulated business scenarios to mirror the iterative nature of real-world decision-making. Expanding the reporting output to include automated dashboards or integrations with business intelligence platforms could also support more dynamic data consumption.-->
 
 
-<!--## License-->
+<!--## License
 
 This project is licensed under the MIT License.
 
@@ -71,4 +71,4 @@ This project is licensed under the MIT License.
 ├── deliverables/         # ERD | Data Dictionary | Query Output | Presentation
 ├── sql-queries/          # SQL Scripts
 ├── LICENSE               # Project License
-└── README.md             # Project Overview
+└── README.md             # Project Overview-->
