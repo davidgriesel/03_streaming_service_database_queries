@@ -1,8 +1,8 @@
 # Streaming Service Database Queries
-*This project was completed as part of the [CareerFoundry Data Analytics Program](https://careerfoundry.com/en/courses/become-a-data-analyst/).*
+*This project was completed as part of the [CareerFoundry Data Analytics Programme](https://careerfoundry.com/en/courses/become-a-data-analyst/).*
 
 ## Overview
-A legacy movie rental company is planning to re-enter the market with a new online streaming service. This project supports the launch strategy by using SQL to query a relational database containing inventory, customer, and payment data—helping to identify revenue-driving films, high-value markets, and regional sales trends to inform content strategy and customer targeting.
+A legacy movie rental company is planning to re-enter the market with a new online streaming service. This project supports the launch strategy by using SQL to query a relational database containing inventory, customer, and payment data. The analysis addresses a series of ad hoc business questions posed by management, helping to identify revenue-driving films, high-value markets, and regional sales trends to inform content strategy and customer targeting.
 
 ## Tools
 - **PostgreSQL** - Relational Database
@@ -13,13 +13,13 @@ A legacy movie rental company is planning to re-enter the market with a new onli
 - **PowerPoint** - Presentation
 
 ## Process
-- Database Setup
-- Data Structure Interpretation | ERD & Data Dictionary Creation
-- Filtering | Sorting | Joining | Aggregating | Subqueries | CTEs
-- Visualisation | Presentation
+- **Data Preparation** - Database Setup | Import | Structure Interperation
+- **Data Modelling & Documentation** - ERD Creation | Data Dictionary Documentation
+- **Querying** - Filtering | Sorting | Joining | Aggregating | Subqueries | CTEs
+- **Communication** - Visualisation | Presentation
 
 ## Data
-This analysis uses a modified version of the DVD Rental dataset originally provided as a sample database for learning and testing SQL with **PostgreSQL**. The dataset was adapted and provided by **CareerFoundry** as part of their Data Analytics Course.
+This analysis uses a modified version of the DVD Rental dataset originally provided as a sample database for learning and testing SQL with PostgreSQL. The dataset was adapted and provided by CareerFoundry as part of their Data Analytics Programme.
 
 - [**Dataset**](http://www.postgresqltutorial.com/wp-content/uploads/2019/05/dvdrental.zip) – Film, inventory, customer, payment, and rental records
 
