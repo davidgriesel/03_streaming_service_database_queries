@@ -5,6 +5,28 @@
 -- Purpose: Initial Data Exploration, Validation, and Preparation
 -- ==============================================================
 
+/* 
+Before commencing statistical analysis and business query 
+development, a structured 13-step data audit was performed. 
+
+This included:
+- Table overview
+- Row count verification
+- Sample data inspection
+- Data type validation
+- Foreign key validation
+- Missing value analysis
+- Duplicate detection
+- Distinct value analysis
+- Temporal range checks
+- Logical and dependency validations
+- Distribution checks
+- Outlier detection
+- Basic summary statistics
+
+Outcome: Dataset is confirmed clean and ready for business analysis.
+*/
+
 -- ==============================================================
 -- TABLE OF CONTENTS:
 -- ==============================================================
@@ -86,7 +108,14 @@
     SELECT * FROM store LIMIT 5;
 
 -- ==============================================================
--- 4. Foreign Key Checks
+-- 4. Data Type Validation
+-- ==============================================================
+    SELECT column_name, data_type 
+    FROM information_schema.columns
+    WHERE table_name = 'payment';
+
+-- ==============================================================
+-- 5. Foreign Key Checks
 -- ==============================================================
 
     -- Check for addresses linked to non-existent cities
@@ -204,7 +233,7 @@
     WHERE a.address_id IS NULL;
 
 -- ==============================================================
--- 5. Missing Data Checks
+-- 6. Missing Data Checks
 -- ==============================================================
 
     -- TABLE: actor
@@ -427,7 +456,7 @@
         WHERE amount IS NULL;
 
     -- TABLE: rental
-    
+
         -- Check for missing rental_id
         SELECT COUNT(*) AS missing_rental_id
         FROM rental
@@ -449,11 +478,75 @@
         WHERE staff_id IS NULL;
 
 -- ==============================================================
--- Unique Values
+-- 7. Duplicates Checks
 -- ==============================================================
+    -- check for duplicate primary keys (Integrity issue with database)
+    -- check for duplicate records (across the remaining variables to remove duplicate records)
+
+    SELECT customer_id, COUNT(*)
+    FROM customer
+    GROUP BY customer_id
+    HAVING COUNT(*) > 1;
 
 -- ==============================================================
--- 6. Basic Summary Stats (Numeric Columns)
+-- 8. Distinct Value Checks
+-- ==============================================================
+
+    -- Check for distinct values across key variables i.e. city-, country-, category name, release year, film rating, rental duration, rental rate, language, actor name etc. (Gives me an idea of the range and if I count them I can see anomalies I.e. all dates = 10 except one which = 2.)
+    -- Compare the number of unique descriptions for key variables and compare to the number of unique key ids
+
+    -- Distinct countries
+    SELECT DISTINCT country FROM country;
+
+    -- Distinct languages
+    SELECT DISTINCT name FROM language;
+
+    -- Distinct ratings (assuming 'rating' field in film table)
+    SELECT DISTINCT rating FROM film;
+
+    -- Which film genres exist in the category table
+    SELECT category_id, name
+    FROM category;
+
+    SELECT COUNT(DISTINCT country_id) FROM country;
+    SELECT COUNT(DISTINCT name) FROM language;
+    SELECT COUNT(DISTINCT rating) FROM film;
+
+-- ==============================================================
+-- 9. Temporal Checks
+-- ==============================================================
+    
+    SELECT MIN(rental_date), MAX(rental_date) FROM rental;
+
+-- ==============================================================
+-- 10.  Logic and Dependency Checks
+-- ==============================================================
+    
+    SELECT rental_id
+    FROM rental
+    WHERE return_date < rental_date;
+    -- Do all payments match to rentals etc
+    -- i.e. If a rental has no return date → Maybe it should have no payment yet?
+
+-- ==============================================================
+-- 11. Distributions
+-- ==============================================================
+
+    SELECT store_id, COUNT(*) 
+    FROM rental 
+    GROUP BY store_id 
+    ORDER BY COUNT(*) DESC;
+
+-- ==============================================================
+-- 12. Outlier Detection
+-- ==============================================================
+    
+    SELECT rental_id, return_date, rental_date
+    FROM rental
+    WHERE EXTRACT(EPOCH FROM (return_date - rental_date)) / 86400 > 100;
+
+-- ==============================================================
+-- 13. Basic Summary Stats (Numeric Columns)
 -- ==============================================================
 
 -- Average rental duration (days)
