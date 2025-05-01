@@ -1,27 +1,35 @@
--- Select actors with first name 'Ed'
-SELECT COUNT(*)
+-- 1. Count the number of actors with first name 'Ed'
+SELECT COUNT(*) AS actor_count
 FROM actor
 WHERE first_name = 'Ed';
 
--- List all columns in payment table
-SELECT * 
-FROM payment 
+
+-- 2. Display first 10 rows from the payment table
+SELECT *
+FROM payment
 LIMIT 10;
 
--- List all tables in public schema
-SELECT * FROM information_schema.tables
+
+-- 3. List all base tables in the public schema
+SELECT table_name
+FROM information_schema.tables
 WHERE table_schema = 'public'
-AND table_type = 'BASE TABLE';
+  AND table_type = 'BASE TABLE'
+ORDER BY table_name;
 
--- Analyse rental duration distribution - number of days most films rented for
-SELECT rental_duration AS "rented for (in days)", 
-	COUNT(*) AS "number of films"
-FROM film
-GROUP BY 1
-ORDER BY 2;
 
--- Tableau export file - Rental duration distribution
-SELECT rental_duration, film_id
+-- 4. Number of films by rental duration
+SELECT 
+    rental_duration, 
+    COUNT(*) AS number_of_films
 FROM film
-GROUP BY 1,2
-ORDER BY 2;
+GROUP BY rental_duration
+ORDER BY number_of_films DESC;
+
+
+-- 5. Tableau export: film ID and rental duration
+SELECT 
+    film_id, 
+    rental_duration
+FROM film
+ORDER BY film_id;

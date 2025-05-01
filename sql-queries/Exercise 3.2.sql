@@ -35,6 +35,7 @@ GROUP BY p.payment_id,
 -- Total payments
 SELECT SUM(amount)
 FROM payment;
+-- Results:
 -- 61312.04
 
 -- Total payments by actor assignment
@@ -46,6 +47,7 @@ SELECT
     SUM(payment_share) AS payment_share
 FROM payment_share
 GROUP BY allocation;
+-- Results:
 -- actor_assigned = 61159.17
 -- no_actor_assigned = 192.62
 
