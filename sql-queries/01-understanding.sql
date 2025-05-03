@@ -28,7 +28,6 @@
 -- ==============================================================
 
 -- Get a list of all tables in the public schema.
-
     SELECT 
         table_schema, 
         table_type, 
@@ -45,7 +44,6 @@
 -- ==============================================================
 
 -- Get row counts for all base tables in the public schema.
-
     SELECT 'actor' AS table_name, COUNT(*) FROM actor
     UNION ALL
     SELECT 'address', COUNT(*) FROM address
@@ -83,7 +81,6 @@
 -- ==============================================================
     
 -- Get sample rows from all base tables in the public schema.
-
     SELECT * FROM actor LIMIT 5;
     SELECT * FROM address LIMIT 5;
     SELECT * FROM category LIMIT 5;
@@ -108,7 +105,6 @@
 -- ==============================================================
     
 -- Retrieve data types for all base tables in the public schema.
-
     SELECT 
         c.table_name,
         c.column_name,
@@ -255,7 +251,6 @@
 -- ==============================================================
 
 -- Identify columns across key tables that allow NULL values for targeted missing data checks.
-
     SELECT 
         table_name,
         column_name, 
@@ -279,7 +274,8 @@
     AND is_nullable = 'YES'
     ORDER BY ordinal_position;
 
--- TABLE: actor 
+-- Tables
+-- TABLE: actor
 
     SELECT
         'actor' AS table_name, 
@@ -670,7 +666,6 @@
 -- TABLE: actor 
 
     -- Check for duplicate primary keys
-
         SELECT 
             actor_id,
             COUNT(*) AS duplicate_count
@@ -679,7 +674,6 @@
         HAVING COUNT(*) > 1
         
     -- Check for duplicate records
-    
         SELECT 
             first_name, 
             last_name, 
@@ -700,6 +694,7 @@
         WHERE actor_id IN (101,110);
 
 -- TABLE: address
+
     -- Check for duplicate primary keys
         SELECT 
             address_id,
@@ -732,6 +727,7 @@
             COUNT(*) > 1;
 
 -- TABLE: category
+
     -- Check for duplicate primary keys
         SELECT 
             category_id,
@@ -754,6 +750,7 @@
             COUNT(*) > 1;
 
 -- TABLE: city
+
     -- Check for duplicate primary keys
         SELECT 
             city_id,
@@ -778,6 +775,7 @@
             COUNT(*) > 1;
 
 -- TABLE: country
+
     -- Check for duplicate primary keys
         SELECT 
             country_id,
@@ -800,6 +798,7 @@
             COUNT(*) > 1;
 
 -- TABLE: customer
+
     -- Check for duplicate primary keys
         SELECT 
             customer_id,
@@ -836,6 +835,7 @@
             COUNT(*) > 1;
         
 -- TABLE: film
+
     -- Check for duplicate primary keys
         SELECT
             film_id,
@@ -878,6 +878,7 @@
             COUNT(*) > 1;        
 
 -- TABLE: film_actor
+
     -- Check for duplicate primary keys
         SELECT 
             actor_id,
@@ -900,6 +901,7 @@
             COUNT(*) > 1;
             
 -- TABLE: film_category
+
     -- Check for duplicate primary keys
         SELECT 
             film_id,
@@ -922,6 +924,7 @@
             COUNT(*) > 1;
 
 -- TABLE: inventory
+
     -- Check for duplicate primary keys
         SELECT 
             inventory_id,
@@ -946,6 +949,7 @@
             COUNT(*) > 1; 
 
 -- TABLE: language
+
     -- Check for duplicate primary keys
         SELECT 
             language_id,
@@ -968,6 +972,7 @@
             COUNT(*) > 1;
 
 -- TABLE: payment
+
     -- Check for duplicate primary keys
         SELECT 
             payment_id,
@@ -996,6 +1001,7 @@
             COUNT(*) > 1; 
 
 -- TABLE: rental
+
     -- Check for duplicate primary keys
         SELECT 
             rental_id,
