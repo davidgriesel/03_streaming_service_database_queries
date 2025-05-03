@@ -9,25 +9,26 @@
 -- TABLE OF CONTENTS:
 -- ==============================================================
 
-    -- 1. Overview of Tables
-    -- 2. Row Counts
-    -- 3. Sample Rows
-    -- 4. Data Type Validation
-    -- 5. Foreign Key Checks
-    -- 6. Missing Data Checks
-    -- 7. Duplicates Checks
-    -- 8. Distinct Value Checks
-    -- 9. Temporal Checks
-    -- 10. Logic and Dependency Checks
-    -- 11. Distributions
-    -- 12. Outlier Detection
-    -- 13. Basic Summary Stats (Numeric Columns)
+-- 1. Overview of Tables
+-- 2. Row Counts
+-- 3. Sample Rows
+-- 4. Data Type Validation
+-- 5. Foreign Key Checks
+-- 6. Missing Data Checks
+-- 7. Duplicates Checks
+-- 8. Distinct Value Checks
+-- 9. Temporal Checks
+-- 10. Logic and Dependency Checks
+-- 11. Distributions
+-- 12. Outlier Detection
+-- 13. Basic Summary Stats (Numeric Columns)
 
 -- ==============================================================
 -- 1. Overview of Tables
 -- ==============================================================
 
-    -- Get a list of all tables in the public schema.
+-- Get a list of all tables in the public schema.
+
     SELECT 
         table_schema, 
         table_type, 
@@ -37,13 +38,14 @@
     AND table_type = 'BASE TABLE' -- exclude views
     ORDER BY table_name;
 
-    -- Result: 15 public tables
+-- Results: 15 public tables
 
 -- ==============================================================
 -- 2. Row Counts
 -- ==============================================================
 
-    -- Get row counts for all base tables in the public schema.
+-- Get row counts for all base tables in the public schema.
+
     SELECT 'actor' AS table_name, COUNT(*) FROM actor
     UNION ALL
     SELECT 'address', COUNT(*) FROM address
@@ -74,11 +76,14 @@
     UNION ALL
     SELECT 'store', COUNT(*) FROM store;
 
+-- Results:
+
 -- ==============================================================
 -- 3. Sample Rows
 -- ==============================================================
+    
+-- Get sample rows from all base tables in the public schema.
 
-    -- Get sample rows from all base tables in the public schema.
     SELECT * FROM actor LIMIT 5;
     SELECT * FROM address LIMIT 5;
     SELECT * FROM category LIMIT 5;
@@ -95,13 +100,15 @@
     SELECT * FROM staff LIMIT 5;
     SELECT * FROM store LIMIT 5;
 
-    -- Note: Displays data type (PostgreSQL & VS Code).
+-- Note: Displays data type (PostgreSQL & VS Code).
+-- Results:
 
 -- ==============================================================
 -- 4. Data Type Validation 
 -- ==============================================================
+    
+-- Retrieve data types for all base tables in the public schema.
 
-    -- Retrieve data types for all base tables in the public schema.
     SELECT 
         c.table_name,
         c.column_name,
@@ -118,155 +125,163 @@
     ORDER BY 
         c.table_name, c.ordinal_position;
 
+-- Results:
+
 -- ==============================================================
 -- 5. Foreign Key Checks
 -- ==============================================================
 
-    -- Check for addresses linked to non-existent cities.
+-- TABLE: address
+
     SELECT a.city_id
     FROM address a
     LEFT JOIN city c ON a.city_id = c.city_id
     WHERE c.city_id IS NULL;
 
-    -- Check for cities linked to non-existent countries.
+-- TABLE: city
+
     SELECT ci.country_id
     FROM city ci
     LEFT JOIN country co ON ci.country_id = co.country_id 
     WHERE co.country_id IS NULL;
 
-    -- Check for customers linked to non-existent stores.
+-- TABLE: customer
+
     SELECT cu.store_id
     FROM customer cu
     LEFT JOIN store s ON cu.store_id = s.store_id
     WHERE s.store_id IS NULL;
 
-    -- Check for customers linked to non-existent addresses.
     SELECT cu.address_id
     FROM customer cu
     LEFT JOIN address a ON cu.address_id = a.address_id
     WHERE a.address_id IS NULL;
 
-    -- Check for films linked to non-existent languages.
+-- TABLE: film
+
     SELECT f.language_id
     FROM film f
     LEFT JOIN language l ON f.language_id = l.language_id
     WHERE l.language_id IS NULL;
 
-    -- Check for actors linked to non-existent films.
+-- TABLE: film_actor
+
     SELECT fa.film_id
     FROM film_actor fa
     LEFT JOIN film f ON fa.film_id = f.film_id
     WHERE f.film_id IS NULL;
 
-    -- Check for films linked to non-existent categories.
+-- TABLE: film_category
+
     SELECT fc.category_id
     FROM film_category fc
     LEFT JOIN category c ON fc.category_id = c.category_id
     WHERE c.category_id IS NULL;
 
-    -- Check for inventory linked to non-existent films.
+-- TABLE: inventory
+
     SELECT i.film_id
     FROM inventory i
     LEFT JOIN film f ON i.film_id = f.film_id
     WHERE f.film_id IS NULL;
 
-    -- Check for inventory linked to non-existent stores.
     SELECT i.store_id
     FROM inventory i
     LEFT JOIN store s ON i.store_id = s.store_id
     WHERE s.store_id IS NULL;
 
-    -- Check for payments linked to non-existent customers.
+-- TABLE: payment
+
     SELECT p.customer_id
     FROM payment p
     LEFT JOIN customer c ON p.customer_id = c.customer_id
     WHERE c.customer_id IS NULL;
 
-    -- Check for payments linked to non-existent staff.
     SELECT p.staff_id
     FROM payment p
     LEFT JOIN staff s ON p.staff_id = s.staff_id
     WHERE s.staff_id IS NULL;
 
-    -- Check for payments linked to non-existent rentals.
     SELECT p.rental_id
     FROM payment p
     LEFT JOIN rental r ON p.rental_id = r.rental_id
     WHERE r.rental_id IS NULL;
 
-    -- Check for rentals linked to non-existent inventory.
+-- TABLE: rental
+
     SELECT r.inventory_id
     FROM rental r
     LEFT JOIN inventory i ON r.inventory_id = i.inventory_id
     WHERE i.inventory_id IS NULL;
 
-    -- Check for rentals linked to non-existent customers.
     SELECT r.customer_id
     FROM rental r
     LEFT JOIN customer c ON r.customer_id = c.customer_id
     WHERE c.customer_id IS NULL;
 
-    -- Check for rentals linked to non-existent staff.
     SELECT r.staff_id
     FROM rental r
     LEFT JOIN staff s ON r.staff_id = s.staff_id
     WHERE s.staff_id IS NULL;
 
-    -- Check for staff linked to non-existent addresses.
+-- TABLE: staff
+
     SELECT s.address_id
     FROM staff s
     LEFT JOIN address a ON s.address_id = a.address_id
     WHERE a.address_id IS NULL;
 
-    -- Check for staff linked to non-existent stores.
     SELECT s.store_id
     FROM staff s
     LEFT JOIN store st ON s.store_id = st.store_id
     WHERE st.store_id IS NULL;
 
-    -- Check for stores linked to non-existent managers.
+-- TABLE: store
+
     SELECT s.manager_staff_id
     FROM store s
     LEFT JOIN staff st ON s.manager_staff_id = st.staff_id
     WHERE st.staff_id IS NULL;
 
-    -- Check for stores linked to non-existent addresses.
     SELECT s.address_id
     FROM store s
     LEFT JOIN address a ON s.address_id = a.address_id
     WHERE a.address_id IS NULL;
 
+-- Results:
+
 -- ==============================================================
--- 6. Missing Data Checks
+-- 6. Missing Data Checks (Key Variables)
 -- ==============================================================
 
-    -- Check which columns can contain nulls for all base tables in the public schema.
+-- Identify columns across key tables that allow NULL values for targeted missing data checks.
+
     SELECT 
-        table_name, 
+        table_name,
         column_name, 
-        is_nullable
+        is_nullable 
     FROM information_schema.columns
-    WHERE table_name IN (
-            'actor', 
-            'address', 
-            'category', 
-            'city', 
-            'country', 
-            'customer', 
-            'film', 
-            'film_actor', 
-            'film_category', 
-            'inventory', 
-            'language', 
-            'payment', 
-            'rental', 
-            'staff', 
-            'store'
-        )
-    ORDER BY table_name, ordinal_position;
+    WHERE table_name IN(
+        'actor', 
+        'address', 
+        'category', 
+        'city', 
+        'country', 
+        'customer', 
+        'film', 
+        'film_actor', 
+        'film_category', 
+        'inventory', 
+        'language', 
+        'payment', 
+        'rental'
+    )
+    AND is_nullable = 'YES'
+    ORDER BY ordinal_position;
 
-    -- Count missing (NULL) values in key variables of all base tables in the public schema.
-    SELECT -- actor
+-- TABLE: actor 
+
+    SELECT
         'actor' AS table_name, 
         'actor_id' AS column_name, 
         COUNT(*) AS missing_count
@@ -293,7 +308,9 @@
 
     UNION ALL
 
-    SELECT -- address
+-- TABLE: address
+
+    SELECT
         'address' AS table_name, 
         'address_id' AS column_name, 
         COUNT(*) AS missing_count
@@ -311,7 +328,9 @@
 
     UNION ALL
 
-    SELECT -- category
+-- TABLE: category
+
+    SELECT 
         'category' AS table_name, 
         'category_id' AS column_name, 
         COUNT(*) AS missing_count
@@ -329,7 +348,9 @@
 
     UNION ALL
 
-    SELECT -- city
+-- TABLE: city
+
+    SELECT 
         'city' AS table_name, 
         'city_id' AS column_name, 
         COUNT(*) AS missing_count
@@ -356,7 +377,9 @@
 
     UNION ALL
     
-    SELECT -- country
+-- TABLE: country
+
+    SELECT 
         'country' AS table_name, 
         'country_id' AS column_name, 
         COUNT(*) AS missing_count
@@ -374,7 +397,9 @@
 
     UNION ALL
 
-    SELECT -- customer
+-- TABLE: customer
+
+    SELECT 
         'customer' AS table_name, 
         'customer_id' AS column_name, 
         COUNT(*) AS missing_count
@@ -410,7 +435,9 @@
 
     UNION ALL
 
-    SELECT -- film
+-- TABLE: film
+
+    SELECT 
         'film' AS table_name, 
         'film_id' AS column_name, 
         COUNT(*) AS missing_count
@@ -491,7 +518,9 @@
     
     UNION ALL
 
-    SELECT -- film_actor
+-- TABLE: film_actor
+
+    SELECT
         'film_actor' AS table_name, 
         'actor_id' AS column_name, 
         COUNT(*) AS missing_count
@@ -509,7 +538,9 @@
 
     UNION ALL
     
-    SELECT -- film_category
+-- TABLE: film_category
+
+    SELECT 
         'film_category' AS table_name, 
         'film_id' AS column_name, 
         COUNT(*) AS missing_count
@@ -527,7 +558,9 @@
 
     UNION ALL
     
-    SELECT -- inventory
+-- TABLE: inventory
+
+    SELECT 
         'inventory' AS table_name, 
         'inventory_id' AS column_name, 
         COUNT(*) AS missing_count
@@ -543,7 +576,9 @@
     FROM inventory
     WHERE film_id IS NULL
 
-    UNION ALL -- language
+-- TABLE: language
+
+    UNION ALL 
 
     SELECT 
         'language' AS table_name, 
@@ -563,7 +598,9 @@
 
     UNION ALL 
 
-     SELECT -- payment
+-- TABLE: payment
+
+    SELECT 
         'payment' AS table_name,
         'payment_id' AS column_name, 
         COUNT(*) AS missing_count
@@ -599,7 +636,9 @@
 
     UNION ALL 
 
-    SELECT -- rental
+-- TABLE: rental
+
+    SELECT 
         'rental' AS table_name,
         'rental_id' AS column_name, 
         COUNT(*) AS missing_count
@@ -627,140 +666,20 @@
 -- ==============================================================
 -- 7. Duplicates Checks
 -- ==============================================================
- 
+
+-- TABLE: actor 
+
     -- Check for duplicate primary keys
+
         SELECT 
-            'actor' AS table_name,
-            'actor_id' AS primary_key,
+            actor_id,
             COUNT(*) AS duplicate_count
         FROM  actor
         GROUP BY actor_id
         HAVING COUNT(*) > 1
-
-        UNION ALL   
         
-        SELECT 
-            'address' AS table_name,
-            'address_id' AS primary_key,
-            COUNT(*) AS duplicate_count
-        FROM address
-        GROUP BY address_id
-        HAVING COUNT(*) > 1
-
-        UNION ALL   
-
-        SELECT 
-            'category' AS table_name,
-            'category_id' AS primary_key,
-            COUNT(*) AS duplicate_count
-        FROM category
-        GROUP BY category_id
-        HAVING COUNT(*) > 1
-
-        UNION ALL   
-
-        SELECT 
-            'city' AS table_name,
-            'city_id' AS primary_key,
-            COUNT(*) AS duplicate_count
-        FROM city
-        GROUP BY city_id
-        HAVING COUNT(*) > 1
-
-        UNION ALL   
-
-        SELECT 
-            'country' AS table_name,
-            'country_id' AS primary_key,
-            COUNT(*) AS duplicate_count
-        FROM country
-        GROUP BY country_id
-        HAVING COUNT(*) > 1
-
-        UNION ALL   
-
-        SELECT 
-            'customer' AS table_name,
-            'customer_id' AS primary_key,
-            COUNT(*) AS duplicate_count
-        FROM customer
-        GROUP BY customer_id
-        HAVING COUNT(*) > 1
-        
-        UNION ALL   
-
-        SELECT
-            'film' AS table_name,
-            'film_id' AS primary_key,
-            COUNT(*) AS duplicate_count
-        FROM film
-        GROUP BY film_id
-        HAVING COUNT(*) > 1
-            
-        UNION ALL   
-
-/*        SELECT 
-            'film_actor' AS table_name,
-            'actor_id' AS primary_key,
-            COUNT(*) AS duplicate_count
-        FROM film_actor
-        GROUP BY actor_id
-        HAVING COUNT(*) > 1 
-            
-        UNION ALL   
-
-        SELECT 
-            'film_category' AS table_name,
-            'film_id' AS primary_key,
-            COUNT(*) AS duplicate_count
-        FROM film_category
-        GROUP BY film_id
-        HAVING COUNT(*) > 1
-
-        UNION ALL   */
-
-        SELECT 
-            'inventory' AS table_name,
-            'inventory_id' AS primary_key,
-            COUNT(*) AS duplicate_count
-        FROM inventory
-        GROUP BY inventory_id
-        HAVING COUNT(*) > 1
-            
-        UNION ALL   
-
-        SELECT 
-            'language' AS table_name,
-            'language_id' AS primary_key,
-            COUNT(*) AS duplicate_count
-        FROM language
-        GROUP BY language_id
-        HAVING COUNT(*) > 1
-            
-        UNION ALL   
-
-        SELECT 
-            'payment' AS table_name,
-            'payment_id' AS primary_key,
-            COUNT(*) AS duplicate_count
-        FROM payment
-        GROUP BY payment_id
-        HAVING COUNT(*) > 1
-
-        UNION ALL   
-
-        SELECT 
-            'rental' AS table_name,
-            'rental_id' AS primary_key,
-            COUNT(*) AS duplicate_count
-        FROM rental
-        GROUP BY rental_id
-        HAVING COUNT(*) > 1;
-
-            
--- TABLE: actor 
-
     -- Check for duplicate records
+    
         SELECT 
             first_name, 
             last_name, 
@@ -775,12 +694,19 @@
         HAVING 
             COUNT(*) > 1;
 
-    -- Duplicate records
+    -- Duplicate records found!!!
         SELECT *
         FROM actor
         WHERE actor_id IN (101,110);
 
 -- TABLE: address
+    -- Check for duplicate primary keys
+        SELECT 
+            address_id,
+            COUNT(*) AS duplicate_count
+        FROM address
+        GROUP BY address_id
+        HAVING COUNT(*) > 1;
     
     -- Check for duplicate records
         SELECT 
@@ -806,8 +732,15 @@
             COUNT(*) > 1;
 
 -- TABLE: category
-    
--- Check for duplicate records
+    -- Check for duplicate primary keys
+        SELECT 
+            category_id,
+            COUNT(*) AS duplicate_count
+        FROM category
+        GROUP BY category_id
+        HAVING COUNT(*) > 1;
+
+    -- Check for duplicate records
         SELECT 
             name,
             last_update,
@@ -821,7 +754,14 @@
             COUNT(*) > 1;
 
 -- TABLE: city
-    
+    -- Check for duplicate primary keys
+        SELECT 
+            city_id,
+            COUNT(*) AS duplicate_count
+        FROM city
+        GROUP BY city_id
+        HAVING COUNT(*) > 1;
+
     -- Check for duplicate records
         SELECT 
             city,
@@ -838,7 +778,14 @@
             COUNT(*) > 1;
 
 -- TABLE: country
-    
+    -- Check for duplicate primary keys
+        SELECT 
+            country_id,
+            COUNT(*) AS duplicate_count
+        FROM country
+        GROUP BY country_id
+        HAVING COUNT(*) > 1;
+
     -- Check for duplicate records
         SELECT 
             country,
@@ -853,6 +800,13 @@
             COUNT(*) > 1;
 
 -- TABLE: customer
+    -- Check for duplicate primary keys
+        SELECT 
+            customer_id,
+            COUNT(*) AS duplicate_count
+        FROM customer
+        GROUP BY customer_id
+        HAVING COUNT(*) > 1;
 
     -- Check for duplicate records
         SELECT 
@@ -880,8 +834,15 @@
             active
         HAVING 
             COUNT(*) > 1;
-
+        
 -- TABLE: film
+    -- Check for duplicate primary keys
+        SELECT
+            film_id,
+            COUNT(*) AS duplicate_count
+        FROM film
+        GROUP BY film_id
+        HAVING COUNT(*) > 1;
 
     -- Check for duplicate records
         SELECT 
@@ -914,10 +875,17 @@
             special_features,
             fulltext
         HAVING 
-            COUNT(*) > 1;
+            COUNT(*) > 1;        
 
 -- TABLE: film_actor
-    
+    -- Check for duplicate primary keys
+        SELECT 
+            actor_id,
+            COUNT(*) AS duplicate_count
+        FROM film_actor
+        GROUP BY actor_id
+        HAVING COUNT(*) > 1 ;
+
     -- Check for duplicate records
         SELECT 
             film_id,
@@ -930,9 +898,16 @@
             last_update
         HAVING 
             COUNT(*) > 1;
-
+            
 -- TABLE: film_category
-    
+    -- Check for duplicate primary keys
+        SELECT 
+            film_id,
+            COUNT(*) AS duplicate_count
+        FROM film_category
+        GROUP BY film_id
+        HAVING COUNT(*) > 1;
+
     -- Check for duplicate records
         SELECT 
             category_id,
@@ -947,7 +922,14 @@
             COUNT(*) > 1;
 
 -- TABLE: inventory
-    
+    -- Check for duplicate primary keys
+        SELECT 
+            inventory_id,
+            COUNT(*) AS duplicate_count
+        FROM inventory
+        GROUP BY inventory_id
+        HAVING COUNT(*) > 1;
+
     -- Check for duplicate records
         SELECT 
             film_id,
@@ -961,10 +943,17 @@
             store_id,
             last_update
         HAVING 
-            COUNT(*) > 1;
+            COUNT(*) > 1; 
 
 -- TABLE: language
-    
+    -- Check for duplicate primary keys
+        SELECT 
+            language_id,
+            COUNT(*) AS duplicate_count
+        FROM language
+        GROUP BY language_id
+        HAVING COUNT(*) > 1;
+            
     -- Check for duplicate records
         SELECT 
             name,
@@ -979,7 +968,14 @@
             COUNT(*) > 1;
 
 -- TABLE: payment
-    
+    -- Check for duplicate primary keys
+        SELECT 
+            payment_id,
+            COUNT(*) AS duplicate_count
+        FROM payment
+        GROUP BY payment_id
+        HAVING COUNT(*) > 1;
+
     -- Check for duplicate records
         SELECT 
             customer_id,
@@ -997,30 +993,37 @@
             amount,
             payment_date
         HAVING 
-            COUNT(*) > 1;
+            COUNT(*) > 1; 
 
 -- TABLE: rental
-    
+    -- Check for duplicate primary keys
+        SELECT 
+            rental_id,
+            COUNT(*) AS duplicate_count
+        FROM rental
+        GROUP BY rental_id
+        HAVING COUNT(*) > 1;
+
     -- Check for duplicate records
-    SELECT 
-        rental_date,
-        inventory_id,
-        customer_id,
-        return_date,
-        staff_id,
-        last_update,
-        COUNT(*) AS duplicate_count
-    FROM 
-        rental
-    GROUP BY 
-        rental_date,
-        inventory_id,
-        customer_id,
-        return_date,
-        staff_id,
-        last_update
-    HAVING 
-        COUNT(*) > 1;
+        SELECT 
+            rental_date,
+            inventory_id,
+            customer_id,
+            return_date,
+            staff_id,
+            last_update,
+            COUNT(*) AS duplicate_count
+        FROM 
+            rental
+        GROUP BY 
+            rental_date,
+            inventory_id,
+            customer_id,
+            return_date,
+            staff_id,
+            last_update
+        HAVING 
+            COUNT(*) > 1;
 
 -- ==============================================================
 -- 8. Distinct Value Checks
