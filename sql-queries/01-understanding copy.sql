@@ -136,288 +136,145 @@
 -- 5. Foreign Key Checks
 -- ==============================================================
 
--- Check foreign key constratints.
-
-    SELECT
-        tc.table_name AS child_table,
-        kcu.column_name AS child_column,
-        ccu.table_name AS parent_table,
-        ccu.column_name AS parent_column,
-        tc.constraint_name
-    FROM 
-        information_schema.table_constraints AS tc
-    JOIN 
-        information_schema.key_column_usage AS kcu
-    ON 
-        tc.constraint_name = kcu.constraint_name
-    JOIN 
-        information_schema.constraint_column_usage AS ccu
-    ON 
-        ccu.constraint_name = tc.constraint_name
-    WHERE 
-        tc.constraint_type = 'FOREIGN KEY'
-        AND tc.table_schema = 'public'
-    ORDER BY 
-        child_table, child_column;
-
--- No constraints enforced - Check foreign keys.
-
--- Check if foreign keys link to valid primary keys in parent tables.
-
-    -- TABLE: address
+-- Check if all foreign keys link to valid primary keys in parent tables.
 
         SELECT 
-            1 AS sort_order,
-            'address' AS table_name,
+            'address' AS table,
             'city_id' AS secondary_key, 
-            COUNT(*) AS missing_key_count
+            COUNT(*) AS missing_key
         FROM address a
         LEFT JOIN city c ON a.city_id = c.city_id
         WHERE c.city_id IS NULL
 
         UNION ALL
 
-    -- TABLE: city
-
         SELECT 
-            2,
-            'city',
-            'country_id', 
-            COUNT(*)
+            'city' AS table,
+            'country_id' AS secondary_key, 
+            COUNT(*) AS missing_key
         FROM city ci
         LEFT JOIN country co ON ci.country_id = co.country_id
-        WHERE co.country_id IS NULL
+        WHERE co.country_id IS NULL;
 
-        UNION ALL
+
+    -- TABLE: address
+
+        SELECT a.city_id
+        FROM address a
+        LEFT JOIN city c ON a.city_id = c.city_id
+        WHERE c.city_id IS NULL;
+
+    -- TABLE: city
+
+        SELECT ci.country_id
+        FROM city ci
+        LEFT JOIN country co ON ci.country_id = co.country_id 
+        WHERE co.country_id IS NULL;
 
     -- TABLE: customer
 
-        SELECT 
-            3,
-            'customer',
-            'store_id',
-            COUNT(*)
+        SELECT cu.store_id
         FROM customer cu
         LEFT JOIN store s ON cu.store_id = s.store_id
-        WHERE s.store_id IS NULL
+        WHERE s.store_id IS NULL;
 
-        UNION ALL
-        
-        SELECT 
-            4,
-            'customer',
-            'address_id',
-            COUNT(*)
+        SELECT cu.address_id
         FROM customer cu
         LEFT JOIN address a ON cu.address_id = a.address_id
-        WHERE a.address_id IS NULL
-
-        UNION ALL
+        WHERE a.address_id IS NULL;
 
     -- TABLE: film
 
-        SELECT 
-            5,
-            'film',
-            'language_id',
-            COUNT(*)
+        SELECT f.language_id
         FROM film f
         LEFT JOIN language l ON f.language_id = l.language_id
-        WHERE l.language_id IS NULL
-        
-        UNION ALL
-    
+        WHERE l.language_id IS NULL;
+
     -- TABLE: film_actor
 
-        SELECT 
-            6,
-            'film_actor',
-            'actor_id',
-            COUNT(*)
-        FROM film_actor fa
-        LEFT JOIN actor a ON fa.actor_id = a.actor_id
-        WHERE a.actor_id IS NULL
-
-        UNION ALL
-
-        SELECT 
-            7,
-            'film_actor',
-            'film_id',
-            COUNT(*)
+        SELECT fa.film_id
         FROM film_actor fa
         LEFT JOIN film f ON fa.film_id = f.film_id
-        WHERE f.film_id IS NULL
-
-        UNION ALL
+        WHERE f.film_id IS NULL;
 
     -- TABLE: film_category
 
-        SELECT 
-            8,
-            'film_category',
-            'film_id',
-            COUNT(*)
-        FROM film_category fc
-        LEFT JOIN film f ON fc.film_id = f.film_id
-        WHERE f.film_id IS NULL
-
-        UNION ALL
-
-        SELECT 
-            9,
-            'film_category',
-            'category_id',
-            COUNT(*)
+        SELECT fc.category_id
         FROM film_category fc
         LEFT JOIN category c ON fc.category_id = c.category_id
-        WHERE c.category_id IS NULL
-
-        UNION ALL
+        WHERE c.category_id IS NULL;
 
     -- TABLE: inventory
 
-        SELECT 
-            10,
-            'inventory',
-            'film_id',
-            COUNT(*)
+        SELECT i.film_id
         FROM inventory i
         LEFT JOIN film f ON i.film_id = f.film_id
-        WHERE f.film_id IS NULL
-        
-        UNION ALL
+        WHERE f.film_id IS NULL;
 
-        SELECT 
-            11,
-            'inventory',
-            'store_id',
-            COUNT(*)
+        SELECT i.store_id
         FROM inventory i
         LEFT JOIN store s ON i.store_id = s.store_id
-        WHERE s.store_id IS NULL
-
-        UNION ALL
+        WHERE s.store_id IS NULL;
 
     -- TABLE: payment
 
-        SELECT 
-            12,
-            'payment',
-            'customer_id',
-            COUNT(*)
+        SELECT p.customer_id
         FROM payment p
         LEFT JOIN customer c ON p.customer_id = c.customer_id
-        WHERE c.customer_id IS NULL
+        WHERE c.customer_id IS NULL;
 
-        UNION ALL
-
-        SELECT 
-            13,
-            'payment',
-            'staff_id',
-            COUNT(*)
+        SELECT p.staff_id
         FROM payment p
         LEFT JOIN staff s ON p.staff_id = s.staff_id
-        WHERE s.staff_id IS NULL
+        WHERE s.staff_id IS NULL;
 
-        UNION ALL
-
-        SELECT 
-            14,
-            'payment',
-            'rental_id',
-            COUNT(*)
+        SELECT p.rental_id
         FROM payment p
         LEFT JOIN rental r ON p.rental_id = r.rental_id
-        WHERE r.rental_id IS NULL
-
-        UNION ALL
+        WHERE r.rental_id IS NULL;
 
     -- TABLE: rental
 
-        SELECT
-            15,
-            'rental',
-            'inventory_id',
-            COUNT(*)
+        SELECT r.inventory_id
         FROM rental r
         LEFT JOIN inventory i ON r.inventory_id = i.inventory_id
-        WHERE i.inventory_id IS NULL
+        WHERE i.inventory_id IS NULL;
 
-        UNION ALL
-
-        SELECT 
-            16,
-            'rental',
-            'customer_id',
-            COUNT(*)
+        SELECT r.customer_id
         FROM rental r
         LEFT JOIN customer c ON r.customer_id = c.customer_id
-        WHERE c.customer_id IS NULL
+        WHERE c.customer_id IS NULL;
 
-        UNION ALL
-
-        SELECT 
-            17,
-            'rental',
-            'staff_id',
-            COUNT(*)
+        SELECT r.staff_id
         FROM rental r
         LEFT JOIN staff s ON r.staff_id = s.staff_id
-        WHERE s.staff_id IS NULL
-
-        UNION ALL
+        WHERE s.staff_id IS NULL;
 
     -- TABLE: staff
 
-        SELECT 
-            18,
-            'staff',
-            'address_id',
-            COUNT(*)
+        SELECT s.address_id
         FROM staff s
         LEFT JOIN address a ON s.address_id = a.address_id
-        WHERE a.address_id IS NULL
+        WHERE a.address_id IS NULL;
 
-        UNION ALL
-
-        SELECT 
-            19,
-            'staff',
-            'store_id',
-            COUNT(*)
+        SELECT s.store_id
         FROM staff s
         LEFT JOIN store st ON s.store_id = st.store_id
-        WHERE st.store_id IS NULL
-        
-        UNION ALL
+        WHERE st.store_id IS NULL;
 
     -- TABLE: store
 
-        SELECT 
-            20,
-            'store',
-            'manager_staff_id',
-            COUNT(*)
+        SELECT s.manager_staff_id
         FROM store s
         LEFT JOIN staff st ON s.manager_staff_id = st.staff_id
-        WHERE st.staff_id IS NULL
-        
-        UNION ALL
+        WHERE st.staff_id IS NULL;
 
-        SELECT 
-            21,
-            'store',
-            'address_id',
-            COUNT(*)
+        SELECT s.address_id
         FROM store s
         LEFT JOIN address a ON s.address_id = a.address_id
-        WHERE a.address_id IS NULL
-        
-        ORDER BY sort_order;
+        WHERE a.address_id IS NULL;
 
--- RESULTS: Foreign key validation completed - no missing references found.
+-- RESULTS: All foreign keys link to valid primary keys in parent tables.
 
 -- ==============================================================
 -- 6. Missing Data Checks (Key Variables)
@@ -443,67 +300,537 @@
         'inventory', 
         'language', 
         'payment', 
-        'rental',
-        'staff',
-        'store'
+        'rental'
     )
     AND is_nullable = 'YES'
-    ORDER BY table_name, column_name;
+    ORDER BY ordinal_position;
 
--- RESULTS: 11 Columns allowing NULLs.
+-- RESULTS: 11 Columns that may contain blanks. Most in film table. 
 
--- Check key columns that allow NULL values
+-- Check columns that allow NULL values for missing data
+
+    -- TABLE: actor
+
+        SELECT
+            'actor' AS table_name, 
+            'actor_id' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM actor
+        WHERE actor_id IS NULL
+
+        UNION ALL
+
+        SELECT 
+            'actor' AS table_name, 
+            'first_name' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM actor
+        WHERE first_name IS NULL
+
+        UNION ALL
+
+        SELECT 
+            'actor' AS table_name, 
+            'last_name' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM actor
+        WHERE last_name IS NULL
+
+        UNION ALL
+
+    -- TABLE: address
+
+        SELECT
+            'address' AS table_name, 
+            'address_id' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM address
+        WHERE address_id IS NULL
+
+        UNION ALL
+
+        SELECT 
+            'address' AS table_name, 
+            'city_id' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM address
+        WHERE city_id IS NULL
+
+        UNION ALL
+
+    -- TABLE: category
+
+        SELECT 
+            'category' AS table_name, 
+            'category_id' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM category
+        WHERE category_id IS NULL
+
+        UNION ALL
+
+        SELECT 
+            'category' AS table_name, 
+            'name' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM category
+        WHERE name IS NULL
+
+        UNION ALL
+
+    -- TABLE: city
+
+        SELECT 
+            'city' AS table_name, 
+            'city_id' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM city
+        WHERE city_id IS NULL
+
+        UNION ALL
+
+        SELECT 
+            'city' AS table_name, 
+            'city' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM city
+        WHERE city IS NULL
+
+        UNION ALL
+
+        SELECT 
+            'city' AS table_name, 
+            'country_id' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM city
+        WHERE country_id IS NULL
+
+        UNION ALL
+        
+    -- TABLE: country
+
+        SELECT 
+            'country' AS table_name, 
+            'country_id' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM country
+        WHERE country_id IS NULL
+
+        UNION ALL
+        
+        SELECT 
+            'country' AS table_name, 
+            'country' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM country
+        WHERE country IS NULL
+
+        UNION ALL
 
     -- TABLE: customer
 
         SELECT 
             'customer' AS table_name, 
-            'active' AS column_name, 
+            'customer_id' AS column_name, 
             COUNT(*) AS missing_count
         FROM customer
-        WHERE active IS NULL
+        WHERE customer_id IS NULL
+
+        UNION ALL
+        
+        SELECT 
+            'customer' AS table_name, 
+            'store_id' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM customer
+        WHERE store_id IS NULL
+
+        UNION ALL
+        
+        SELECT 
+            'customer' AS table_name, 
+            'first_name' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM customer
+        WHERE first_name IS NULL
+
+        UNION ALL
+
+        SELECT 
+            'customer' AS table_name, 
+            'last_name' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM customer
+        WHERE last_name IS NULL
+
+        UNION ALL
+
+        SELECT 
+            'customer' AS table_name, 
+            'address_id' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM customer
+        WHERE address_id IS NULL
 
         UNION ALL
 
     -- TABLE: film
 
         SELECT 
-            'film', 
-            'length', 
-            COUNT(*)
+            'film' AS table_name, 
+            'film_id' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM film
+        WHERE film_id IS NULL
+
+        UNION ALL
+
+        SELECT 
+            'film' AS table_name, 
+            'title' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM film
+        WHERE title IS NULL
+
+        UNION ALL
+
+        SELECT 
+            'film' AS table_name, 
+            'release_year' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM film
+        WHERE release_year IS NULL
+
+        UNION ALL
+
+        SELECT 
+            'film' AS table_name, 
+            'language_id' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM film
+        WHERE language_id IS NULL
+
+        UNION ALL
+
+        SELECT 
+            'film' AS table_name, 
+            'rental_duration' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM film
+        WHERE rental_duration IS NULL
+
+        UNION ALL
+
+        SELECT 
+            'film' AS table_name, 
+            'rental_rate' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM film
+        WHERE rental_rate IS NULL
+
+        UNION ALL
+
+        SELECT 
+            'film' AS table_name, 
+            'length' AS column_name, 
+            COUNT(*) AS missing_count
         FROM film
         WHERE length IS NULL
 
         UNION ALL
 
         SELECT 
-            'film', 
-            'rating', 
-            COUNT(*)
+            'film' AS table_name, 
+            'replacement_cost' AS column_name, 
+            COUNT(*) AS missing_count
         FROM film
-        WHERE rating IS NULL
+        WHERE replacement_cost IS NULL
 
         UNION ALL
 
         SELECT 
-            'film',
-            'release_year',
-            COUNT(*)
+            'film' AS table_name, 
+            'rating' AS column_name, 
+            COUNT(*) AS missing_count
         FROM film
-        WHERE release_year IS NULL
+        WHERE rating IS NULL
+        
+        UNION ALL
+
+    -- TABLE: film_actor
+
+        SELECT
+            'film_actor' AS table_name, 
+            'actor_id' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM film_actor
+        WHERE actor_id IS NULL
 
         UNION ALL
+
+        SELECT 
+            'film_actor' AS table_name, 
+            'film_id' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM film_actor
+        WHERE film_id IS NULL
+
+        UNION ALL
+        
+    -- TABLE: film_category
+
+        SELECT 
+            'film_category' AS table_name, 
+            'film_id' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM film_category
+        WHERE film_id IS NULL
+
+        UNION ALL
+
+        SELECT 
+            'film_category' AS table_name, 
+            'category_id' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM film_category
+        WHERE category_id IS NULL
+
+        UNION ALL
+        
+    -- TABLE: inventory
+
+        SELECT 
+            'inventory' AS table_name, 
+            'inventory_id' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM inventory
+        WHERE inventory_id IS NULL
+
+        UNION ALL
+
+        SELECT 
+            'inventory' AS table_name, 
+            'film_id' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM inventory
+        WHERE film_id IS NULL
+
+        UNION ALL
+
+        SELECT 
+            'inventory' AS table_name, 
+            'store_id' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM inventory
+        WHERE store_id IS NULL
+
+        UNION ALL 
+
+    -- TABLE: language
+
+        SELECT 
+            'language' AS table_name, 
+            'language_id' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM language
+        WHERE language_id IS NULL
+
+        UNION ALL
+
+        SELECT 
+            'language' AS table_name, 
+            'name' AS table_name,
+            COUNT(*) AS missing_count
+        FROM language
+        WHERE name IS NULL
+
+        UNION ALL 
+
+    -- TABLE: payment
+
+        SELECT 
+            'payment' AS table_name,
+            'payment_id' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM payment
+        WHERE payment_id IS NULL
+
+        UNION ALL
+
+        SELECT 
+            'payment' AS table_name,
+            'customer_id' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM payment
+        WHERE customer_id IS NULL
+
+        UNION ALL
+
+        SELECT 
+            'payment' AS table_name,
+            'staff_id' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM payment
+        WHERE staff_id IS NULL
+
+        UNION ALL
+
+        SELECT 
+            'payment' AS table_name,
+            'rental_id' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM payment
+        WHERE rental_id IS NULL
+
+        UNION ALL
+
+        SELECT 
+            'payment' AS table_name,
+            'amount' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM payment
+        WHERE amount IS NULL
+
+        UNION ALL 
+
+        SELECT 
+            'payment' AS table_name,
+            'payment_date' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM payment
+        WHERE payment_date IS NULL
+
+        UNION ALL 
 
     -- TABLE: rental
 
         SELECT 
-            'rental',
-            'return_date', 
-            COUNT(*)
+            'rental' AS table_name,
+            'rental_id' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM rental
+        WHERE rental_id IS NULL
+
+        UNION ALL
+
+        SELECT 
+            'rental' AS table_name,
+            'rental_date' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM rental
+        WHERE rental_date IS NULL
+
+        UNION ALL
+
+        SELECT 
+            'rental' AS table_name,
+            'inventory_id' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM rental
+        WHERE inventory_id IS NULL
+
+        UNION ALL
+
+        SELECT 
+            'rental' AS table_name,
+            'customer_id' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM rental
+        WHERE customer_id IS NULL
+
+        UNION ALL
+
+        SELECT 
+            'rental' AS table_name,
+            'return_date' AS column_name, 
+            COUNT(*) AS missing_count
         FROM rental
         WHERE return_date IS NULL
 
-        ORDER BY table_name, column_name;
+        UNION ALL
+
+        SELECT 
+            'rental' AS table_name,
+            'staff_id' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM rental
+        WHERE staff_id IS NULL
+
+        UNION ALL
+
+    -- TABLE: staff
+
+        SELECT 
+            'staff' AS table_name,
+            'staff_id' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM staff
+        WHERE staff_id IS NULL
+
+        UNION ALL
+
+        SELECT 
+            'staff' AS table_name,
+            'first_name' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM staff
+        WHERE first_name IS NULL
+
+        UNION ALL
+
+        SELECT 
+            'staff' AS table_name,
+            'last_name' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM staff
+        WHERE last_name IS NULL
+
+        UNION ALL
+
+        SELECT 
+            'staff' AS table_name,
+            'address_id' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM staff
+        WHERE address_id IS NULL
+
+        UNION ALL
+
+        SELECT 
+            'staff' AS table_name,
+            'store_id' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM staff
+        WHERE store_id IS NULL
+
+        UNION ALL
+
+    -- TABLE: store
+
+        SELECT 
+            'store' AS table_name,
+            'store_id' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM store
+        WHERE store_id IS NULL
+
+        UNION ALL
+
+        SELECT 
+            'store' AS table_name,
+            'manager_staff_id' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM store
+        WHERE manager_staff_id IS NULL
+
+        UNION ALL
+
+        SELECT 
+            'store' AS table_name,
+            'address_id' AS column_name, 
+            COUNT(*) AS missing_count
+        FROM store
+        WHERE address_id IS NULL
         
 -- RESULTS: 183 records missing in return_date in rental table.
 
