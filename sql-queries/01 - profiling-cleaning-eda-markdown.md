@@ -290,8 +290,6 @@ rental|return_date|timestamp without time zone
 
 ---
 
-# 5. Primary Key and Sequence Checks
-
 # 5. Primary Key Checks
 
 ## Objective
