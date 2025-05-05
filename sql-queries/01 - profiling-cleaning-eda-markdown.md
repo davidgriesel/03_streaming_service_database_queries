@@ -34,30 +34,24 @@ Comprehensive data profiling, structural validation, and basic exploration of th
 ## Objective
 Establish the initial structure of the database by identifying all base tables in the `public` schema.
 Exclude irrelevant objects such as system tables or views.
-This first step helps to frame the profiling process by understanding the available entities.
-
-An Entity Relationship Diagram (ERD) was consulted prior to querying, providing a high-level view of the database's structure, relationships, and key fields.  
-Subsequent SQL queries were designed to validate the structure against the live database.
 
 ## Query
-Refer to Section 1 of [profiling-cleaning-eda-queries.sql](./profiling-cleaning-eda-queries.sql).
-Refer to section 1 of [profiling-cleaning-eda-queries.sql](sql-queries/01 - profiling-cleaning-eda-queries.sql)
+Refer to section 1 of [profiling-cleaning-eda-queries.sql](./profiling-cleaning-eda-queries.sql).
 
 ```sql
-    SELECT 
-        table_schema, 
-        table_type, 
-        table_name
-    FROM information_schema.tables
-    WHERE table_schema = 'public' 
-        AND table_type = 'BASE TABLE'
-    ORDER BY
-        table_name;
+SELECT 
+    table_schema, 
+    table_type, 
+    table_name
+FROM information_schema.tables
+WHERE table_schema = 'public' 
+    AND table_type = 'BASE TABLE'
+ORDER BY
+    table_name;
 ```
 
 ## Results
-- 15 base tables identified in the public schema.
-- All objects are classified as BASE TABLE (no views or temporary tables).
+15 base tables identified in the public schema.
 
 number|table_schema | table_type | table_name
 |:---:|:---:|:---:|:---
@@ -80,10 +74,9 @@ number|table_schema | table_type | table_name
 *(For full results, see profiling-cleaning-eda-results.csv)*
 
 ## Observations
-- The initial table list aligns with the ERD.
-- No unexpected tables were present.
+- The table list aligns with the ERD.
 - Database structure suggests operational processes centered around rentals, inventory, and customer management.
-- Full schema pattern (e.g., star or galaxy schema) will be validated after exploring relationships in later sections.
+- Full schema pattern (e.g., star or galaxy schema).
 
 [⬆️ Back to Top](#)
 
