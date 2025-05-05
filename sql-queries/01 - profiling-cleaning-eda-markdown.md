@@ -41,6 +41,7 @@ Subsequent SQL queries were designed to validate the structure against the live 
 
 ## Query
 Refer to Section 1 of [profiling-cleaning-eda-queries.sql](./profiling-cleaning-eda-queries.sql).
+Refer to section 1 of [profiling-cleaning-eda-queries.sql](sql-queries/01 - profiling-cleaning-eda-queries.sql)
 
 ```sql
     SELECT 
