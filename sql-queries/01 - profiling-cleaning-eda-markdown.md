@@ -5,7 +5,7 @@ Comprehensive data profiling, structural validation, and basic exploration of th
 ## Project Files
 
 - [ERD Diagram](./path-to-your-erd-file.png) — Entity Relationship Diagram providing an overview of the database structure.
-- [SQL Queries](./profiling-cleaning-eda-queries.sql) — Full SQL script for data validation and profiling.
+- [SQL Queries](sql-queries/01 - profiling-cleaning-eda-queries.sql) — Full SQL script for data validation and profiling.
 - [Results (.csv)](./profiling-cleaning-eda-results.csv) — Output tables exported from SQL queries.
 - [Report (.xls)](./profiling-cleaning-eda.xlsx) — Consolidated results and observations compiled in Excel.
 
