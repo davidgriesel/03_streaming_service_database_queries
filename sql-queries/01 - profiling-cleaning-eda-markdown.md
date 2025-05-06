@@ -1,5 +1,11 @@
 # Profiling, Cleaning and EDA
 
+
+# Acknowledgements
+
+Assistance received from OpenAI's ChatGPT on schema querying and selected SQL structuring. Final queries reviewed and finalised by the analyst.
+
+
 Comprehensive data profiling, structural validation, and basic exploration of the Rockbuster Stealth database.
 
 ## Project Files

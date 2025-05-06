@@ -1,0 +1,14 @@
+film_variable,distinct_count
+film_id,1000
+title,1000
+description,1000
+release_year,1
+language_id,1
+rental_duration,5
+rental_rate,3
+length,140
+replacement_cost,21
+rating,5
+last_update,1
+special_features,15
+fulltext,1000

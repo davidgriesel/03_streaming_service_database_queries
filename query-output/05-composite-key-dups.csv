@@ -1,0 +1,3 @@
+table_name,composite_key,duplicate_count
+film_actor,"actor_id, film_id",0
+film_category,"film_id, category_id",0

@@ -1,0 +1,6 @@
+table_name,column_name,missing_count
+customer,active,0
+film,length,0
+film,rating,0
+film,release_year,0
+rental,return_date,183

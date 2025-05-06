@@ -1,0 +1,14 @@
+table_name,primary_key,null_count
+actor,actor_id,0
+address,address_id,0
+category,category_id,0
+city,city_id,0
+country,country_id,0
+customer,customer_id,0
+film,film_id,0
+inventory,inventory_id,0
+language,language_id,0
+payment,payment_id,0
+rental,rental_id,0
+staff,staff_id,0
+store,store_id,0
