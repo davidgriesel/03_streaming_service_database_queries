@@ -1,33 +1,33 @@
--- ===============================================================================
+-- ================================================================================
 -- Rockbuster Stealth
 -- Analyst: David Griesel
 -- Date: July 2024
 -- Purpose: Initial Data Profiling, Cleaning, and EDA
--- ===============================================================================
+-- ================================================================================
 
--- ===============================================================================
+-- ================================================================================
 -- TABLE OF CONTENTS:
--- ===============================================================================
+-- ================================================================================
 
+-- 1. Overview of Tables (Structure)
+-- 2. Row Counts (Structure)
+-- 3. Sample Rows (Structure)
+-- 4. Data Type Validation (Integrity)
+-- 5. Constraint Checks (Integrity)
+-- 6. Missing Data Checks (Quality)
+-- 7. Duplicates Checks (Quality)
+-- 8. Distinct Value Counts (Exploration)
+-- 9. Frequency Distributions (Exploration)
+-- 10. Descriptive Statistics (Exploration)
+-- 11. Temporal Checks (Exploration)
+-- 12. Logic and Dependency Checks
+-- 13. Addressing Business Questions
+
+-- ================================================================================
 -- 1. Overview of Tables
--- 2. Row Counts
--- 3. Sample Rows
--- 4. Data Type Validation
--- 5. Primary Key Checks
--- 6. Foreign Key Checks
--- 7. Missing Data Checks (Key Variables)
--- 8. Duplicates Checks
--- 9. Distinct Value Counts (All Variables)
--- 10. Frequency Distributions (Categorical Variables)
--- 11. Descriptive Statistics (Numeric Variables)
--- 12. Temporal Checks
--- 13. Logic and Dependency Checks
+-- ================================================================================
 
--- ===============================================================================
--- 1. Overview of Tables
--- ===============================================================================
-
--- 1.1 - List all base tables in the public schema.
+-- 1.1 - List all base tables in the public schema for profiling. 
 
     SELECT 
         table_schema, 
@@ -42,9 +42,9 @@
 -- OBSERVATIONS: 
 -- THere are 15 tables in the public schema.
 
--- ===============================================================================
--- 2. Row Counts
--- ===============================================================================
+-- ================================================================================
+-- 2. Row Counts per Table
+-- ================================================================================
 
 -- 2.1 - Count rows for all base tables in the public schema.
 
@@ -83,9 +83,9 @@
 -- 603 addresses (599 customers + 2 staff + 2 stores).
 -- 16044 rentals vs 14596 payments (likely due to outstanding returns).
 
--- ===============================================================================
+-- ================================================================================
 -- 3. Sample Rows
--- ===============================================================================
+-- ================================================================================
 
 -- 3.1 - Get sample rows from all base tables in the public schema.
 
@@ -111,9 +111,9 @@
 -- Possible reduntant columns (address.address2, film.special_features, staff.picture).
 -- Some ambiguous column names (category.name, language.name).
 
--- ===============================================================================
+-- ================================================================================
 -- 4. Data Type Validation
--- ===============================================================================
+-- ================================================================================
 
 -- 4.1 - Retrieve data types for all variables across all tables.
 
@@ -141,9 +141,14 @@
 -- film.release_year of type integer - flag for temporal analysis.
 -- rental.return_date | rental.rental_date | payment.payment_date - cast to date in queries.
 
--- ===============================================================================
+-- ================================================================================
 -- 5. Primary Key Checks
--- ===============================================================================
+-- ================================================================================
+
+-- primary and foreign keys
+-- NOT NULL | UNIQUE | CHECK rules i.e. negative amounts| DEFAULTs when none provided (prevents '') 
+-- | ENUM or Domain constraints from a list i.e. active or inactive
+
 
 -- 5.1 - Check if primary keys exist in the schema.
 
@@ -305,9 +310,9 @@
 -- OBSERVATIONS:
 -- No duplicates across composite keys.
 
--- ===============================================================================
+-- ================================================================================
 -- 6. Foreign Key Checks
--- ===============================================================================
+-- ================================================================================
 
 -- 6.1 - Check foreign key constraints in the schema.
 
@@ -508,9 +513,9 @@
 -- OBSERVATIONS:
 -- All foreign keys link to valid primary keys in parent tables.
 
--- ===============================================================================
+-- ================================================================================
 -- 7. Missing Data Checks (Key Variables)
--- ===============================================================================
+-- ================================================================================
 
 -- 7.1 - Check forr nulls in all variables across all tables.
 
@@ -850,9 +855,9 @@
 -- address.phone - 2 missing values.
 -- address.postal_code - 4 missing values.
     
--- ===============================================================================
+-- ================================================================================
 -- 8. Duplicates Checks
--- ===============================================================================
+-- ================================================================================
 
 -- 8.1 - Combined duplicate counts across key tables.
 
@@ -1344,19 +1349,19 @@
     -- All records updated across 3 dates.
 
 -- staff table
-    -- 2 staff members with distinct names, addresses and emails working at both stores. 
+    -- 2 staff members with distinct names, addresses and emails working at both stores.
     -- 2 usernames but one password!
     -- Only one in active variable - > both active?
     -- Only one staff member uploaded a picture.
     -- All records updated on the same date.
 
 -- store table
-    -- 2 stores with 2 managers at 2 locations.     
+    -- 2 stores with 2 managers at 2 locations.
     -- All records updated on the same date.
 
--- ===============================================================================
+-- ================================================================================
 -- 10. Frequency Distributions
--- ===============================================================================
+-- ================================================================================
 
 -- 10.1 - Check the frequency distribution of key categorical variables.
 
@@ -1505,8 +1510,8 @@
     -- TABLE: language
 
     SELECT 
-        name AS language_name,  
-        COUNT(*) AS frequency, 
+        name AS language_name,
+        COUNT(*) AS frequency,
         ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM language), 2) AS percentage
     FROM language
     GROUP BY language_name
@@ -1515,16 +1520,16 @@
     -- TABLE: staff
 
     SELECT 
-        first_name AS staff_first_name, 
-        COUNT(*) AS frequency, 
+        first_name AS staff_first_name,
+        COUNT(*) AS frequency,
         ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM staff), 2) AS percentage
     FROM staff
     GROUP BY staff_first_name
     ORDER BY frequency DESC;
 
     SELECT 
-        last_name AS staff_last_name, 
-        COUNT(*) AS frequency, 
+        last_name AS staff_last_name,
+        COUNT(*) AS frequency,
         ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM staff), 2) AS percentage
     FROM staff
     GROUP BY staff_last_name
@@ -1532,14 +1537,14 @@
 
     SELECT 
         email AS staff_email,
-        COUNT(*) AS frequency, 
+        COUNT(*) AS frequency,
         ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM staff), 2) AS percentage
     FROM staff
     GROUP BY staff_email
     ORDER BY frequency DESC;
 
     SELECT 
-        password AS staff_password, 
+        password AS staff_password,
         COUNT(*) AS frequency, 
         ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM staff), 2) AS percentage
     FROM staff
@@ -1547,7 +1552,7 @@
     ORDER BY frequency DESC;
     
     SELECT 
-        username AS staff_username, 
+        username AS staff_username,
         COUNT(*) AS frequency, 
         ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM staff), 2) AS percentage
     FROM staff
@@ -1560,13 +1565,13 @@
 -- address.phone - 2 missing values.
 -- address.postal_code - 4 missing values.
 -- customer.activebool - all customers are active.
--- customer.active - 1 x 584 & 0 x 15 unexpected type and inconsistent - > consider unreliable. 
+-- customer.active - 1 x 584 & 0 x 15 unexpected type and inconsistent - > consider unreliable.
 -- staff.active - both staff members are active.
 
 
--- ===============================================================================
+-- ================================================================================
 -- 11. Descriptive Statistics (Numeric Variables)
--- ===============================================================================
+-- ================================================================================
 
 -- 11.1 - Summary statistics and distributions of numeric variables.
 
@@ -1667,7 +1672,7 @@
 -- film.rental_duration
     -- No nulls or zero values.
     -- Range - > 4 (3 to 7).
-    -- Mean and median - > 4,99/5. 
+    -- Mean and median - > 4,99/5.
     -- Standard deviation - > 1,41.
 
 -- film.rental_rate
@@ -1689,14 +1694,14 @@
     -- Standard deviation - > 6,05.
 
 -- payment.amount
-    -- No nulls but 24 zero values! 
+    -- No nulls but 24 zero values!
     -- Range - > 11,99 (0 to 11,99).
     -- Mean and median - > 4,2/3,99.
     -- Standard deviation - > 2,37.
     
--- ===============================================================================
+-- ================================================================================
 -- 12. Temporal Checks
--- ===============================================================================
+-- ================================================================================
 
 -- 12.1 - Validate 'last_update' and 'create_date' fields across all tables
 
@@ -1732,7 +1737,7 @@
     ORDER BY table_name;
 
 -- OBSERVATIONS:
--- All returned 1 single date except for rental.last_update. 
+-- All returned 1 single date except for rental.last_update.
 -- Database created on one date with minor updates?
 
 -- 12.2 - Temporal analysis of key event date or timestamp fields
@@ -1740,7 +1745,7 @@
     SELECT
         'payment' AS table_name, 
         'payment_date' AS column_name, 
-        COUNT(DISTINCT payment_date) AS distinct_dates, 
+        COUNT(DISTINCT payment_date) AS distinct_dates,
         MIN(payment_date) AS min_date,
         MAX(payment_date) AS max_date 
     FROM payment
@@ -1748,7 +1753,7 @@
     SELECT
         'rental' AS table_name, 
         'rental_date' AS column_name, 
-        COUNT(DISTINCT rental_date) AS distinct_dates, 
+        COUNT(DISTINCT rental_date) AS distinct_dates,
         MIN(rental_date) AS min_date,
         MAX(rental_date) AS max_date 
     FROM rental
@@ -1756,7 +1761,7 @@
     SELECT
         'rental' AS table_name, 
         'return_date' AS column_name, 
-        COUNT(DISTINCT return_date) AS distinct_dates, 
+        COUNT(DISTINCT return_date) AS distinct_dates,
         MIN(return_date) AS min_date,
         MAX(return_date) AS max_date 
     FROM rental;
@@ -1771,7 +1776,7 @@
     SELECT
         'film' AS table_name, 
         'release_year' AS column_name, 
-        COUNT(DISTINCT release_year) AS distinct_dates, 
+        COUNT(DISTINCT release_year) AS distinct_dates,
         MIN(release_year) AS min_date,
         MAX(release_year) AS max_date 
     FROM film;
@@ -1810,3 +1815,63 @@
 -- rental_date generally increase in frequency over time, but drops every 8 days.
 -- return_date follows a similar pattern but dips every 17 days.
 -- payment-date also show intermittant dips in frequency but at less regular intervals ranging between 5 and 10 days.
+
+-- ================================================================================
+-- 13. Logic and Dependency Checks
+-- ================================================================================
+
+-- 1. Check that every payment links to an existing rental
+
+-- Check for orphaned payments (payments without a matching rental)
+
+SELECT COUNT(*) AS payments_without_rental
+FROM payment p
+LEFT JOIN rental r ON p.rental_id = r.rental_id
+WHERE r.rental_id IS NULL;
+
+-- 2. Check that return dates are after rental dates
+
+-- Check rentals where return_date is before rental_date (bad logic)
+SELECT COUNT(*) AS invalid_return_dates
+FROM rental
+WHERE return_date < rental_date;
+
+-- 3. Check rentals without return dates
+
+-- Check rentals with NULL return_date (could be unreturned rentals)
+SELECT COUNT(*) AS rentals_without_return
+FROM rental
+WHERE return_date IS NULL;
+
+-- 4. Check for payments before rental date
+
+-- Payments made before rental date (business logic error)
+
+SELECT COUNT(*) AS payments_before_rental
+FROM payment p
+JOIN rental r ON p.rental_id = r.rental_id
+WHERE p.payment_date < r.rental_date;
+
+-- 5. Optional advanced: future rentals
+
+-- Rentals dated in the future compared to current timestamp
+SELECT COUNT(*) AS rentals_in_future
+FROM rental
+WHERE rental_date > NOW();
+
+
+-- Results columns with 'valid"/"invalid"
+-- error summary tables
+
+-- Did not create wrangling views - explored the whole database for learning purposes. 
+SELECT * FROM actor_info limit 10;
+SELECT * FROM clean_actor limit 10;
+SELECT * FROM customer_cleaned limit 10;
+SELECT * FROM customer_list limit 10;
+SELECT * FROM film_list limit 10;
+SELECT * FROM nicer_but_slower_film_list limit 10;
+SELECT * FROM payment_share limit 10;
+SELECT * FROM sales_by_film_category limit 10;
+SELECT * FROM sales_by_store limit 10;
+SELECT * FROM staff_list limit 10;
+
