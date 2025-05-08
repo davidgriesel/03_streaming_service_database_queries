@@ -10,7 +10,7 @@
 -- ================================================================================
 
 -- 1. Overview of Tables (Structure)
--- 2. Row Counts (Structure)
+-- 2. Row Counts per Table (Structure)
 -- 3. Sample Rows (Structure)
 -- 4. Data Type Validation (Integrity)
 -- 5. Constraint Checks (Integrity)
@@ -27,7 +27,7 @@
 -- 1. Overview of Tables
 -- ================================================================================
 
--- 1.1 - List all base tables in the public schema for profiling. 
+-- 1.1 - List all tables in the public schema for profiling. 
 
     SELECT 
         table_schema, 
@@ -35,12 +35,11 @@
         table_name
     FROM information_schema.tables
     WHERE table_schema = 'public' 
-        AND table_type = 'BASE TABLE'
     ORDER BY
         table_name;
 
 -- OBSERVATIONS: 
--- THere are 15 tables in the public schema.
+-- THere are 15 base tables in the public schema.
 
 -- ================================================================================
 -- 2. Row Counts per Table
@@ -80,8 +79,9 @@
 
 -- OBSERVATIONS:
 -- All tables are populated.
--- 603 addresses (599 customers + 2 staff + 2 stores).
--- 16044 rentals vs 14596 payments (likely due to outstanding returns).
+-- The rental and payment tables hold transactional data based on high transaction volumes.
+-- Other tables hold supporting descriptive information based on low transaction volumes.
+-- This is consistent with the structure depicted in the ERD.
 
 -- ================================================================================
 -- 3. Sample Rows
@@ -106,10 +106,11 @@
     SELECT * FROM store LIMIT 5;
 
 -- OBSERVATIONS:
--- Some expected null values (address2, picture).
--- Some empty values (postal_code, phone).
--- Possible reduntant columns (address.address2, film.special_features, staff.picture).
--- Some ambiguous column names (category.name, language.name).
+-- null values e.g. address.address2, staff.picture.
+-- Empty values e.g. address.address2, address.postal_code, address.phone.
+-- Ambiguous column names e.g. category.name, language.name. Consider aliasing. 
+-- Possible redundant columns e.g. customer.active, customer.activebool likely more reliable.
+-- Other possibly redundant colums for analysis e.g. address.address2, film.special_features.
 
 -- ================================================================================
 -- 4. Data Type Validation
@@ -131,204 +132,64 @@
         c.table_schema = 'public' 
         AND t.table_type = 'BASE TABLE' 
     ORDER BY 
-        c.data_type-- c.table_name, c.ordinal_position;
+        c.data_type;
+        -- c.table_name, c.ordinal_position;
 
 -- OBSERVATIONS:
--- film.rating is type USER-DEFINED - cast to varchar in queries.
--- staff.active is type boolean - alias to staff.activebool
--- language.name is type character - trim in queries.
--- customer.active of type integer vs customer.activebool of type boolean - compare and flag for ignore.
--- film.release_year of type integer - flag for temporal analysis.
--- rental.return_date | rental.rental_date | payment.payment_date - cast to date in queries.
+-- staff.active         type boolean        - > alias to staff.activebool for naming consistency.
+
+-- language.name        type character      - > trim or cast to type varchar.
+
+-- customer.active      type integer vs,
+-- customer.activebool  type boolean        - > compare for redundancy.
+
+-- film.release_year    type integer        - > contains year only, flag for temporal analysis.
+
+-- payment.payment_date type timestamp &,
+-- rental.rental_date   type timestamp &,
+-- rental.return_date   type timestamp      - > precision unnecessary for analysis, cast to date.
+
+-- film.rating      type USER-DEFINED       - > Likely has ENUM constraints. Cast to varchar.
+
+-- Consider standardisation of data types across similar fields in the remainder of the dataset.
 
 -- ================================================================================
--- 5. Primary Key Checks
+-- 5. Constraint Discovery
 -- ================================================================================
 
--- primary and foreign keys
--- NOT NULL | UNIQUE | CHECK rules i.e. negative amounts| DEFAULTs when none provided (prevents '') 
--- | ENUM or Domain constraints from a list i.e. active or inactive
-
-
--- 5.1 - Check if primary keys exist in the schema.
+-- 5.1 - Primary Key Discovery.
 
     SELECT 
-        t.table_name,
-        CASE 
-            WHEN pk.column_name IS NOT NULL THEN 'Yes'
-            ELSE 'No'
-        END AS primary_key_exists,
-        pk.column_name AS primary_key_column,
-        pk.constraint_name AS primary_key_constraint
+        tc.table_name,
+        string_agg(kcu.column_name, ', ') AS primary_key_columns,
+        tc.constraint_name
     FROM 
-        information_schema.tables AS t
-    LEFT JOIN (
-        SELECT 
-            tc.table_name, 
-            kcu.column_name,
-            tc.constraint_name
-        FROM 
-            information_schema.table_constraints AS tc
-        INNER JOIN 
-            information_schema.key_column_usage AS kcu
-        ON 
-            tc.constraint_name = kcu.constraint_name
-        WHERE 
-            tc.constraint_type = 'PRIMARY KEY'
-            AND tc.table_schema = 'public'
-    ) AS pk
+        information_schema.table_constraints AS tc
+    JOIN 
+        information_schema.key_column_usage AS kcu
     ON 
-        t.table_name = pk.table_name
+        tc.constraint_name = kcu.constraint_name
     WHERE 
-        t.table_schema = 'public'
-        AND t.table_type = 'BASE TABLE'
+        tc.constraint_type = 'PRIMARY KEY'
+        AND tc.table_schema = 'public'
+    GROUP BY 
+        tc.table_name, tc.constraint_name
     ORDER BY 
-        t.table_name;
+        tc.table_name;
 
 -- OBSERVATIONS: 
--- No primary key constraints exist in the schema.
+-- Primary keys exist across all public tables enforcing unique values.
+-- Composite keys exist across two columns in the film_actor, and film_category tables.
 
--- 5.2 - Check for nulls in primary key columns.
-
-    SELECT 'actor' AS table_name, 'actor_id' AS primary_key, COUNT(*) AS null_count FROM actor WHERE actor_id IS NULL
-    UNION ALL
-    SELECT 'address' AS table_name, 'address_id' AS primary_key, COUNT(*) AS null_count FROM address WHERE address_id IS NULL
-    UNION ALL
-    SELECT 'category' AS table_name, 'category_id' AS primary_key, COUNT(*) AS null_count FROM category WHERE category_id IS NULL
-    UNION ALL
-    SELECT 'city' AS table_name, 'city_id' AS primary_key, COUNT(*) AS null_count FROM city WHERE city_id IS NULL
-    UNION ALL
-    SELECT 'country' AS table_name, 'country_id' AS primary_key, COUNT(*) AS null_count FROM country WHERE country_id IS NULL
-    UNION ALL
-    SELECT 'customer' AS table_name, 'customer_id' AS primary_key, COUNT(*) AS null_count FROM customer WHERE customer_id IS NULL
-    UNION ALL
-    SELECT 'film' AS table_name, 'film_id' AS primary_key, COUNT(*) AS null_count FROM film WHERE film_id IS NULL
-    UNION ALL
-    SELECT 'inventory' AS table_name, 'inventory_id' AS primary_key, COUNT(*) AS null_count FROM inventory WHERE inventory_id IS NULL
-    UNION ALL
-    SELECT 'language' AS table_name, 'language_id' AS primary_key, COUNT(*) AS null_count FROM language WHERE language_id IS NULL
-    UNION ALL
-    SELECT 'payment' AS table_name, 'payment_id' AS primary_key, COUNT(*) AS null_count FROM payment WHERE payment_id IS NULL
-    UNION ALL
-    SELECT 'rental' AS table_name, 'rental_id' AS primary_key, COUNT(*) AS null_count FROM rental WHERE rental_id IS NULL
-    UNION ALL
-    SELECT 'staff' AS table_name, 'staff_id' AS primary_key, COUNT(*) AS null_count FROM staff WHERE staff_id IS NULL
-    UNION ALL
-    SELECT 'store' AS table_name, 'store_id' AS primary_key, COUNT(*) AS null_count FROM store WHERE store_id IS NULL;
-
--- OBSERVATIONS:
--- No nullss in primary key columns.
-
--- 5.3 - Check for duplicates in primary key columns.
-
-    WITH duplicate_checks AS (
-        
-        SELECT 1 AS sort_order, 'actor' AS table_name, 'actor_id' AS primary_key, COUNT(*) - COUNT(DISTINCT actor_id) AS duplicate_count FROM actor
-        UNION ALL
-        SELECT 2 AS sort_order, 'address' AS table_name, 'address_id' AS primary_key, COUNT(*) - COUNT(DISTINCT address_id) AS duplicate_count FROM address
-        UNION ALL
-        SELECT 3 AS sort_order, 'category' AS table_name, 'category_id' AS primary_key, COUNT(*) - COUNT(DISTINCT category_id) AS duplicate_count FROM category
-        UNION ALL
-        SELECT 4 AS sort_order, 'city' AS table_name, 'city_id' AS primary_key, COUNT(*) - COUNT(DISTINCT city_id) AS duplicate_count FROM city
-        UNION ALL
-        SELECT 5 AS sort_order, 'country' AS table_name, 'country_id' AS primary_key, COUNT(*) - COUNT(DISTINCT country_id) AS duplicate_count FROM country
-        UNION ALL
-        SELECT 6 AS sort_order, 'customer' AS table_name, 'customer_id' AS primary_key, COUNT(*) - COUNT(DISTINCT customer_id) AS duplicate_count FROM customer
-        UNION ALL
-        SELECT 7 AS sort_order, 'film' AS table_name, 'film_id' AS primary_key, COUNT(*) - COUNT(DISTINCT film_id) AS duplicate_count FROM film
-        UNION ALL
-        SELECT 8 AS sort_order, 'inventory' AS table_name, 'inventory_id' AS primary_key, COUNT(*) - COUNT(DISTINCT inventory_id) AS duplicate_count FROM inventory
-        UNION ALL
-        SELECT 9 AS sort_order, 'language' AS table_name, 'language_id' AS primary_key, COUNT(*) - COUNT(DISTINCT language_id) AS duplicate_count FROM language
-        UNION ALL
-        SELECT 10 AS sort_order, 'payment' AS table_name, 'payment_id' AS primary_key, COUNT(*) - COUNT(DISTINCT payment_id) AS duplicate_count FROM payment
-        UNION ALL
-        SELECT 11 AS sort_order, 'rental' AS table_name, 'rental_id' AS primary_key, COUNT(*) - COUNT(DISTINCT rental_id) AS duplicate_count FROM rental
-        UNION ALL
-        SELECT 12 AS sort_order, 'staff' AS table_name, 'staff_id' AS primary_key, COUNT(*) - COUNT(DISTINCT staff_id) AS duplicate_count FROM staff
-        UNION ALL
-        SELECT 13 AS sort_order, 'store' AS table_name, 'store_id' AS primary_key, COUNT(*) - COUNT(DISTINCT store_id) AS duplicate_count FROM store
-    )
-
-    SELECT 
-        table_name, 
-        primary_key, 
-        duplicate_count
-    FROM 
-        duplicate_checks
-    ORDER BY 
-        sort_order;
-
--- OBSERVATIONS:
--- No duplicates in primary key columns.
-
--- 5.4 - Check for nulls across composite keys.
-
-    SELECT 
-        'film_actor' AS table_name, 
-        'actor_id, film_id' AS composite_key,
-        COUNT(*) AS null_count
-    FROM 
-        film_actor
-    WHERE 
-        actor_id IS NULL
-        OR film_id IS NULL
-
-    UNION ALL
-
-    SELECT 
-        'film_category' AS table_name, 
-        'film_id, category_id' AS composite_key,
-        COUNT(*) AS null_count
-    FROM 
-        film_category
-    WHERE 
-        film_id IS NULL
-        OR category_id IS NULL;
-
--- OBSERVATIONS:
--- No nulls across composite keys.
-    
--- 5.5 - Check for duplicates across composite keys.
-
-    SELECT 
-        'film_actor' AS table_name, 
-        'actor_id, film_id' AS composite_key,
-        COUNT(*) - COUNT(DISTINCT actor_id || '-' || film_id) AS duplicate_count
-    FROM 
-        film_actor
-
-    UNION ALL
-
-    SELECT 
-        'film_category' AS table_name, 
-        'film_id, category_id' AS composite_key,
-        COUNT(*) - COUNT(DISTINCT film_id || '-' || category_id) AS duplicate_count
-    FROM 
-        film_category;
-
--- OBSERVATIONS:
--- No duplicates across composite keys.
-
--- ================================================================================
--- 6. Foreign Key Checks
--- ================================================================================
-
--- 6.1 - Check foreign key constraints in the schema.
+-- 5.2 - Foreign Key Discovery.
 
     SELECT
-        t.table_name,
-        CASE 
-            WHEN fk.child_column IS NOT NULL THEN 'Yes'
-            ELSE 'No'
-        END AS foreign_key_exists,
+        fk.child_table AS table_name,
         fk.child_column AS foreign_key_column,
         fk.parent_table,
         fk.parent_column,
-        fk.constraint_name AS foreign_key_constraint
-    FROM 
-        information_schema.tables AS t
-    LEFT JOIN (
+        fk.constraint_name
+    FROM (
         SELECT
             tc.table_name AS child_table,
             kcu.column_name AS child_column,
@@ -339,264 +200,176 @@
             information_schema.table_constraints AS tc
         INNER JOIN 
             information_schema.key_column_usage AS kcu
-        ON 
-            tc.constraint_name = kcu.constraint_name
+            ON tc.constraint_name = kcu.constraint_name
         INNER JOIN 
             information_schema.constraint_column_usage AS ccu
-        ON 
-            tc.constraint_name = ccu.constraint_name
+            ON tc.constraint_name = ccu.constraint_name
         WHERE 
             tc.constraint_type = 'FOREIGN KEY'
             AND tc.table_schema = 'public'
     ) AS fk
-    ON 
-        t.table_name = fk.child_table
-    WHERE 
-        t.table_schema = 'public'
-        AND t.table_type = 'BASE TABLE'
     ORDER BY 
-        t.table_name, fk.child_column;
+        fk.child_table, fk.child_column;
 
 -- OBSERVATIONS:
--- No foreign key constraints exist in the schema.
+-- Foreign keys exist linking transactional tables and their supporting dimension tables.
+-- No constraints for identified for customer.store_id, inventory.store_id, and staff.store_id.
 
--- 6.2 - Check if foreign keys link to valid primary keys in parent tables.
+-- 5.2.1 - Check if all store_id's in customer, inventory, and staff tables exist in store.store_id
 
-    -- TABLE: address
-
-    SELECT 'address' AS table_name, 'city_id' AS secondary_key, COUNT(*) AS missing_key_count FROM address ad
-    LEFT JOIN city ci ON ad.city_id = ci.city_id
-    WHERE ci.city_id IS NULL
-
+    SELECT 'customer' AS table_name, 'store_id' AS foreign_key, COUNT(*) AS orphaned_customers FROM customer
+    LEFT JOIN store ON customer.store_id = store.store_id
+    WHERE store.store_id IS NULL
     UNION ALL
-
-    -- TABLE: city
-
-    SELECT 'city' AS table_name, 'country_id' AS secondary_key, COUNT(*) AS missing_key_count FROM city ci
-    LEFT JOIN country co ON ci.country_id = co.country_id
-    WHERE co.country_id IS NULL
-
+    SELECT 'inventory' AS table_name, 'store_id' AS foreign_key, COUNT(*) AS orphaned_inventory
+    FROM inventory
+    LEFT JOIN store ON inventory.store_id = store.store_id
+    WHERE store.store_id IS NULL
     UNION ALL
-
-    -- TABLE: customer
-
-    SELECT 'customer' AS table_name, 'store_id' AS secondary_key, COUNT(*) AS missing_key_count FROM customer cu
-    LEFT JOIN store st ON cu.store_id = st.store_id
-    WHERE st.store_id IS NULL
-
-    UNION ALL
-
-    SELECT 'customer' AS table_name, 'address_id' AS secondary_key, COUNT(*) AS missing_key_count FROM customer cu
-    LEFT JOIN address ad ON cu.address_id = ad.address_id
-    WHERE ad.address_id IS NULL
-
-    UNION ALL
-
-    -- TABLE: film
-
-    SELECT 'film' AS table_name, 'language_id' AS secondary_key, COUNT(*) AS missing_key_count FROM film fi
-    LEFT JOIN language la ON fi.language_id = la.language_id
-    WHERE la.language_id IS NULL
-
-    UNION ALL
-
-    -- TABLE: film_actor
-
-    SELECT 'film_actor' AS table_name, 'actor_id' AS secondary_key, COUNT(*) AS missing_key_count FROM film_actor fa
-    LEFT JOIN actor ac ON fa.actor_id = ac.actor_id
-    WHERE ac.actor_id IS NULL
-
-    UNION ALL
-
-    SELECT 'film_actor' AS table_name, 'film_id' AS secondary_key, COUNT(*) AS missing_key_count FROM film_actor fa
-    LEFT JOIN film fi ON fa.film_id = fi.film_id
-    WHERE fi.film_id IS NULL
-
-    UNION ALL
-
-    -- TABLE: film_category
-
-    SELECT 'film_category' AS table_name, 'film_id' AS secondary_key, COUNT(*) AS missing_key_count FROM film_category fc
-    LEFT JOIN film fi ON fc.film_id = fi.film_id
-    WHERE fi.film_id IS NULL
-
-    UNION ALL
-
-    SELECT 'film_category' AS table_name, 'category_id' AS secondary_key, COUNT(*) AS missing_key_count FROM film_category fc
-    LEFT JOIN category ca ON fc.category_id = ca.category_id
-    WHERE ca.category_id IS NULL
-
-    UNION ALL
-
-    -- TABLE: inventory
-
-    SELECT 'inventory' AS table_name, 'film_id' AS secondary_key, COUNT(*) AS missing_key_count FROM inventory iv
-    LEFT JOIN film fi ON iv.film_id = fi.film_id
-    WHERE fi.film_id IS NULL
-
-    UNION ALL
-
-    SELECT 'inventory' AS table_name, 'store_id' AS secondary_key, COUNT(*) AS missing_key_count FROM inventory iv
-    LEFT JOIN store st ON iv.store_id = st.store_id
-    WHERE st.store_id IS NULL
-
-    UNION ALL
-
-    -- TABLE: payment
-
-    SELECT 'payment' AS table_name, 'customer_id' AS secondary_key, COUNT(*) AS missing_key_count FROM payment pm
-    LEFT JOIN customer cu ON pm.customer_id = cu.customer_id
-    WHERE cu.customer_id IS NULL
-
-    UNION ALL
-
-    SELECT 'payment' AS table_name, 'staff_id' AS secondary_key, COUNT(*) AS missing_key_count FROM payment pm
-    LEFT JOIN staff sf ON pm.staff_id = sf.staff_id
-    WHERE sf.staff_id IS NULL
-
-    UNION ALL
-
-    SELECT 'payment' AS table_name, 'rental_id' AS secondary_key, COUNT(*) AS missing_key_count FROM payment pm
-    LEFT JOIN rental re ON pm.rental_id = re.rental_id
-    WHERE re.rental_id IS NULL
-
-    UNION ALL
-
-    -- TABLE: rental
-
-    SELECT 'rental' AS table_name, 'inventory_id' AS secondary_key, COUNT(*) AS missing_key_count FROM rental re
-    LEFT JOIN inventory iv ON re.inventory_id = iv.inventory_id
-    WHERE iv.inventory_id IS NULL
-
-    UNION ALL
-
-    SELECT 'rental' AS table_name, 'customer_id' AS secondary_key, COUNT(*) AS missing_key_count FROM rental re
-    LEFT JOIN customer cu ON re.customer_id = cu.customer_id
-    WHERE cu.customer_id IS NULL
-
-    UNION ALL
-
-    SELECT 'rental' AS table_name, 'staff_id' AS secondary_key, COUNT(*) AS missing_key_count FROM rental re
-    LEFT JOIN staff sf ON re.staff_id = sf.staff_id
-    WHERE sf.staff_id IS NULL
-
-    UNION ALL
-
-    -- TABLE: staff
-
-    SELECT 'staff' AS table_name, 'address_id' AS secondary_key, COUNT(*) AS missing_key_count FROM staff sf
-    LEFT JOIN address ad ON sf.address_id = ad.address_id
-    WHERE ad.address_id IS NULL
-
-    UNION ALL
-
-    SELECT 'staff' AS table_name, 'store_id' AS secondary_key, COUNT(*) AS missing_key_count FROM staff sf
-    LEFT JOIN store st ON sf.store_id = st.store_id
-    WHERE st.store_id IS NULL
-
-    UNION ALL
-
-    -- TABLE: store
-
-    SELECT 'store' AS table_name, 'manager_staff_id' AS secondary_key, COUNT(*) AS missing_key_count FROM store st
-    LEFT JOIN staff sf ON st.manager_staff_id = sf.staff_id
-    WHERE sf.staff_id IS NULL
-
-    UNION ALL
-
-    SELECT 'store' AS table_name, 'address_id' AS secondary_key, COUNT(*) AS missing_key_count FROM store st
-    LEFT JOIN address ad ON st.address_id = ad.address_id
-    WHERE ad.address_id IS NULL
-
-    ORDER BY table_name;
+    SELECT 'staff' AS table_name, 'store_id' AS foreign_key, COUNT(*) AS orphaned_staff
+    FROM staff
+    LEFT JOIN store ON staff.store_id = store.store_id
+    WHERE store.store_id IS NULL;
 
 -- OBSERVATIONS:
--- All foreign keys link to valid primary keys in parent tables.
+-- All store_id's in customer, inventory, and staff tables exist in store.store_id.
+
+-- 5.3 - Not Null Constraint Discovery.
+
+    SELECT 
+        table_name,
+        column_name,
+        is_nullable
+    FROM 
+        information_schema.columns
+    WHERE 
+        table_schema = 'public'
+       -- AND is_nullable = 'YES' 
+    ORDER BY 
+        table_name, column_name;
+
+-- OBSERVATIONS:
+-- 14 variables allowing NULLs to be taken forward for NULL checks. Refer 6.1.
+
+-- 5.4 - Unique Constraint Discovery.
+
+    SELECT 
+        tc.table_name, 
+        kcu.column_name, 
+        tc.constraint_name
+    FROM 
+        information_schema.table_constraints AS tc
+    JOIN 
+        information_schema.key_column_usage AS kcu
+        ON tc.constraint_name = kcu.constraint_name
+    WHERE 
+        tc.constraint_type = 'UNIQUE'
+        AND tc.table_schema = 'public'
+    ORDER BY 
+        tc.table_name, kcu.column_name;
+
+-- OBSERVATIONS:
+-- No UNIQUE constraints identified. 
+-- Fields expected to contain unique values e.g. category.name, staff.password may contain duplicates.
+
+-- 5.5 - Default Value Discovery.
+
+    SELECT 
+        table_name,
+        column_name,
+        column_default
+    FROM 
+        information_schema.columns
+    WHERE 
+        table_schema = 'public'
+    AND column_default IS NOT NULL
+    ORDER BY 
+        column_default;
+        
+-- OBSERVATIONS:
+-- Defaults set at possible minimum values for film.replacement_cost, film.rental_duration, film.rental_rate.
+-- Deafult set at 'G' for film.rating. Refer 5.6.
+-- All primary keys default to the next available number.
+-- All last_update variables default to current date, time and time zone.
+-- create_date default to current date.
+-- Boolean values default to true.
+
+-- 5.6 - Enumerated / Domain Constraint Discovery.
+
+    SELECT 
+        n.nspname AS schema_name,
+        t.typname AS enum_type,
+        e.enumlabel AS enum_value
+    FROM 
+        pg_type t 
+    JOIN 
+        pg_enum e 
+        ON t.oid = e.enumtypid
+    JOIN 
+        pg_catalog.pg_namespace n 
+        ON n.oid = t.typnamespace
+    ORDER BY 
+        enum_type, enum_value;
+        
+-- OBSERVATIONS:
+-- Enumerated constraints exist.
+
+-- 5.6.1 - Enumerated / Domain Constraint Mapping to Columns.
+
+    SELECT 
+        table_name,
+        column_name,
+        data_type,
+        udt_name
+    FROM 
+        information_schema.columns
+    WHERE 
+        table_schema = 'public'
+    AND data_type = 'USER-DEFINED'
+    ORDER BY 
+        table_name, column_name;
+
+-- OBSERVATIONS:
+-- Enumerated constraints applies to the film.rating column. 
+
+-- 5.7 - Check Constraint (Business Rules) Discovery.
+
+    SELECT 
+        tc.table_name, 
+        cc.check_clause
+    FROM 
+        information_schema.table_constraints AS tc
+    JOIN 
+        information_schema.check_constraints AS cc
+        ON tc.constraint_name = cc.constraint_name
+    WHERE 
+        tc.constraint_type = 'CHECK'
+        AND tc.table_schema = 'public'
+    ORDER BY 
+        tc.table_name;
+
+-- OBSERVATIONS:
+-- 72 fields enforce NOT NULL conditions through CHECK constraints in line with the NOT NULL constraints already identified.
+-- No other business rules (e.g., value range restrictions) are enforced through CHECK constraints.
 
 -- ================================================================================
--- 7. Missing Data Checks (Key Variables)
+-- 6. Missing Data Checks
 -- ================================================================================
 
--- 7.1 - Check forr nulls in all variables across all tables.
+-- 6.1 - Check forr nulls across 14 variables without constraints.
 
     WITH null_check AS (
 
-        -- TABLE: actor
-
-        SELECT 'actor' AS table_name, 'actor_id' AS column_name, COUNT(*) AS null_count FROM actor WHERE actor_id IS NULL
-        UNION ALL
-        SELECT 'actor' AS table_name, 'first_name' AS column_name, COUNT(*) AS null_count FROM actor WHERE first_name IS NULL
-        UNION ALL
-        SELECT 'actor' AS table_name, 'last_name' AS column_name, COUNT(*) AS null_count FROM actor WHERE last_name IS NULL
-        UNION ALL
-        SELECT 'actor' AS table_name, 'last_update' AS column_name, COUNT(*) AS null_count FROM actor WHERE last_update IS NULL
-
         -- TABLE: address
 
-        UNION ALL
-        SELECT 'address' AS table_name, 'address_id' AS column_name, COUNT(*) AS null_count FROM address WHERE address_id IS NULL
-        UNION ALL
-        SELECT 'address' AS table_name, 'address' AS column_name, COUNT(*) AS null_count FROM address WHERE address IS NULL
-        UNION ALL
         SELECT 'address' AS table_name, 'address2' AS column_name, COUNT(*) AS null_count FROM address WHERE address2 IS NULL
         UNION ALL
-        SELECT 'address' AS table_name, 'district' AS column_name, COUNT(*) AS null_count FROM address WHERE district IS NULL
-        UNION ALL
-        SELECT 'address' AS table_name, 'city_id' AS column_name, COUNT(*) AS null_count FROM address WHERE city_id IS NULL
-        UNION ALL
         SELECT 'address' AS table_name, 'postal_code' AS column_name, COUNT(*) AS null_count FROM address WHERE postal_code IS NULL
-        UNION ALL
-        SELECT 'address' AS table_name, 'phone' AS column_name, COUNT(*) AS null_count FROM address WHERE phone IS NULL
-        UNION ALL
-        SELECT 'address' AS table_name, 'last_update' AS column_name, COUNT(*) AS null_count FROM address WHERE last_update IS NULL
-
-        -- TABLE: category
-
-        UNION ALL
-        SELECT 'category' AS table_name, 'category_id' AS column_name, COUNT(*) AS null_count FROM category WHERE category_id IS NULL
-        UNION ALL
-        SELECT 'category' AS table_name, 'name' AS column_name, COUNT(*) AS null_count FROM category WHERE name IS NULL
-        UNION ALL
-        SELECT 'category' AS table_name, 'last_update' AS column_name, COUNT(*) AS null_count FROM category WHERE last_update IS NULL
-
-        -- TABLE: city
-
-        UNION ALL
-        SELECT 'city' AS table_name, 'city_id' AS column_name, COUNT(*) AS null_count FROM city WHERE city_id IS NULL
-        UNION ALL
-        SELECT 'city' AS table_name, 'city' AS column_name, COUNT(*) AS null_count FROM city WHERE city IS NULL
-        UNION ALL
-        SELECT 'city' AS table_name, 'country_id' AS column_name, COUNT(*) AS null_count FROM city WHERE country_id IS NULL
-        UNION ALL
-        SELECT 'city' AS table_name, 'last_update' AS column_name, COUNT(*) AS null_count FROM city WHERE last_update IS NULL
-
-        -- TABLE: country
-
-        UNION ALL
-        SELECT 'country' AS table_name, 'country_id' AS column_name, COUNT(*) AS null_count FROM country WHERE country_id IS NULL
-        UNION ALL
-        SELECT 'country' AS table_name, 'country' AS column_name, COUNT(*) AS null_count FROM country WHERE country IS NULL
-        UNION ALL
-        SELECT 'country' AS table_name, 'last_update' AS column_name, COUNT(*) AS null_count FROM country WHERE last_update IS NULL
 
         -- TABLE: customer
 
         UNION ALL
-        SELECT 'customer' AS table_name, 'customer_id' AS column_name, COUNT(*) AS null_count FROM customer WHERE customer_id IS NULL
-        UNION ALL
-        SELECT 'customer' AS table_name, 'store_id' AS column_name, COUNT(*) AS null_count FROM customer WHERE store_id IS NULL
-        UNION ALL
-        SELECT 'customer' AS table_name, 'first_name' AS column_name, COUNT(*) AS null_count FROM customer WHERE first_name IS NULL
-        UNION ALL
-        SELECT 'customer' AS table_name, 'last_name' AS column_name, COUNT(*) AS null_count FROM customer WHERE last_name IS NULL
-        UNION ALL
         SELECT 'customer' AS table_name, 'email' AS column_name, COUNT(*) AS null_count FROM customer WHERE email IS NULL
-        UNION ALL
-        SELECT 'customer' AS table_name, 'address_id' AS column_name, COUNT(*) AS null_count FROM customer WHERE address_id IS NULL
-        UNION ALL
-        SELECT 'customer' AS table_name, 'activebool' AS column_name, COUNT(*) AS null_count FROM customer WHERE activebool IS NULL
-        UNION ALL
-        SELECT 'customer' AS table_name, 'create_date' AS column_name, COUNT(*) AS null_count FROM customer WHERE create_date IS NULL
         UNION ALL
         SELECT 'customer' AS table_name, 'last_update' AS column_name, COUNT(*) AS null_count FROM customer WHERE last_update IS NULL
         UNION ALL
@@ -605,137 +378,30 @@
         -- TABLE: film
 
         UNION ALL
-        SELECT 'film' AS table_name, 'film_id' AS column_name, COUNT(*) AS null_count FROM film WHERE film_id IS NULL
-        UNION ALL
-        SELECT 'film' AS table_name, 'title' AS column_name, COUNT(*) AS null_count FROM film WHERE title IS NULL
-        UNION ALL
         SELECT 'film' AS table_name, 'description' AS column_name, COUNT(*) AS null_count FROM film WHERE description IS NULL
         UNION ALL
         SELECT 'film' AS table_name, 'release_year' AS column_name, COUNT(*) AS null_count FROM film WHERE release_year IS NULL
         UNION ALL
-        SELECT 'film' AS table_name, 'language_id' AS column_name, COUNT(*) AS null_count FROM film WHERE language_id IS NULL
-        UNION ALL
-        SELECT 'film' AS table_name, 'rental_duration' AS column_name, COUNT(*) AS null_count FROM film WHERE rental_duration IS NULL
-        UNION ALL
-        SELECT 'film' AS table_name, 'rental_rate' AS column_name, COUNT(*) AS null_count FROM film WHERE rental_rate IS NULL
-        UNION ALL
         SELECT 'film' AS table_name, 'length' AS column_name, COUNT(*) AS null_count FROM film WHERE length IS NULL
-        UNION ALL
-        SELECT 'film' AS table_name, 'replacement_cost' AS column_name, COUNT(*) AS null_count FROM film WHERE replacement_cost IS NULL
         UNION ALL
         SELECT 'film' AS table_name, 'rating' AS column_name, COUNT(*) AS null_count FROM film WHERE rating IS NULL
         UNION ALL
-        SELECT 'film' AS table_name, 'last_update' AS column_name, COUNT(*) AS null_count FROM film WHERE last_update IS NULL
-        UNION ALL
         SELECT 'film' AS table_name, 'special_features' AS column_name, COUNT(*) AS null_count FROM film WHERE special_features IS NULL
-        UNION ALL
-        SELECT 'film' AS table_name, 'fulltext' AS column_name, COUNT(*) AS null_count FROM film WHERE fulltext IS NULL
-
-        -- TABLE: film_actor
-
-        UNION ALL
-        SELECT 'film_actor' AS table_name, 'actor_id' AS column_name, COUNT(*) AS null_count FROM film_actor WHERE actor_id IS NULL
-        UNION ALL
-        SELECT 'film_actor' AS table_name, 'film_id' AS column_name, COUNT(*) AS null_count FROM film_actor WHERE film_id IS NULL
-        UNION ALL
-        SELECT 'film_actor' AS table_name, 'last_update' AS column_name, COUNT(*) AS missing_count FROM film_actor WHERE last_update IS NULL
-
-        -- TABLE: film_category
-
-        UNION ALL
-        SELECT 'film_category' AS table_name, 'film_id' AS column_name, COUNT(*) AS null_count FROM film_category WHERE film_id IS NULL
-        UNION ALL
-        SELECT 'film_category' AS table_name, 'category_id' AS column_name, COUNT(*) AS null_count FROM film_category WHERE category_id IS NULL
-        UNION ALL
-        SELECT 'film_category' AS table_name, 'last_update' AS column_name, COUNT(*) AS null_count FROM film_category WHERE last_update IS NULL
-
-        -- TABLE: inventory
-
-        UNION ALL
-        SELECT 'inventory' AS table_name, 'inventory_id' AS column_name, COUNT(*) AS null_count FROM inventory WHERE inventory_id IS NULL
-        UNION ALL
-        SELECT 'inventory' AS table_name, 'film_id' AS column_name, COUNT(*) AS null_count FROM inventory WHERE film_id IS NULL
-        UNION ALL
-        SELECT 'inventory' AS table_name, 'store_id' AS column_name, COUNT(*) AS null_count FROM inventory WHERE store_id IS NULL
-        UNION ALL
-        SELECT 'inventory' AS table_name, 'last_update' AS column_name, COUNT(*) AS null_count FROM inventory WHERE last_update IS NULL
-
-        -- TABLE: language
-
-        UNION ALL
-        SELECT 'language' AS table_name, 'language_id' AS column_name, COUNT(*) AS null_count FROM language WHERE language_id IS NULL
-        UNION ALL
-        SELECT 'language' AS table_name, 'name' AS column_name, COUNT(*) AS null_count FROM language WHERE name IS NULL
-        UNION ALL
-        SELECT 'language' AS table_name, 'last_update' AS column_name, COUNT(*) AS null_count FROM language WHERE last_update IS NULL
-
-        -- TABLE: payment
-
-        UNION ALL
-        SELECT 'payment' AS table_name, 'payment_id' AS column_name, COUNT(*) AS null_count FROM payment WHERE payment_id IS NULL
-        UNION ALL
-        SELECT 'payment' AS table_name, 'customer_id' AS column_name, COUNT(*) AS null_count FROM payment WHERE customer_id IS NULL
-        UNION ALL
-        SELECT 'payment' AS table_name, 'staff_id' AS column_name, COUNT(*) AS null_count FROM payment WHERE staff_id IS NULL
-        UNION ALL
-        SELECT 'payment' AS table_name, 'rental_id' AS column_name, COUNT(*) AS null_count FROM payment WHERE rental_id IS NULL
-        UNION ALL
-        SELECT 'payment' AS table_name, 'amount' AS column_name, COUNT(*) AS null_count FROM payment WHERE amount IS NULL
-        UNION ALL
-        SELECT 'payment' AS table_name, 'payment_date' AS column_name, COUNT(*) AS null_count FROM payment WHERE payment_date IS NULL
 
         -- TABLE: rental
 
         UNION ALL
-        SELECT 'rental' AS table_name, 'rental_id' AS column_name, COUNT(*) AS null_count FROM rental WHERE rental_id IS NULL
-        UNION ALL
-        SELECT 'rental' AS table_name, 'rental_date' AS column_name, COUNT(*) AS null_count FROM rental WHERE rental_date IS NULL
-        UNION ALL
-        SELECT 'rental' AS table_name, 'inventory_id' AS column_name, COUNT(*) AS null_count FROM rental WHERE inventory_id IS NULL
-        UNION ALL
-        SELECT 'rental' AS table_name, 'customer_id' AS column_name, COUNT(*) AS null_count FROM rental WHERE customer_id IS NULL
-        UNION ALL
         SELECT 'rental' AS table_name, 'return_date' AS column_name, COUNT(*) AS null_count FROM rental WHERE return_date IS NULL
-        UNION ALL
-        SELECT 'rental' AS table_name, 'staff_id' AS column_name, COUNT(*) AS null_count FROM rental WHERE staff_id IS NULL
-        UNION ALL
-        SELECT 'rental' AS table_name, 'last_update' AS column_name, COUNT(*) AS null_count FROM rental WHERE last_update IS NULL
 
         -- TABLE: staff
 
         UNION ALL
-        SELECT 'staff' AS table_name, 'staff_id' AS column_name, COUNT(*) AS null_count FROM staff WHERE staff_id IS NULL
-        UNION ALL
-        SELECT 'staff' AS table_name, 'first_name' AS column_name, COUNT(*) AS null_count FROM staff WHERE first_name IS NULL
-        UNION ALL
-        SELECT 'staff' AS table_name, 'last_name' AS column_name, COUNT(*) AS null_count FROM staff WHERE last_name IS NULL
-        UNION ALL
-        SELECT 'staff' AS table_name, 'address_id' AS column_name, COUNT(*) AS null_count FROM staff WHERE address_id IS NULL
-        UNION ALL
         SELECT 'staff' AS table_name, 'email' AS column_name, COUNT(*) AS null_count FROM staff WHERE email IS NULL
-        UNION ALL
-        SELECT 'staff' AS table_name, 'store_id' AS column_name, COUNT(*) AS null_count FROM staff WHERE store_id IS NULL
-        UNION ALL
-        SELECT 'staff' AS table_name, 'active' AS column_name, COUNT(*) AS null_count FROM staff WHERE active IS NULL
-        UNION ALL
-        SELECT 'staff' AS table_name, 'username' AS column_name, COUNT(*) AS null_count FROM staff WHERE username IS NULL
         UNION ALL
         SELECT 'staff' AS table_name, 'password' AS column_name, COUNT(*) AS null_count FROM staff WHERE password IS NULL
         UNION ALL
-        SELECT 'staff' AS table_name, 'last_update' AS column_name, COUNT(*) AS null_count FROM staff WHERE last_update IS NULL
-        UNION ALL
         SELECT 'staff' AS table_name, 'picture' AS column_name, COUNT(*) AS null_count FROM staff WHERE picture IS NULL
 
-        -- TABLE: store
-
-        UNION ALL
-        SELECT 'store' AS table_name, 'store_id' AS column_name, COUNT(*) AS null_count FROM store WHERE store_id IS NULL
-        UNION ALL
-        SELECT 'store' AS table_name, 'manager_staff_id' AS column_name, COUNT(*) AS null_count FROM store WHERE manager_staff_id IS NULL
-        UNION ALL
-        SELECT 'store' AS table_name, 'address_id' AS column_name, COUNT(*) AS null_count FROM store WHERE address_id IS NULL
-        UNION ALL
-        SELECT 'store' AS table_name, 'last_update' AS column_name, COUNT(*) AS null_count FROM store WHERE last_update IS NULL
         )
         SELECT *
         FROM null_check
@@ -744,10 +410,10 @@
 
 -- OBSERVATIONS:
 -- address.address2 - 4 nulls.
--- rental.return_date - 183 nulls - > key variable!
+-- rental.return_date - 183 nulls.
 -- staff.picture - 1 nulls.
 
--- 7.3 - Check for missing values across variables with character-based data types.
+-- 6.3 - Check for missing values across variables with character-based data types.
 
     WITH missing_check AS (
 
@@ -856,10 +522,10 @@
 -- address.postal_code - 4 missing values.
     
 -- ================================================================================
--- 8. Duplicates Checks
+-- 7. Duplicates Checks
 -- ================================================================================
 
--- 8.1 - Combined duplicate counts across key tables.
+-- 7.1 - Combined duplicate counts across key tables.
 
     SELECT 'actor' AS table_name, COUNT(*) AS duplicate_count
     FROM (
@@ -995,7 +661,7 @@
 -- actor table - 1 duplicate records!
 -- inventory table - 1521 duplicate records!
 
--- 8.2.1 - View duplicate records: actor table.
+-- 7.2.1 - View duplicate records: actor table.
 
     SELECT *
     FROM actor
@@ -1015,7 +681,7 @@
 -- OBSERVATIONS:
 -- 1 record flagged for cleaning!
 
--- 8.2.1 - View duplciate records: inventory table.
+-- 7.2.1 - View duplciate records: inventory table.
 
     SELECT *
     FROM inventory
@@ -1036,50 +702,11 @@
 -- OBSERVATIONS:
 -- More than one title per store - > expected.
 
--- 8.3 - Create a clean view of actor table.
-
-    CREATE OR REPLACE VIEW clean_actor AS
-    SELECT *
-    FROM actor
-    WHERE actor_id NOT IN (
-        SELECT actor_id
-        FROM (
-            SELECT actor_id,
-                ROW_NUMBER() OVER (PARTITION BY first_name, last_name ORDER BY actor_id) AS rn
-            FROM actor
-        ) AS numbered
-        WHERE rn > 1
-    );
-
--- OBSERVATIONS:
--- Table successfully created.
-
--- 8.4.1 - Validation Check: Row counts actor vs clean_actor
-
-    SELECT 'actor' AS table_name, COUNT(*) AS row_count FROM actor;
-    SELECT 'clean_actor' AS table_name, COUNT(*) AS row_count FROM clean_actor;
-
--- OBSERVATIONS:
--- One duplicate record successfully removed.
-
--- 8.4.2 - Confirm no duplicates in clean-actor view.
-
-    SELECT 'clean_actor' AS table_name, COUNT(*) AS duplicate_count
-    FROM (
-        SELECT first_name, last_name
-        FROM clean_actor
-        GROUP BY first_name, last_name
-        HAVING COUNT(*) > 1
-    ) AS dup;
-
--- OBSERVATIONS:
--- Duplciate successfully removed from clean_actor VIEW.
-
 -- ===============================================================================
--- 9. Distinct Value Counts
+-- 8. Distinct Value Counts
 -- ===============================================================================
 
--- 9.1 - Check the number of distinct values per variable across all tables.
+-- 8.1 - Check the number of distinct values per variable across all tables.
 
     -- TABLE: actor
 
@@ -1285,85 +912,85 @@
 
 -- OBSERVATIONS:
 -- actor table
-    -- 200 actors with shared or missing names.
-    -- All records updated on the same date.
+-- 200 actors with shared or missing names.
+-- All records updated on the same date.
 
 -- address table
-    -- 603 address with 4 missing cities - > store & staff?.
-    -- All records updated on the same date.
+-- 603 address with 4 missing cities - > store & staff?.
+-- All records updated on the same date.
 
 -- category table
-    -- 16 categories.
-    -- All records updated on the same date.
+-- 16 categories.
+-- All records updated on the same date.
 
 -- city table
-    -- 600 ids & 599 cities - > 1 missing?.
-    -- All records updated on the same date.
+-- 600 ids & 599 cities - > 1 missing?.
+-- All records updated on the same date.
 
 -- country table
-    -- 109 countries.
-    -- All records updated on the same date.
+-- 109 countries.
+-- All records updated on the same date.
 
 -- customer table
-    -- 599 customers across 2 stores with 1 value in activebool - > all active?
-    -- Two values in active with type integer - unreliable?
-    -- All records created and updated on the same date
+-- 599 customers across 2 stores with 1 value in activebool - > all active?
+-- Two values in active with type integer - unreliable?
+-- All records created and updated on the same date
 
 -- film table
-    -- 1000 titles with 5 ratings released in the same year in one language.
-    -- 5 standardised renting periods?
-    -- 3 standardised rates.
-    -- 21 cost prices. 
-    -- All records updated on the same date.
+-- 1000 titles with 5 ratings released in the same year in one language.
+-- 5 standardised renting periods?
+-- 3 standardised rates.
+-- 21 cost prices. 
+-- All records updated on the same date.
 
 -- film_actor table
-    -- Combination of all 200 actors across only 997 film titles - > missing information for 3 titles?.
-    -- All records updated on the same date.
+-- Combination of all 200 actors across only 997 film titles - > missing information for 3 titles?.
+-- All records updated on the same date.
 
 -- film_category table
-    -- Combination of all 1000 film titles across all 16 categories.
-    -- All records updated on the same date.
+-- Combination of all 1000 film titles across all 16 categories.
+-- All records updated on the same date.
 
 -- inventory table
-    -- 4581 copies of only 958 titles across two stores - > film table contains old titles?.
-    -- All records updated on the same date.
+-- 4581 copies of only 958 titles across two stores - > film table contains old titles?.
+-- All records updated on the same date.
 
 -- language table
-    -- 6 languages
-    -- All records updated on the same date.
+-- 6 languages
+-- All records updated on the same date.
 
 -- payment table
-    -- 14596 payments made across 14592 rental ids - > 4 split payments?.
-    -- 14365 payment dates/times - > high number due to timestamp.
-    -- 19 different amounts - > standardised rates & number of videos allowed.
-    -- All transactions processed by one of 2 staff members.
-    -- All customers (599) made payments in the period.
+-- 14596 payments made across 14592 rental ids - > 4 split payments?.
+-- 14365 payment dates/times - > high number due to timestamp.
+-- 19 different amounts - > standardised rates & number of videos allowed.
+-- All transactions processed by one of 2 staff members.
+-- All customers (599) made payments in the period.
 
 -- rental table
-    -- 16044 rental ids - > less payments due to outstanding returns?
-    -- 15815 rental dates/times - > high number due to timestamp.
-    -- 15836 return dates/times - > high number due to timestamp.
-    -- All transactions processed by one of 2 staff members.
-    -- 4580 out of 458§ copies in inventory were rented out.
-    -- All customers (599) rented videos in the period.
-    -- All records updated across 3 dates.
+-- 16044 rental ids - > less payments due to outstanding returns?
+-- 15815 rental dates/times - > high number due to timestamp.
+-- 15836 return dates/times - > high number due to timestamp.
+-- All transactions processed by one of 2 staff members.
+-- 4580 out of 458§ copies in inventory were rented out.
+-- All customers (599) rented videos in the period.
+-- All records updated across 3 dates.
 
 -- staff table
-    -- 2 staff members with distinct names, addresses and emails working at both stores.
-    -- 2 usernames but one password!
-    -- Only one in active variable - > both active?
-    -- Only one staff member uploaded a picture.
-    -- All records updated on the same date.
+-- 2 staff members with distinct names, addresses and emails working at both stores.
+-- 2 usernames but one password!
+-- Only one in active variable - > both active?
+-- Only one staff member uploaded a picture.
+-- All records updated on the same date.
 
 -- store table
-    -- 2 stores with 2 managers at 2 locations.
-    -- All records updated on the same date.
+-- 2 stores with 2 managers at 2 locations.
+-- All records updated on the same date.
 
 -- ================================================================================
--- 10. Frequency Distributions
+-- 9. Frequency Distributions
 -- ================================================================================
 
--- 10.1 - Check the frequency distribution of key categorical variables.
+-- 9.1 - Check the frequency distribution of key categorical variables.
 
     -- TABLE:  actor
 
@@ -1568,12 +1195,11 @@
 -- customer.active - 1 x 584 & 0 x 15 unexpected type and inconsistent - > consider unreliable.
 -- staff.active - both staff members are active.
 
-
 -- ================================================================================
--- 11. Descriptive Statistics (Numeric Variables)
+-- 10. Descriptive Statistics (Numeric Variables)
 -- ================================================================================
 
--- 11.1 - Summary statistics and distributions of numeric variables.
+-- 10.1 - Summary statistics and distributions of numeric variables.
 
     SELECT 
         'film' AS table_name,
@@ -1700,10 +1326,10 @@
     -- Standard deviation - > 2,37.
     
 -- ================================================================================
--- 12. Temporal Checks
+-- 11. Temporal Checks
 -- ================================================================================
 
--- 12.1 - Validate 'last_update' and 'create_date' fields across all tables
+-- 11.1 - Validate 'last_update' and 'create_date' fields across all tables
 
     SELECT 'actor' AS table_name, 'last_update' AS column_name, COUNT(DISTINCT last_update) AS distinct_dates, MIN(last_update) AS min_date, MAX(last_update) AS max_date FROM actor
     UNION ALL
@@ -1740,7 +1366,7 @@
 -- All returned 1 single date except for rental.last_update.
 -- Database created on one date with minor updates?
 
--- 12.2 - Temporal analysis of key event date or timestamp fields
+-- 11.2 - Temporal analysis of key event date or timestamp fields
 
     SELECT
         'payment' AS table_name, 
@@ -1767,11 +1393,11 @@
     FROM rental;
 
 -- OBSERVATIONS:
--- 15815 retnal dates
+-- 15815 rental dates
 -- 15836 return dates
 -- 14365 payment_dates
 
--- 12.3 - Temporal analysis of numeric date fields
+-- 11.3 - Temporal analysis of numeric date fields
 
     SELECT
         'film' AS table_name, 
@@ -1784,7 +1410,7 @@
 -- OBSERVATIONS:
 -- 1 release year = 2006
 
--- 12.4 - Frequency distribution of key date or timestamp fields
+-- 11.4 - Frequency distribution of key date or timestamp fields
 
     SELECT 
         'rental' AS table_name,
@@ -1817,7 +1443,7 @@
 -- payment-date also show intermittant dips in frequency but at less regular intervals ranging between 5 and 10 days.
 
 -- ================================================================================
--- 13. Logic and Dependency Checks
+-- 12. Logic and Dependency Checks
 -- ================================================================================
 
 -- 1. Check that every payment links to an existing rental
@@ -1860,18 +1486,56 @@ FROM rental
 WHERE rental_date > NOW();
 
 
+
+
+
+
 -- Results columns with 'valid"/"invalid"
 -- error summary tables
 
--- Did not create wrangling views - explored the whole database for learning purposes. 
-SELECT * FROM actor_info limit 10;
-SELECT * FROM clean_actor limit 10;
-SELECT * FROM customer_cleaned limit 10;
-SELECT * FROM customer_list limit 10;
-SELECT * FROM film_list limit 10;
-SELECT * FROM nicer_but_slower_film_list limit 10;
-SELECT * FROM payment_share limit 10;
-SELECT * FROM sales_by_film_category limit 10;
-SELECT * FROM sales_by_store limit 10;
-SELECT * FROM staff_list limit 10;
 
+
+
+-- ================================================================================
+-- 13. Cleaning 
+-- ================================================================================
+
+
+-- 7.3 - Create a clean view of actor table.
+
+    CREATE OR REPLACE VIEW clean_actor AS
+    SELECT *
+    FROM actor
+    WHERE actor_id NOT IN (
+        SELECT actor_id
+        FROM (
+            SELECT actor_id,
+                ROW_NUMBER() OVER (PARTITION BY first_name, last_name ORDER BY actor_id) AS rn
+            FROM actor
+        ) AS numbered
+        WHERE rn > 1
+    );
+
+-- OBSERVATIONS:
+-- Table successfully created.
+
+-- 7.4.1 - Validation Check: Row counts actor vs clean_actor
+
+    SELECT 'actor' AS table_name, COUNT(*) AS row_count FROM actor;
+    SELECT 'clean_actor' AS table_name, COUNT(*) AS row_count FROM clean_actor;
+
+-- OBSERVATIONS:
+-- One duplicate record successfully removed.
+
+-- 7.4.2 - Confirm no duplicates in clean-actor view.
+
+    SELECT 'clean_actor' AS table_name, COUNT(*) AS duplicate_count
+    FROM (
+        SELECT first_name, last_name
+        FROM clean_actor
+        GROUP BY first_name, last_name
+        HAVING COUNT(*) > 1
+    ) AS dup;
+
+-- OBSERVATIONS:
+-- Duplciate successfully removed from clean_actor VIEW.
