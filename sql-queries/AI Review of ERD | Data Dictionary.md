@@ -1,3 +1,77 @@
+Your SQL script for data profiling, cleaning, and exploratory data analysis (EDA) on the Rockbuster dataset is comprehensive and logically structured. Here's a breakdown of the steps and some observations:
+
+### 1. Overview of Tables
+- **Objective**: Understand the structure of the database.
+- **Observation**: You've listed all tables in the public schema, which is a good starting point.
+
+### 2. Row Counts per Table
+- **Objective**: Check the size of each table.
+- **Observation**: You've counted rows in each table, identifying transactional tables with high volumes, which is useful for understanding data distribution.
+
+### 3. Sample Rows
+- **Objective**: Get a feel for the data.
+- **Observation**: You've sampled rows from each table, noting null values and potential redundancies, which is crucial for initial data understanding.
+
+### 4. Data Type Validation
+- **Objective**: Ensure data types are appropriate.
+- **Observation**: You've checked data types and noted inconsistencies, such as boolean vs. integer for active flags, which is important for data integrity.
+
+### 5. Constraint Checks
+- **Objective**: Understand the constraints in the database.
+- **Observation**: You've checked for primary keys, foreign keys, not null constraints, unique constraints, default values, and enumerated constraints. This is essential for understanding data relationships and integrity.
+
+### 6. Missing Data Checks
+- **Objective**: Identify missing data.
+- **Observation**: You've checked for nulls and missing values, noting specific columns with issues, which is critical for data quality.
+
+### 7. Duplicates Checks
+- **Objective**: Identify duplicate records.
+- **Observation**: You've checked for duplicates, noting some in the actor and inventory tables, which is important for data accuracy.
+
+### 8. Distinct Value Counts
+- **Objective**: Understand the uniqueness of data.
+- **Observation**: You've counted distinct values, providing insights into data diversity and potential issues.
+
+### 9. Frequency Distributions
+- **Objective**: Understand the distribution of categorical data.
+- **Observation**: You've analyzed frequency distributions, noting patterns and anomalies, which is useful for understanding data characteristics.
+
+### 10. Descriptive Statistics
+- **Objective**: Summarize numeric data.
+- **Observation**: You've calculated statistics for numeric variables, providing insights into central tendency and variability.
+
+### 11. Temporal Checks
+- **Objective**: Validate temporal data.
+- **Observation**: You've checked date fields, noting patterns and potential issues, which is important for time-series analysis.
+
+### 12. Logic and Dependency Checks
+- **Objective**: Ensure logical consistency.
+- **Observation**: This step is not explicitly detailed in your script but is crucial for ensuring data makes sense in a business context.
+
+### 13. Addressing Business Questions
+- **Objective**: Use the cleaned data to answer business questions.
+- **Observation**: This step is not detailed in your script but is the ultimate goal of your data cleaning and EDA process.
+
+### Overall Flow
+Your script follows a logical flow from understanding the structure and content of the data to checking for integrity, quality, and exploring the data. Each step builds on the previous one, ensuring a thorough understanding and cleaning of the data.
+
+### Suggestions for Improvement
+1. **Documentation**: Add more detailed comments explaining the purpose of each query and the insights gained.
+2. **Automation**: Consider automating repetitive checks, such as missing data and duplicates, using scripts or functions.
+3. **Visualization**: Incorporate data visualization to better understand distributions and relationships.
+4. **Business Logic**: Include more detailed logic and dependency checks to ensure the data makes sense in a business context.
+5. **Business Questions**: Clearly define and address the business questions you aim to answer with the cleaned data.
+
+Overall, your script is well-structured and covers the essential steps for data cleaning and EDA.
+
+
+
+
+
+
+
+
+
 # Request
 
 I am working on an SQL analytics project using a dataset provided through CareerFoundry as part of their Data Analytics programme. The original dataset appears to have been created as a training set for PostgreSQL users for a fictional video game store called Rockbuster. There are many open source projects that used this particular data source. My project goal was to create an ERD and draw up a Data Dictionary, and then to answer 5 ad-hoc business questions posed by the board of directors and present them with the results. 
