@@ -1,0 +1,16 @@
+table_name,primary_key_columns,constraint_name
+actor,actor_id,actor_pkey
+address,address_id,address_pkey
+category,category_id,category_pkey
+city,city_id,city_pkey
+country,country_id,country_pkey
+customer,customer_id,customer_pkey
+film,film_id,film_pkey
+film_actor,"actor_id, film_id",film_actor_pkey
+film_category,"film_id, category_id",film_category_pkey
+inventory,inventory_id,inventory_pkey
+language,language_id,language_pkey
+payment,payment_id,payment_pkey
+rental,rental_id,rental_pkey
+staff,staff_id,staff_pkey
+store,store_id,store_pkey

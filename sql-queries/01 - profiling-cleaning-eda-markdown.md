@@ -1,64 +1,87 @@
 # Profiling, Cleaning and EDA
 
+Comprehensive profiling, validation of integrity & quality, and cleaning of the Rockbuster Stealth database.
 
-# Acknowledgements
+## 📁 Deliverables
 
-Assistance received from OpenAI's ChatGPT on schema querying and selected SQL structuring. Final queries reviewed and finalised by the analyst.
-
-
-Comprehensive data profiling, structural validation, and basic exploration of the Rockbuster Stealth database.
-
-## Project Files
-
-- [ERD Diagram](./path-to-your-erd-file.png) — Entity Relationship Diagram providing an overview of the database structure.
-- [SQL Queries](sql-queries/01 - profiling-cleaning-eda-queries.sql) — Full SQL script for data validation and profiling.
-- [Results (.csv)](./profiling-cleaning-eda-results.csv) — Output tables exported from SQL queries.
-- [Report (.xls)](./profiling-cleaning-eda.xlsx) — Consolidated results and observations compiled in Excel.
+- [Presentation (powerpoint)](deliverables/Presentation.pptx)
+- [Presentation (pdf)](deliverables/presentation.pdf)
+- [Entity Relationship Diagram (png)](deliverables/erd-dbvisualiser.png)
+- [Entity Relationship Diagram (jpg)](deliverables/erd-dbvisualiser.jpg)
+- [Data Dictionary (pdf)](deliverables/data-dictionary.pdf)
 
 ---
 
-# Table of Contents
+## Table of Contents
 
-1. [Overview of Tables](#1-overview-of-tables)  
-2. [Row Counts](#2-row-counts)  
-3. [Sample Rows](#3-sample-rows)  
-4. [Data Type Validation](#4-data-type-validation)  
-5. [Primary Key and Sequence Checks](#5-primary-key-and-sequence-checks)  
-6. [Foreign Key Checks](#6-foreign-key-checks)  
-7. [Missing Data Checks (Key Variables)](#7-missing-data-checks)  
-8. [Duplicates Checks](#8-duplicates-checks)  
-9. [Distinct Value Counts (All Variables)](#9-distinct-value-counts-all-variables)  
-10. [Frequency Distributions (Categorical Variables)](#10-frequency-distributions-categorical-variables)  
-11. [Descriptive Statistics (Numeric Variables)](#11-descriptive-statistics-numeric-variables)  
-12. [Temporal Checks](#12-temporal-checks)  
-13. [Logic and Dependency Checks](#13-logic-and-dependency-checks)
+1. [Profiling](#1-profiling)  
+   1.1 [Overview of Tables](#11-overview-of-tables)  
+   1.2 [Row Counts](#12-row-counts)  
+   1.3 [Sample Rows](#13-sample-rows)  
+
+2. [Integrity Checks](#2-integrity-checks)  
+   2.1 [Data Types](#21-data-types)  
+   2.2.1 [Primary Key Constraints](#221-primary-key-constraints)  
+   2.2.2 [Foreign Key Constraints](#222-foreign-key-constraints)  
+   2.2.3 [Not Null Constraints](#223-not-null-constraints)  
+   2.2.4 [Unique Constraints](#224-unique-constraints)  
+   2.2.5 [Check Constraints](#225-check-constraints)  
+   2.2.6 [Default Values](#226-default-values)  
+   2.2.7 [Enumerated | Domain Constraints](#227-enumerated--domain-constraints)  
+   2.2.8 [Enumerated | Domain Constraint Mapping to Columns](#228-enumerated--domain-constraint-mapping-to-columns)  
+
+3. [Quality Checks](#3-quality-checks)  
+   3.1 [Null Checks](#31-null-checks)  
+   3.2 [Missing Records and Placeholders](#32-missing-records-and-placeholders)  
+   3.3 [Duplicate Checks](#33-duplicate-checks)  
+   3.4 [Count Distinct Values (All Columns | Tables)](#34-count-distinct-values-all-columns--tables)  
+   3.5 [Frequency Distributions (Categorical Variables)](#35-frequency-distributions-categorical-variables)  
+   3.6 [Descriptive Statistics (Numeric Variables)](#36-descriptive-statistics-numeric-variables)  
+   3.7.1 [Count Distinct Values (Timestamp Variables)](#371-count-distinct-values-timestamp-variables)  
+   3.7.2 [Count Distinct Values (Transaction Date Variables)](#372-count-distinct-values-transaction-date-variables)  
+   3.7.3 [Count Distinct Values (Numeric Date Variables)](#373-count-distinct-values-numeric-date-variables)  
+   3.7.4 [Frequency Distributions (Transaction Date Variables)](#374-frequency-distributions-transaction-date-variables)  
+   3.8.1 [Logic Checks for Unconstrained Keys](#381-logic-checks-for-unconstrained-keys)  
+   3.8.2 [Business Check – Orphaned Payments](#382-business-check--orphaned-payments)  
+   3.8.3 [Business Check – Return Dates Before Rental Dates](#383-business-check--return-dates-before-rental-dates)  
+   3.8.4 [Business Check – Rentals Without Return Dates](#384-business-check--rentals-without-return-dates)  
+   3.8.5 [Business Check – Payments Before Rental Dates](#385-business-check--payments-before-rental-dates)  
+
+4. [Cleaning](#4-cleaning)  
+   4.1 [Drop Views](#41-drop-views)  
+   4.2 [Removing Duplicates](#42-removing-duplicates)  
+   4.3 [Dropping Columns](#43-dropping-columns)  
+   4.4 [Aliasing Columns](#44-aliasing-columns)  
+   4.5 [Casting Data Types](#45-casting-data-types)  
+   4.6 [Handling Nulls](#46-handling-nulls)  
+   4.7 [Handling Missing and Placeholder Values](#47-handling-missing-and-placeholder-values)  
+
+5. [Business Questions](#5-business-questions)  
+   5.1 [Question 1](#51-question-1)  
+   5.2 [Question 2](#52-question-2)  
+   5.3 [Question 3](#53-question-3)  
+   5.4 [Question 4](#54-question-4)  
+   5.5 [Question 5](#55-question-5)  
+   5.6 [Question 6](#56-question-6)  
 
 ---
 
-# 1. Overview of Tables
+# 1. Profiling
 
-## Objective
-Establish the initial structure of the database by identifying all base tables in the `public` schema.
-Exclude irrelevant objects such as system tables or views.
+## 1.1 Overview of Tables
 
-## Query
-Refer to section 1 of [profiling-cleaning-eda-queries.sql](./profiling-cleaning-eda-queries.sql).
+### Objective
+Retrieve all tables in the public schema to support database profiling and validate the entity relationship diagram, which suggests a star-like structure with transactional tables linking to descriptive dimension tables, sometimes via join tables.
 
+### Query
 ```sql
-SELECT 
-    table_schema, 
-    table_type, 
-    table_name
+SELECT table_schema, table_type, table_name
 FROM information_schema.tables
-WHERE table_schema = 'public' 
-    AND table_type = 'BASE TABLE'
-ORDER BY
-    table_name;
+WHERE table_schema = 'public'
+ORDER BY table_type;
 ```
 
-## Results
-15 base tables identified in the public schema.
-
+### Results
 number|table_schema | table_type | table_name
 |:---:|:---:|:---:|:---
 |1|public|BASE TABLE|actor
@@ -76,13 +99,18 @@ number|table_schema | table_type | table_name
 |13|public|BASE TABLE|rental
 |14|public|BASE TABLE|staff
 |15|public|BASE TABLE|store
+|16|public|VIEW|actor_info
+|17|public|VIEW|customer_list
+|18|public|VIEW|film_list
+|19|public|VIEW|nicer_but_slower_film_list
+|20|public|VIEW|sales_by_film_category
+|21|public|VIEW|staff_list
+|22|public|VIEW|sales_by_store
 
 *(For full results, see profiling-cleaning-eda-results.csv)*
 
-## Observations
-- The table list aligns with the ERD.
-- Database structure suggests operational processes centered around rentals, inventory, and customer management.
-- Full schema pattern (e.g., star or galaxy schema).
+### Insights
+- Structure matches ERD expectations (transactional + dimension + join tables) with 15 base tables and also revealed 7 view tables.
 
 [⬆️ Back to Top](#)
 

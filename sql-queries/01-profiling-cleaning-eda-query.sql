@@ -1,51 +1,59 @@
 -- ================================================================================
 -- Rockbuster Stealth
--- Analyst: David Griesel
--- Date: July 2024
--- Purpose: Initial Data Profiling, Cleaning, and EDA
+-- David Griesel
+-- July 2024
+-- Data Profiling, Cleaning, and Addressing Business Questions
 -- ================================================================================
 
 -- ================================================================================
--- TABLE OF CONTENTS:
+-- TABLE OF CONTENTS
 -- ================================================================================
 
--- 1. Overview of Tables (Structure)
--- 2. Row Counts per Table (Structure)
--- 3. Sample Rows (Structure)
--- 4. Data Type Validation (Integrity)
--- 5. Constraint Checks (Integrity)
--- 6. Missing Data Checks (Quality)
--- 7. Duplicates Checks (Quality)
--- 8. Distinct Value Counts (Exploration)
--- 9. Frequency Distributions (Exploration)
--- 10. Descriptive Statistics (Exploration)
--- 11. Temporal Checks (Exploration)
--- 12. Logic and Dependency Checks
--- 13. Addressing Business Questions
+-- 1. PROFLING
+-- 2. INTEGRITY CHECKS
+-- 3. QUALITY CHECKS
+-- 4. CLEANING
+-- 5. BUSINESS QUESTIONS
 
 -- ================================================================================
--- 1. Overview of Tables
+-- 1. PROFILING
 -- ================================================================================
 
--- 1.1 - List all tables in the public schema for profiling. 
+-- PURPOSE
+-- Understand the structure and content of the data.
 
-    SELECT 
-        table_schema, 
-        table_type, 
+-- --------------------------------------------------------------------------------
+-- 1.1 OVERVIEW OF TABLES
+-- --------------------------------------------------------------------------------
+
+-- PURPOSE
+-- Retrieve all tables in the public schema to confirm the structure of the
+-- database and support initial profiling. 
+-- This step also serves to validate table coverage against the entity
+-- relationship diagram which indicated a star-like schema structure with 
+-- transactional tables linking to descriptive dimension tables.
+    
+    SELECT
+        table_schema,
+        table_type,
         table_name
     FROM information_schema.tables
-    WHERE table_schema = 'public' 
+    WHERE table_schema = 'public'
     ORDER BY
         table_name;
 
--- OBSERVATIONS: 
--- THere are 15 base tables in the public schema.
+-- INSIGHTS
+-- All expected base tables present and accounted for.
+-- Structure matches ERD expectations (transactional + dimension + join tables).
 
--- ================================================================================
--- 2. Row Counts per Table
--- ================================================================================
+-- --------------------------------------------------------------------------------
+-- 1.2 ROW COUNTS
+-- --------------------------------------------------------------------------------
 
--- 2.1 - Count rows for all base tables in the public schema.
+-- PURPOSE
+-- Count the number of records in each table to identify relative table sizes,
+-- prioritise profiling effort, and spot any unexpectedly empty or undersized 
+-- tables.
 
     SELECT 'actor' AS table_name, COUNT(*) AS row_count FROM actor
     UNION ALL
@@ -77,17 +85,24 @@
     UNION ALL
     SELECT 'store' AS table_name, COUNT(*) AS row_count FROM store;
 
--- OBSERVATIONS:
--- All tables are populated.
--- The rental and payment tables hold transactional data based on high transaction volumes.
--- Other tables hold supporting descriptive information based on low transaction volumes.
--- This is consistent with the structure depicted in the ERD.
+-- INSIGHTS
+-- No empty tables found.
+-- The largest tables (rental and payment) are clearly transactional.
+-- Join tables (film_actor, film_category) and inventory are relatively large.
+-- Dimension tables (e.g. customer, film, address) of appropriate mid-size.
+-- Very small tables (e.g. language, staff, store) consistent with lookup role.
 
--- ================================================================================
--- 3. Sample Rows
--- ================================================================================
+-- RECOMMENDATIONS
+-- Flag very small tables like staff and store for possible manual inspection.
 
--- 3.1 - Get sample rows from all base tables in the public schema.
+-- --------------------------------------------------------------------------------
+-- 1.3 SAMPLE ROWS
+-- --------------------------------------------------------------------------------
+
+-- PURPOSE
+-- Review a sample of 5 records from each base table to understand data formats,
+-- typical content, and possible irregularities (e.g., NULLs, strange encodings,
+-- unexpected field usage) before deeper integrity and quality checks.
 
     SELECT * FROM actor LIMIT 5;
     SELECT * FROM address LIMIT 5;
@@ -105,18 +120,46 @@
     SELECT * FROM staff LIMIT 5;
     SELECT * FROM store LIMIT 5;
 
--- OBSERVATIONS:
--- null values e.g. address.address2, staff.picture.
--- Empty values e.g. address.address2, address.postal_code, address.phone.
--- Ambiguous column names e.g. category.name, language.name. Consider aliasing. 
--- Possible redundant columns e.g. customer.active, customer.activebool likely more reliable.
--- Other possibly redundant colums for analysis e.g. address.address2, film.special_features.
+-- INSIGHTS
+-- No structural anomalies were detected.
+-- Visible NULLs (address2), and empty strings (phone, postal_code) in address table
+-- suggesting optional or inconsistently captured contact data.
+-- The customer table contains two fields (active and activebool) that seemingly 
+-- have a similar function.
+-- The film table contain non-standard data types such as ARRA, tsvector, and ENUM
+-- suggesting rich metadata.
+-- The film_actor and film_category follow expected join-table structure with 
+-- composite keys.
+-- The inventory table records the physical stock of film copies held at each 
+-- store, linking inventory_id to both film and store.
+-- The payment and rental tables contain transaction records linked to other tables
+-- via foreign keys.
+-- The last_update fields across all tables seeminlgy share the same timestamp.
+-- Some inconsistencies (active vs activebool) and ambiguity (cagegory.name vs.
+-- city.city)in column names.
+
+-- RECOMMENDATIONS
+-- Flag columns with optional information, inconsistently captured data, duplicate 
+-- functions, or rich metadata not needed for analysis for potential removal.
+-- Confirm and document ENUM values in film.rating (Refer 2.2.7 | 2.2.8).
+-- Check join tables for composite key integrity (Refer 2.2.1).
+-- Confirm if the database has a static last_update date (Refer 3.4 | 3.7.1).
+-- Flag columns with inconsistent or ambiguous names for standardisation. 
 
 -- ================================================================================
--- 4. Data Type Validation
+-- 2. Integrity Checks
 -- ================================================================================
 
--- 4.1 - Retrieve data types for all variables across all tables.
+-- PURPOSE 
+-- Validate data types and constraints to ensure data integrity.
+
+-- --------------------------------------------------------------------------------
+-- 2.1 DATA TYPES
+-- --------------------------------------------------------------------------------
+
+-- PURPOSE
+-- Validate the data types of all columns across all tables to ensure consistency and 
+-- compatibility for downstream cleaning and analysis.
 
     SELECT 
         c.table_name,
@@ -133,31 +176,36 @@
         AND t.table_type = 'BASE TABLE' 
     ORDER BY 
         c.data_type;
-        -- c.table_name, c.ordinal_position;
 
--- OBSERVATIONS:
--- staff.active         type boolean        - > alias to staff.activebool for naming consistency.
+-- INSIGHTS
+-- Most fields are smallint, integer, or character varying.
+-- 17 columns use timestamp without time zone, typical of system-generated or 
+-- transactional date fields such as last_update and payment_date.
+-- A single column uses date while the rest use full timestamps.
+-- One column uses character rather than character varying which may case padding
+-- or formatting inconsistencies.
+-- One column normally associated with boolean uses integer.
+-- Less common data types include ARRAY, USER-DEFINED ENUM, bytea, and tsvector  
+-- suggesting less common or rich metadata fields.
 
--- language.name        type character      - > trim or cast to type varchar.
+-- RECOMMENDATIONS
+-- Flag timestamp fields vs date for standardisation if time-level precision is not
+-- required. 
+-- Flag fiels using character vs varchar for standardisation.
+-- Review variable normally associated with boolean for binary logic and flag for 
+-- removal if redundant (Refer 3.4 | 3.5).
+-- Flag columns using unusual or complex data types for potential removal if not 
+-- relevant to the analysis. 
+-- Flag required fields with complex data types for transformation to be usable in 
+-- analysis.
 
--- customer.active      type integer vs,
--- customer.activebool  type boolean        - > compare for redundancy.
-
--- film.release_year    type integer        - > contains year only, flag for temporal analysis.
-
--- payment.payment_date type timestamp &,
--- rental.rental_date   type timestamp &,
--- rental.return_date   type timestamp      - > precision unnecessary for analysis, cast to date.
-
--- film.rating      type USER-DEFINED       - > Likely has ENUM constraints. Cast to varchar.
-
--- Consider standardisation of data types across similar fields in the remainder of the dataset.
-
--- ================================================================================
--- 5. Constraint Discovery
--- ================================================================================
-
--- 5.1 - Primary Key Discovery.
+-- --------------------------------------------------------------------------------
+-- 2.2.1 - Primary Key Constraints
+-- --------------------------------------------------------------------------------
+    
+-- PURPOSE
+-- Identify all primary key constraints (including composite keys) across tables to 
+-- validate that each table has a unique identifier & enforce row-level integrity.
 
     SELECT 
         tc.table_name,
@@ -177,11 +225,16 @@
     ORDER BY 
         tc.table_name;
 
--- OBSERVATIONS: 
--- Primary keys exist across all public tables enforcing unique values.
--- Composite keys exist across two columns in the film_actor, and film_category tables.
+-- INSIGHTS
+-- All tables have a defined primary key with two tables having composite keys.
 
--- 5.2 - Foreign Key Discovery.
+-- --------------------------------------------------------------------------------
+-- 2.2.2 - Foreign Key Constraints
+-- --------------------------------------------------------------------------------
+
+-- PURPOSE
+-- Identify foreign key relationships to confirm that child tables are properly
+-- linked to referenced tables, supporting referential integrity across the schema.
 
     SELECT
         fk.child_table AS table_name,
@@ -211,30 +264,24 @@
     ORDER BY 
         fk.child_table, fk.child_column;
 
--- OBSERVATIONS:
--- Foreign keys exist linking transactional tables and their supporting dimension tables.
--- No constraints for identified for customer.store_id, inventory.store_id, and staff.store_id.
+-- INSIGHTS
+-- Foreign key relationships are defined and align with the schema’s relational 
+-- structure.
+-- Constraints are missing for certain expected relationships, specifically 
+-- those linking to the store table.
 
--- 5.2.1 - Check if all store_id's in customer, inventory, and staff tables exist in store.store_id
+-- RECOMMENDATIONS
+-- Validate referential integrity manually for store-linked fields where 
+-- constraints are absent (Refer ).
 
-    SELECT 'customer' AS table_name, 'store_id' AS foreign_key, COUNT(*) AS orphaned_customers FROM customer
-    LEFT JOIN store ON customer.store_id = store.store_id
-    WHERE store.store_id IS NULL
-    UNION ALL
-    SELECT 'inventory' AS table_name, 'store_id' AS foreign_key, COUNT(*) AS orphaned_inventory
-    FROM inventory
-    LEFT JOIN store ON inventory.store_id = store.store_id
-    WHERE store.store_id IS NULL
-    UNION ALL
-    SELECT 'staff' AS table_name, 'store_id' AS foreign_key, COUNT(*) AS orphaned_staff
-    FROM staff
-    LEFT JOIN store ON staff.store_id = store.store_id
-    WHERE store.store_id IS NULL;
+-- --------------------------------------------------------------------------------
+-- 2.2.3 - Not Null Constraints
+-- --------------------------------------------------------------------------------
 
--- OBSERVATIONS:
--- All store_id's in customer, inventory, and staff tables exist in store.store_id.
-
--- 5.3 - Not Null Constraint Discovery.
+-- PURPOSE
+-- Identify fields that allow NULLs, helping to isolate columns that require 
+-- additional quality checks and confirm which fields are structurally protected 
+-- from missing values.
 
     SELECT 
         table_name,
@@ -244,14 +291,23 @@
         information_schema.columns
     WHERE 
         table_schema = 'public'
-       -- AND is_nullable = 'YES' 
     ORDER BY 
-        table_name, column_name;
+        is_nullable;
 
--- OBSERVATIONS:
--- 14 variables allowing NULLs to be taken forward for NULL checks. Refer 6.1.
+-- INSIGHTS
+-- 72 varaibles are not nullable. 
+-- 14 columns across 5 tables are declared nullable.
 
--- 5.4 - Unique Constraint Discovery.
+-- RECOMMENDATIONS
+-- Flag all nullable fields for targeted null profiling (Refer 3.1).
+
+-- --------------------------------------------------------------------------------
+-- 2.2.4 - Unique Constraints
+-- --------------------------------------------------------------------------------
+
+-- PURPOSE
+-- Check for columns explicitly constrained to hold only unique values, beyond 
+-- those already enforced as keys helping to reveal additional integrity rules.
 
     SELECT 
         tc.table_name, 
@@ -268,71 +324,24 @@
     ORDER BY 
         tc.table_name, kcu.column_name;
 
--- OBSERVATIONS:
--- No UNIQUE constraints identified. 
--- Fields expected to contain unique values e.g. category.name, staff.password may contain duplicates.
+-- INSIGHTS
+-- No explicit UNIQUE constraints were defined beyond those enforced by primary 
+-- keys.
+-- Any expected uniqueness in other fields (e.g. emails or usernames) is not 
+-- structurally guaranteed.
 
--- 5.5 - Default Value Discovery.
+-- RECOMMENDATIONS
+-- If tables other than primary keys are expected to hold unique values, review 
+-- frequency tables for duplicates (Refer 3.5).
 
-    SELECT 
-        table_name,
-        column_name,
-        column_default
-    FROM 
-        information_schema.columns
-    WHERE 
-        table_schema = 'public'
-    AND column_default IS NOT NULL
-    ORDER BY 
-        column_default;
-        
--- OBSERVATIONS:
--- Defaults set at possible minimum values for film.replacement_cost, film.rental_duration, film.rental_rate.
--- Deafult set at 'G' for film.rating. Refer 5.6.
--- All primary keys default to the next available number.
--- All last_update variables default to current date, time and time zone.
--- create_date default to current date.
--- Boolean values default to true.
+-- --------------------------------------------------------------------------------
+-- 2.2.5 - Check Constraints
+-- --------------------------------------------------------------------------------
 
--- 5.6 - Enumerated / Domain Constraint Discovery.
-
-    SELECT 
-        n.nspname AS schema_name,
-        t.typname AS enum_type,
-        e.enumlabel AS enum_value
-    FROM 
-        pg_type t 
-    JOIN 
-        pg_enum e 
-        ON t.oid = e.enumtypid
-    JOIN 
-        pg_catalog.pg_namespace n 
-        ON n.oid = t.typnamespace
-    ORDER BY 
-        enum_type, enum_value;
-        
--- OBSERVATIONS:
--- Enumerated constraints exist.
-
--- 5.6.1 - Enumerated / Domain Constraint Mapping to Columns.
-
-    SELECT 
-        table_name,
-        column_name,
-        data_type,
-        udt_name
-    FROM 
-        information_schema.columns
-    WHERE 
-        table_schema = 'public'
-    AND data_type = 'USER-DEFINED'
-    ORDER BY 
-        table_name, column_name;
-
--- OBSERVATIONS:
--- Enumerated constraints applies to the film.rating column. 
-
--- 5.7 - Check Constraint (Business Rules) Discovery.
+-- PURPOSE
+-- Identify all CHECK constraints applied at the table level to understand 
+-- enforced business rules or structural protections beyond primary and foreign 
+-- keys.
 
     SELECT 
         tc.table_name, 
@@ -348,15 +357,111 @@
     ORDER BY 
         tc.table_name;
 
--- OBSERVATIONS:
--- 72 fields enforce NOT NULL conditions through CHECK constraints in line with the NOT NULL constraints already identified.
--- No other business rules (e.g., value range restrictions) are enforced through CHECK constraints.
+-- INSIGHTS
+-- All CHECK constraints enforce IS NOT NULL conditions and align exactly with 
+-- the list of 72 non-nullable fields identified earlier.
+
+-- --------------------------------------------------------------------------------
+-- 2.2.6 - Default Values
+-- --------------------------------------------------------------------------------
+
+-- PURPOSE
+-- Identify columns with default values to understand where the database is
+-- automatically assigning values when no input is provided.
+
+    SELECT 
+        table_name,
+        column_name,
+        column_default
+    FROM 
+        information_schema.columns
+    WHERE 
+        table_schema = 'public'
+    AND column_default IS NOT NULL
+    ORDER BY 
+        column_default;
+            
+-- INSIGHTS
+-- Default values are defined for some columns, primarily related to 
+-- classifications, dates, and primary keys.
+-- In primary key fields, defaults enforce unique ID generation.
+-- Timestamp fields default to the current time to track record changes. 
+-- A small set of business-related fields also include predefined default values 
+-- to classify records or populate known attributes.
+
+-- --------------------------------------------------------------------------------
+-- 2.2.7 - Enumerated / Domain Constraints
+-- --------------------------------------------------------------------------------
+
+-- PURPOSE
+-- Identify enumerated types defined in the database and their allowed values.
+-- These domain constraints restrict a column to a fixed set of predefined options
+-- and must be considered when interpreting or transforming categorical fields.
+
+    SELECT 
+        n.nspname AS schema_name,
+        t.typname AS enum_type,
+        e.enumlabel AS enum_value
+    FROM 
+        pg_type t 
+    JOIN 
+        pg_enum e 
+        ON t.oid = e.enumtypid
+    JOIN 
+        pg_catalog.pg_namespace n 
+        ON n.oid = t.typnamespace
+    ORDER BY 
+        enum_type, enum_value;
+
+-- INSIGHTS
+-- A single ENUM type (mpaa_rating) is defined with a controlled list of 
+-- classification values.
+
+-- RECOMMENDATIONS
+-- Confirm columns using ENUMs (Refer 2.2.8).
+
+-- --------------------------------------------------------------------------------
+-- 2.2.8 - Enumerated / Domain Constraint Mapping to Columns
+-- --------------------------------------------------------------------------------
+
+-- PURPOSE
+-- Identify which table columns are assigned user-defined ENUM types to ensure
+-- consistency in categorisation and assess compatibility with tools or exports.
+
+    SELECT 
+        table_name,
+        column_name,
+        data_type,
+        udt_name
+    FROM 
+        information_schema.columns
+    WHERE 
+        table_schema = 'public'
+    AND data_type = 'USER-DEFINED'
+    ORDER BY 
+        table_name, column_name;
+
+-- INSIGHTS
+-- One user-defined ENUM (mpaa_rating) is applied to the rating column in the 
+-- film table.
+
+-- RECOMMENDATIONS
+-- Flag the field for standardisation by casting to string.
 
 -- ================================================================================
--- 6. Missing Data Checks
+-- 3. Quality Checks
 -- ================================================================================
 
--- 6.1 - Check forr nulls across 14 variables without constraints.
+-- PURPOSE 
+-- Assess the quality of the data by identifying issues that need to be addressed.
+
+-- --------------------------------------------------------------------------------
+-- 3.1 Null Checks (14 values without constraints - Refer 2.2.3)
+-- --------------------------------------------------------------------------------
+
+-- PURPOSE
+-- Count missing values in fields that allow NULLs to identify potential issues 
+-- with optional or inconsistently populated data.
 
     WITH null_check AS (
 
@@ -408,12 +513,22 @@
         WHERE null_count > 0
         ORDER BY table_name, column_name;
 
--- OBSERVATIONS:
--- address.address2 - 4 nulls.
--- rental.return_date - 183 nulls.
--- staff.picture - 1 nulls.
+-- INSIGHTS
+-- Only 3 fields contain NULLs, all of which were already flagged as nullable.
+-- Nulls limited to optional data or operational fields where it would be valid.
 
--- 6.3 - Check for missing values across variables with character-based data types.
+-- RECOMMENDATIONS
+-- Drop optional fields containing NULLs that are not required for analysis.
+-- Flag return_date containing NULLs for logic and dependency checks.
+
+-- --------------------------------------------------------------------------------
+-- 3.2 Missing Records and Placeholders (Character-based data types)
+-- --------------------------------------------------------------------------------
+
+-- PURPOSE 
+-- Identify fields in character-based columns where values are missing or 
+-- replaced with placeholders such as empty strings, "unknown", or "n/a".
+-- This helps uncover non-null missingness and inconsistent entry standards.
 
     WITH missing_check AS (
 
@@ -515,17 +630,22 @@
     WHERE missing_count > 0
     ORDER BY table_name, column_name;
 
--- OBSERVATIONS:
--- address.address2 - 603 missing values.
--- address.district - 3 missing values.
--- address.phone - 2 missing values.
--- address.postal_code - 4 missing values.
-    
--- ================================================================================
--- 7. Duplicates Checks
--- ================================================================================
+-- INSIGHTS
+-- Placeholder or empty values were found in several address-related fields, 
+-- particularly secondary address lines and contact fields.
 
--- 7.1 - Combined duplicate counts across key tables.
+-- RECOMMENDATIONS
+-- Drop fields containing placeholder or optional contact data as they are not 
+-- required for the analysis.
+
+-- --------------------------------------------------------------------------------
+-- 3.3 Duplicate Checks (All tables)
+-- --------------------------------------------------------------------------------
+    
+-- PURPOSE
+-- Detect duplicates based on meaningful combinations of non-key fields or 
+-- composite keys, to assess uniqueness and ensure data integrity where 
+-- constraints are absent.
 
     SELECT 'actor' AS table_name, COUNT(*) AS duplicate_count
     FROM (
@@ -657,56 +777,24 @@
 
     ORDER BY table_name;
 
--- OBSERVATIONS:
--- actor table - 1 duplicate records!
--- inventory table - 1521 duplicate records!
+-- INSIGHTS
+-- Duplicate rows were limited to two fields.
+-- In the case of inventory, repeated combinations are expected due to multiple 
+-- copies of the same film at a store.
 
--- 7.2.1 - View duplicate records: actor table.
+-- RECOMMENDATIONS
+-- Confirm whether duplicates in the actor table reflect true data replication 
+-- and drop if appropriate.
+-- No cleaning action required for inventory duplicates as they reflect valid 
+-- business logic.
 
-    SELECT *
-    FROM actor
-    WHERE (first_name, last_name) IN (
-        SELECT 
-            first_name, 
-            last_name
-        FROM 
-            actor
-        GROUP BY 
-            first_name, 
-            last_name
-        HAVING 
-            COUNT(*) > 1
-    );
+-- --------------------------------------------------------------------------------
+-- 3.4 Count Distinct Values (All tables | columns)
+-- --------------------------------------------------------------------------------
 
--- OBSERVATIONS:
--- 1 record flagged for cleaning!
-
--- 7.2.1 - View duplciate records: inventory table.
-
-    SELECT *
-    FROM inventory
-    WHERE (film_id, store_id) IN (
-        SELECT 
-            film_id, 
-            store_id
-        FROM 
-            inventory
-        GROUP BY 
-            film_id, 
-            store_id
-        HAVING 
-            COUNT(*) > 1
-    )
-    LIMIT 10;
-
--- OBSERVATIONS:
--- More than one title per store - > expected.
-
--- ===============================================================================
--- 8. Distinct Value Counts
--- ===============================================================================
-
--- 8.1 - Check the number of distinct values per variable across all tables.
+-- PURPOSE
+-- Count unique values per column across all tables to detect low-variance fields, 
+-- constant values, or columns that may be redundant in analysis.
 
     -- TABLE: actor
 
@@ -910,87 +998,29 @@
     UNION ALL
     SELECT 'last_update', COUNT(DISTINCT last_update) FROM store;
 
--- OBSERVATIONS:
--- actor table
--- 200 actors with shared or missing names.
--- All records updated on the same date.
+-- INSIGHTS
+-- Several fields have extremely low distinct counts relative to total rows,
+-- including last_update, status flags, the ENUM-type field, as well as some
+-- fields across staff, store, language, and category tables.
+-- Some ID or key fields have identical counts to row totals and descriptions,
+-- confirming their uniqueness.
+-- There is one more city_id values than city values in city table. 
+-- Not all film titles are linked actors, and not all titles are available for 
+-- rent. 
+-- Timestamps show no variance, supporting earlier observations of uniform 
+-- update behaviour.
 
--- address table
--- 603 address with 4 missing cities - > store & staff?.
--- All records updated on the same date.
+-- RECOMMENDATIONS
+-- Remove low-variance or constant fields from the analysis view that add no
+-- value to the analysis.
 
--- category table
--- 16 categories.
--- All records updated on the same date.
+-- --------------------------------------------------------------------------------
+-- 3.5 Frequency Distribution (Categorical Variables)
+-- --------------------------------------------------------------------------------
 
--- city table
--- 600 ids & 599 cities - > 1 missing?.
--- All records updated on the same date.
-
--- country table
--- 109 countries.
--- All records updated on the same date.
-
--- customer table
--- 599 customers across 2 stores with 1 value in activebool - > all active?
--- Two values in active with type integer - unreliable?
--- All records created and updated on the same date
-
--- film table
--- 1000 titles with 5 ratings released in the same year in one language.
--- 5 standardised renting periods?
--- 3 standardised rates.
--- 21 cost prices. 
--- All records updated on the same date.
-
--- film_actor table
--- Combination of all 200 actors across only 997 film titles - > missing information for 3 titles?.
--- All records updated on the same date.
-
--- film_category table
--- Combination of all 1000 film titles across all 16 categories.
--- All records updated on the same date.
-
--- inventory table
--- 4581 copies of only 958 titles across two stores - > film table contains old titles?.
--- All records updated on the same date.
-
--- language table
--- 6 languages
--- All records updated on the same date.
-
--- payment table
--- 14596 payments made across 14592 rental ids - > 4 split payments?.
--- 14365 payment dates/times - > high number due to timestamp.
--- 19 different amounts - > standardised rates & number of videos allowed.
--- All transactions processed by one of 2 staff members.
--- All customers (599) made payments in the period.
-
--- rental table
--- 16044 rental ids - > less payments due to outstanding returns?
--- 15815 rental dates/times - > high number due to timestamp.
--- 15836 return dates/times - > high number due to timestamp.
--- All transactions processed by one of 2 staff members.
--- 4580 out of 458§ copies in inventory were rented out.
--- All customers (599) rented videos in the period.
--- All records updated across 3 dates.
-
--- staff table
--- 2 staff members with distinct names, addresses and emails working at both stores.
--- 2 usernames but one password!
--- Only one in active variable - > both active?
--- Only one staff member uploaded a picture.
--- All records updated on the same date.
-
--- store table
--- 2 stores with 2 managers at 2 locations.
--- All records updated on the same date.
-
--- ================================================================================
--- 9. Frequency Distributions
--- ================================================================================
-
--- 9.1 - Check the frequency distribution of key categorical variables.
+-- PURPOSE
+-- Show the most common values for selected categorical variables to detect skew,
+-- repetitive entries, or overly dominant values.
 
     -- TABLE:  actor
 
@@ -1108,6 +1138,22 @@
     GROUP BY customer_email
     ORDER BY frequency DESC;
 
+    SELECT
+        activebool AS customer_activebool,
+        COUNT(*) AS frequency,
+        ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM customer), 2) AS percentage
+    FROM customer
+    GROUP BY customer_activebool
+    ORDER BY frequency DESC;
+    
+    SELECT
+        active AS customer_active,
+        COUNT(*) AS frequency,
+        ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM customer), 2) AS percentage
+    FROM customer
+    GROUP BY customer_active
+    ORDER BY frequency DESC;
+    
     -- TABLE: film
 
     SELECT
@@ -1132,6 +1178,14 @@
         ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM film), 2) AS percentage
     FROM film
     GROUP BY film_rating
+    ORDER BY frequency DESC;
+
+    SELECT
+        special_features AS film_special_features,
+        COUNT(*) AS frequency,
+        ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM film), 2) AS percentage
+    FROM film
+    GROUP BY film_special_features
     ORDER BY frequency DESC;
 
     -- TABLE: language
@@ -1171,13 +1225,13 @@
     ORDER BY frequency DESC;
 
     SELECT 
-        password AS staff_password,
-        COUNT(*) AS frequency, 
+        active AS staff_active,
+        COUNT(*) AS frequency,
         ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM staff), 2) AS percentage
     FROM staff
-    GROUP BY staff_password
+    GROUP BY staff_active
     ORDER BY frequency DESC;
-    
+
     SELECT 
         username AS staff_username,
         COUNT(*) AS frequency, 
@@ -1186,20 +1240,48 @@
     GROUP BY staff_username
     ORDER BY frequency DESC;
 
--- OBSERVATIONS:
--- address.address2 - whole variable is empty.
--- address.district - 3 missing values.
--- address.phone - 2 missing values.
--- address.postal_code - 4 missing values.
--- customer.activebool - all customers are active.
--- customer.active - 1 x 584 & 0 x 15 unexpected type and inconsistent - > consider unreliable.
--- staff.active - both staff members are active.
+    SELECT 
+        password AS staff_password,
+        COUNT(*) AS frequency, 
+        ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM staff), 2) AS percentage
+    FROM staff
+    GROUP BY staff_password
+    ORDER BY frequency DESC;
+    
+-- INSIGHTS
+-- Some categorical fields show small number of uniform values (e.g. active, 
+-- activebool, address2).
+-- Fields such as names, cities, and emails display healthy distribution with 
+-- limited repetition — London appear twice in city table.
+-- ENUMs and structured arrays (e.g. rating, special_features) follow standardised 
+-- patterns as expected.
+-- Some fields (e.g. password) reflect duplicate values.
 
--- ================================================================================
--- 10. Descriptive Statistics (Numeric Variables)
--- ================================================================================
+-- Some fields show nearly complete absence or repetition of a single value.
+-- activebool is uniform across all customers — expected, but confirms it’s a redundant field for analysis.
+-- Customer names are distributed with modest repetition; no dominant entries, indicating diverse inputs.
+-- activebool is uniform across all customers — expected, but confirms it’s a redundant field for analysis.
+-- active shows limited variation and inconsistent typing — flagged earlier as unreliable.
+-- Film ratings and special features are categorised into a small number of standard values, aligning with known ENUM and ARRAY structures.
+-- Language names are well-controlled, with six defined options as per earlier ENUM review.
 
--- 10.1 - Summary statistics and distributions of numeric variables.
+-- RECOMMENDATIONS
+-- Drop fields that are constant or carry no analytical value (e.g. activebool, address2, active in staff).
+-- Exclude technical fields (e.g. password, username) from business views unless required.
+-- Retain well-distributed identifiers and descriptive fields that support segmentation or joins.
+-- Standardise handling of ENUMs and ARRAYs during view creation if used in grouping or filtering.
+
+-- Drop categorical fields with uniform or near-uniform distributions
+-- (e.g. address2, last_update) from analytical views.
+--  Drop customer.activebool and consider excluding or renaming customer.active after resolving type ambiguity.
+-- Retain film.rating and special_features but standardise their handling in views (e.g., cast ENUMs and flatten ARRAYs).
+
+-- --------------------------------------------------------------------------------
+-- 3.6 Descriptive Statistics (Numeric Variables)
+-- --------------------------------------------------------------------------------
+
+-- PURPOSE
+-- Summarise numerical fields (min, max, mean, std, etc.) to detect outliers and skew.
 
     SELECT 
         'film' AS table_name,
@@ -1294,42 +1376,22 @@
         ROUND(VAR_POP(amount), 2)
     FROM payment;
 
--- OBSERVATIONS:
--- film.rental_duration
-    -- No nulls or zero values.
-    -- Range - > 4 (3 to 7).
-    -- Mean and median - > 4,99/5.
-    -- Standard deviation - > 1,41.
+-- INSIGHTS
+-- No NULL values were found across any numeric fields.
+-- All values fall within reasonable expected ranges — no outliers or unexpected spikes.
+-- Only one field (payment.amount) includes zero values, which may represent special transactions.
 
--- film.rental_rate
-    -- No nulls or zero values.
-    -- Range - > 4,00 (0,99 to 4,99).
-    -- Mean and median - > 2,98/2,99.
-    -- Standard deviation - > 1,65.
+-- RECOMMENDATIONS
+-- Review zero amounts in the payment table for validity — may indicate system errors or test records.
 
--- film.length
-    -- No nulls or zero values.
-    -- Range - > 139 (46 to 185).
-    -- Mean and median - > 115,27/114.
-    -- Standard deviation - > 40,41.
+-- --------------------------------------------------------------------------------
+-- 3.7.1 - Distinct Values (Timestamp Variables)
+-- --------------------------------------------------------------------------------
 
--- film.replacement_cost
-    -- No nulls or zero values.
-    -- Range - > 20,00 (9,99 to 29,99).
-    -- Mean and median - > 19,98/19,99.
-    -- Standard deviation - > 6,05.
-
--- payment.amount
-    -- No nulls but 24 zero values!
-    -- Range - > 11,99 (0 to 11,99).
-    -- Mean and median - > 4,2/3,99.
-    -- Standard deviation - > 2,37.
-    
--- ================================================================================
--- 11. Temporal Checks
--- ================================================================================
-
--- 11.1 - Validate 'last_update' and 'create_date' fields across all tables
+-- PURPOSE
+-- Assess the number of distinct update and creation timestamps across all base 
+-- tables to evaluate whether these fields reflect real activity or static/default 
+-- values.
 
     SELECT 'actor' AS table_name, 'last_update' AS column_name, COUNT(DISTINCT last_update) AS distinct_dates, MIN(last_update) AS min_date, MAX(last_update) AS max_date FROM actor
     UNION ALL
@@ -1362,11 +1424,20 @@
     SELECT 'store' AS table_name, 'last_update' AS column_name, COUNT(DISTINCT last_update) AS distinct_dates, MIN(last_update) AS min_date, MAX(last_update) AS max_date FROM store
     ORDER BY table_name;
 
--- OBSERVATIONS:
--- All returned 1 single date except for rental.last_update.
--- Database created on one date with minor updates?
+-- INSIGHTS
+-- Most last_update fields contain only a single distinct timestamp — suggesting default values or initial load timestamps rather than true update tracking.
+-- rental.last_update is the exception, with multiple distinct values — possibly reflecting genuine activity or system processes.
 
--- 11.2 - Temporal analysis of key event date or timestamp fields
+-- RECOMMENDATIONS
+-- Consider excluding static last_update fields from analytical views unless required for metadata documentation.
+    
+-- --------------------------------------------------------------------------------
+-- 3.7.2 - Distinct Values  (Transaction Date Variables)
+-- --------------------------------------------------------------------------------
+
+-- PURPOSE
+-- Evaluate the distribution and coverage of transaction-related timestamps to 
+-- confirm the presence of realistic activity periods and identify gaps or irregularities.
 
     SELECT
         'payment' AS table_name, 
@@ -1392,12 +1463,17 @@
         MAX(return_date) AS max_date 
     FROM rental;
 
--- OBSERVATIONS:
--- 15815 rental dates
--- 15836 return dates
--- 14365 payment_dates
+-- INSIGHTS
+-- Distinct transaction dates are present across all fields, indicating operational activity over time.
+-- The date ranges for rentals, returns, and payments appear coherent, suggesting logical sequencing.
 
--- 11.3 - Temporal analysis of numeric date fields
+-- --------------------------------------------------------------------------------
+-- 3.7.3 - Distinct Values  (Numeric date fields)
+-- --------------------------------------------------------------------------------
+    
+-- PURPOSE
+-- Verify that numeric date fields such as `release_year` hold plausible values 
+-- and fall within a consistent, analysable range.
 
     SELECT
         'film' AS table_name, 
@@ -1407,10 +1483,22 @@
         MAX(release_year) AS max_date 
     FROM film;
 
--- OBSERVATIONS:
--- 1 release year = 2006
+-- INSIGHTS
+-- Only one unique release_year value was found confirming single release year 
+-- catalogue.
 
--- 11.4 - Frequency distribution of key date or timestamp fields
+-- RECOMMENDATIONS
+-- Treat release_year as a fixed attribute for context, not as a timeline for 
+-- trend analysis.
+    
+-- --------------------------------------------------------------------------------
+-- 3.7.4 - Frequency Distribution (Transaction Date Variables)
+-- --------------------------------------------------------------------------------
+
+-- PURPOSE
+-- Assess the daily distribution of transaction events to identify irregular 
+-- patterns, gaps, or system-generated activity that may require cleaning or 
+-- explanation.
 
     SELECT 
         'rental' AS table_name,
@@ -1436,72 +1524,221 @@
     GROUP BY payment_date::date
     ORDER BY payment_date::date;
 
--- OBSERVATIONS:
--- Dips in frequency across does not follow expected temporal patterns.
--- rental_date generally increase in frequency over time, but drops every 8 days.
--- return_date follows a similar pattern but dips every 17 days.
--- payment-date also show intermittant dips in frequency but at less regular intervals ranging between 5 and 10 days.
+-- INSIGHTS
+-- All three date fields (rental_date, return_date, payment_date) span continuous timeframes with varying frequency.
+-- Noticeable dips in frequency occur at semi-regular intervals — potentially reflecting system cycles or business logic.
 
--- ================================================================================
--- 12. Logic and Dependency Checks
--- ================================================================================
+-- RECOMMENDATIONS
+-- Flag recurring dips for further context — may represent batch processing or planned system downtimes.
 
--- 1. Check that every payment links to an existing rental
+-- --------------------------------------------------------------------------------
+-- 3.8 Testing Logic and Dependency
+-- --------------------------------------------------------------------------------
 
--- Check for orphaned payments (payments without a matching rental)
+-- PURPOSE
+-- Validate real-world consistency (e.g. return_date after rental_date, payments tied to valid rentals).
 
-SELECT COUNT(*) AS payments_without_rental
-FROM payment p
-LEFT JOIN rental r ON p.rental_id = r.rental_id
-WHERE r.rental_id IS NULL;
+-- --------------------------------------------------------------------------------
+-- From 2.2.2- Integrity Check for Unconstrained store_id Keys
+-- --------------------------------------------------------------------------------
 
--- 2. Check that return dates are after rental dates
+-- PURPOSE
+-- Manually verify whether all store_id values in related tables have a matching 
+-- entry in the store table.
 
--- Check rentals where return_date is before rental_date (bad logic)
-SELECT COUNT(*) AS invalid_return_dates
-FROM rental
-WHERE return_date < rental_date;
+    SELECT 'customer' AS table_name, 'store_id' AS foreign_key, COUNT(*) AS orphaned_customers FROM customer
+    LEFT JOIN store ON customer.store_id = store.store_id
+    WHERE store.store_id IS NULL
+    UNION ALL
+    SELECT 'inventory' AS table_name, 'store_id' AS foreign_key, COUNT(*) AS orphaned_inventory
+    FROM inventory
+    LEFT JOIN store ON inventory.store_id = store.store_id
+    WHERE store.store_id IS NULL
+    UNION ALL
+    SELECT 'staff' AS table_name, 'store_id' AS foreign_key, COUNT(*) AS orphaned_staff
+    FROM staff
+    LEFT JOIN store ON staff.store_id = store.store_id
+    WHERE store.store_id IS NULL;
 
--- 3. Check rentals without return dates
+-- INSIGHTS
+-- All store_id values in customer, inventory, and staff tables are valid — no 
+-- orphan records found.
 
--- Check rentals with NULL return_date (could be unreturned rentals)
-SELECT COUNT(*) AS rentals_without_return
-FROM rental
-WHERE return_date IS NULL;
+-- --------------------------------------------------------------------------------
+-- 3.8.1. - Orphaned payments
+-- --------------------------------------------------------------------------------
 
--- 4. Check for payments before rental date
+-- PURPOSE
 
--- Payments made before rental date (business logic error)
+    SELECT COUNT(*) AS payments_without_rental
+    FROM payment p
+    LEFT JOIN rental r ON p.rental_id = r.rental_id
+    WHERE r.rental_id IS NULL;
 
-SELECT COUNT(*) AS payments_before_rental
-FROM payment p
-JOIN rental r ON p.rental_id = r.rental_id
-WHERE p.payment_date < r.rental_date;
+-- INSIGHTS
 
--- 5. Optional advanced: future rentals
+-- --------------------------------------------------------------------------------
+-- 3.8.2. - Check that return dates are after rental dates
+-- --------------------------------------------------------------------------------
 
--- Rentals dated in the future compared to current timestamp
-SELECT COUNT(*) AS rentals_in_future
-FROM rental
-WHERE rental_date > NOW();
+-- PURPOSE
 
+    SELECT COUNT(*) AS invalid_return_dates
+    FROM rental
+    WHERE return_date < rental_date;
 
+-- INSIGHTS
 
+-- --------------------------------------------------------------------------------
+-- 3.8.3 - Check rentals without return dates
+-- --------------------------------------------------------------------------------
 
+-- PURPOSE
 
+    SELECT COUNT(*) AS rentals_without_return
+    FROM rental
+    WHERE return_date IS NULL;
 
+-- INSIGHTS
+
+-- --------------------------------------------------------------------------------
+-- 3.8.4 - Check for payments before rental date
+-- --------------------------------------------------------------------------------
+
+-- PURPOSE
+
+    SELECT COUNT(*) AS payments_before_rental
+    FROM payment p
+    JOIN rental r ON p.rental_id = r.rental_id
+    WHERE p.payment_date < r.rental_date;
+
+-- INSIGHTS
+
+-- --------------------------------------------------------------------------------
+-- 3.8.5 - Optional advanced: future rentals
+-- --------------------------------------------------------------------------------
+
+-- PURPOSE
+
+    SELECT COUNT(*) AS rentals_in_future
+    FROM rental
+    WHERE rental_date > NOW();
+
+-- INSIGHTS
 -- Results columns with 'valid"/"invalid"
 -- error summary tables
 
-
-
-
 -- ================================================================================
--- 13. Cleaning 
+-- 4. CLEANING
 -- ================================================================================
 
+-- PURPOSE 
+-- Address issues identified in the quality checks to prepare the data for analysis.
 
--- 7.3 - Create a clean view of actor table.
+-- From 1.3 - Flag columns with optional information, inconsistently captured data, duplicate 
+-- functions, or rich metadata not needed for analysis for potential removal.
+
+-- From 1.3 - Flag columns with inconsistent or ambiguous names for standardisation. 
+
+-- From 2.1 - Cast timestamp fields to date if time-level precision is not required. 
+-- Review use of character vs varchar for standardisation.
+-- Flag columns using unusual or complex data types for potential removal if not 
+-- relevant to the analysis. 
+-- Where retained, these fields may require flattening  or transformation to be 
+-- usable in reporting or modelling.
+
+-- --------------------------------------------------------------------------------
+-- 4.1 Correcting Data Types
+-- --------------------------------------------------------------------------------
+
+-- --------------------------------------------------------------------------------
+-- 4.2 Handling Nulls
+-- --------------------------------------------------------------------------------
+
+-- --------------------------------------------------------------------------------
+-- 4.3 Handling Missing Records and Placeholders
+-- --------------------------------------------------------------------------------
+
+-- --------------------------------------------------------------------------------
+-- 3.4 Removing Duplicates
+-- --------------------------------------------------------------------------------
+
+-- --------------------------------------------------------------------------------
+-- 3.5 Standardizing Data
+-- --------------------------------------------------------------------------------
+
+-- --------------------------------------------------------------------------------
+-- 3.6 Validating Logic and Dependencies
+-- --------------------------------------------------------------------------------
+
+-- Data types were standardized for consistency where it had no impact on analysis.
+-- Numeric fields were changed to NUMERIC to ensure precision for decimal values.
+-- USER-DEFINED types were converted to VARCHAR for flexibility in handling textual or categorical data.
+
+-- staff.active type boolean - > alias to staff.activebool for naming consistency.
+-- language.name, type character - > trim or cast to type varchar.
+-- customer.active type integer vs, customer.activebool type boolean - > compare for redundancy.
+-- film.release_year type integer - > contains year only, flag for temporal analysis.
+-- payment.payment_date type timestamp &, rental.rental_date, rental.return_date type timestamp - > precision unnecessary for analysis, cast to date.
+-- film.rating type USER-DEFINED - > Likely has ENUM constraints. Cast to varchar.
+-- Consider standardisation of data types across similar fields in the remainder of the dataset.
+
+-- --------------------------------------------------------------------------------
+-- #.# - View duplicate records: actor table
+-- --------------------------------------------------------------------------------
+
+    SELECT *
+    FROM actor
+    WHERE (first_name, last_name) IN (
+        SELECT 
+            first_name, 
+            last_name
+        FROM 
+            actor
+        GROUP BY 
+            first_name, 
+            last_name
+        HAVING 
+            COUNT(*) > 1
+    );
+
+-- INSIGHTS
+
+-- RECOMMENDATIONS
+
+-- OBSERVATIONS:
+-- 1 record flagged for cleaning!
+
+-- --------------------------------------------------------------------------------
+-- #.# - View duplciate records: inventory table
+-- --------------------------------------------------------------------------------
+
+    SELECT *
+    FROM inventory
+    WHERE (film_id, store_id) IN (
+        SELECT 
+            film_id, 
+            store_id
+        FROM 
+            inventory
+        GROUP BY 
+            film_id, 
+            store_id
+        HAVING 
+            COUNT(*) > 1
+    )
+    LIMIT 10;
+
+-- INSIGHTS
+
+-- RECOMMENDATIONS
+
+-- OBSERVATIONS:
+-- More than one title per store - > expected.
+
+-- --------------------------------------------------------------------------------
+-- #.# - Create a clean view of actor table.
+-- --------------------------------------------------------------------------------
 
     CREATE OR REPLACE VIEW clean_actor AS
     SELECT *
@@ -1516,18 +1753,22 @@ WHERE rental_date > NOW();
         WHERE rn > 1
     );
 
--- OBSERVATIONS:
--- Table successfully created.
+    -- OBSERVATIONS:
+    -- Table successfully created.
 
--- 7.4.1 - Validation Check: Row counts actor vs clean_actor
+-- --------------------------------------------------------------------------------
+-- #.# - Validation Check: Row counts actor vs clean_actor
+-- --------------------------------------------------------------------------------
 
     SELECT 'actor' AS table_name, COUNT(*) AS row_count FROM actor;
     SELECT 'clean_actor' AS table_name, COUNT(*) AS row_count FROM clean_actor;
 
--- OBSERVATIONS:
--- One duplicate record successfully removed.
+    -- OBSERVATIONS:
+    -- One duplicate record successfully removed.
 
--- 7.4.2 - Confirm no duplicates in clean-actor view.
+-- --------------------------------------------------------------------------------
+-- #.# - Confirm no duplicates in clean-actor view.
+-- --------------------------------------------------------------------------------
 
     SELECT 'clean_actor' AS table_name, COUNT(*) AS duplicate_count
     FROM (
@@ -1537,5 +1778,21 @@ WHERE rental_date > NOW();
         HAVING COUNT(*) > 1
     ) AS dup;
 
--- OBSERVATIONS:
--- Duplciate successfully removed from clean_actor VIEW.
+    -- OBSERVATIONS:
+    -- Duplciate successfully removed from clean_actor VIEW.
+
+-- ================================================================================
+-- 5. BUSINESS QUESTIONS
+-- ================================================================================
+-- PURPOSE Use the INSIGHTS gained to address specific business questions and 
+-- provide RECOMMENDATIONS.
+
+-- --------------------------------------------------------------------------------
+-- 5.1 Business Question 1
+-- --------------------------------------------------------------------------------
+
+-- --------------------------------------------------------------------------------
+-- 5.2 Business Question 2
+-- --------------------------------------------------------------------------------
+
+

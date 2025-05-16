@@ -1,0 +1,5 @@
+table_name,column_name,missing_count
+address,address2,603
+address,district,3
+address,phone,2
+address,postal_code,4

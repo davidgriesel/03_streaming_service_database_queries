@@ -1,2 +1,0 @@
-table_name,column_name,distinct_dates,min_date,max_date
-film,release_year,1,2006,2006
