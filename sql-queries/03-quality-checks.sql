@@ -1,5 +1,5 @@
 -- ================================================================================
--- 3. QUALITY CHECKS
+-- 3 - QUALITY CHECKS
 -- ================================================================================
 
 -- TABLE OF CONTENTS
@@ -193,7 +193,7 @@ ORDER BY
 
 -- RECOMMENDATIONS
 -- Remove columns containing NULLs with optional information that are not needed in
--- the analysis (Refer 4.5).
+-- the analysis (Refer 6.1).
 -- Include columns allowing NULLs that contain operational information needed in
 -- the analysis for logic and business checks (Refer 5.2.1).
 
@@ -467,9 +467,9 @@ ORDER BY table_name, column_name;
 
 -- RECOMMENDATIONS
 -- Remove columns containing empty strings with optional information not needed in the
--- analysis (Refer 4.5).
+-- analysis (Refer 6.1).
 -- Impute empty strings with appropriate placeholder values in columns that will be
--- retained (Refer 4.5).
+-- retained (Refer 6.1).
 
 -- --------------------------------------------------------------------------------
 -- 3.3 - DUPLICATE RECORD CHECKS (All tables)
@@ -1213,13 +1213,15 @@ FROM store;
 -- (address.address2 and several columns in the film table).
 -- Only 997 of the 1000 film titles are linked to actors (film_actor table).
 -- Only 958 of the 1000 film titles are available for rent (inventory table).
+-- The payment table contains 14,596 payments linked to only 14,592 rentals.
 -- Timestamp columns all show 1 distinct value supporting earlier observations of
 -- uniform update behaviour.
 -- Status columns show either 1 or 2 distinct records supporting binary expectation.
 
 -- RECOMMENDATIONS
 -- Remove columns with low or no variance, or redundant status columns that add no
--- value to the analysis (Refer 4.5).
+-- value to the analysis (Refer 6.1).
+-- Flag payment table as likely to contain split payments (Refer 5.3.2.3).
 
 -- --------------------------------------------------------------------------------
 -- 3.5 - FREQUENCY DISTRIBTIONS (Categorical columns)
@@ -1432,13 +1434,13 @@ ORDER BY frequency DESC;
 -- (true) while status column of type integer contain 0 and 1 (customer.active).
 
 -- RECOMMENDATIONS
--- Remove empty columns (Refer 4.5).
+-- Remove empty columns (Refer 6.1).
 -- Impute empty strings in retained columns with placeholder values e.g. 'n/a'
--- (Refer 4.5).
+-- (Refer 6.1).
 -- Remove the redundant status column of type integer. The boolean status column
 -- indicates that all customers are active, which is supported by the presence of
 -- transactions, which provide a more reliable indicator of customer activity
--- (Refer 4.5).
+-- (Refer 6.1).
 -- Communicate duplicate passwords to management as security risk (Reporting).
 
 -- --------------------------------------------------------------------------------
@@ -1602,11 +1604,9 @@ FROM stats_amount CROSS JOIN outliers_amount;
 -- RECOMMENDATIONS
 -- Validate the zero values and outliers in the payment.amount column (Refer 5.2).
 
-
--- ================================================================================
+-- --------------------------------------------------------------------------------
 -- 3.7 - TEMPORAL COLUMNS
--- ================================================================================
-
+-- --------------------------------------------------------------------------------
 -- --------------------------------------------------------------------------------
 -- 3.7.1 - COUNT DISTINCT VALUES (System update columns)
 -- --------------------------------------------------------------------------------
@@ -1772,7 +1772,7 @@ ORDER BY
 -- suggests singular creation rather than true update tracking.
 
 -- RECOMMENDATIONS
--- Remove last_update and create_date columns for analysis (Refer 4.5).
+-- Remove last_update and create_date columns for analysis (Refer 6.1).
 
 -- --------------------------------------------------------------------------------
 -- 3.7.2 - COUNT DISTINCT VALUES (Transaction date columns)
@@ -1813,7 +1813,7 @@ FROM rental;
 
 -- RECOMMENDATIONS
 -- Cast retained timestamp columns tracking operational activity to date as
--- time-level detail is not required in the analysis (Refer 4.5).
+-- time-level detail is not required in the analysis (Refer 6.1).
 
 -- --------------------------------------------------------------------------------
 -- 3.7.3 - COUNT DISTINCT VALUES (Numeric date columns)

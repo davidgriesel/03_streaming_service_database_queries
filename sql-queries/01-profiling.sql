@@ -235,13 +235,13 @@ SELECT * FROM sales_by_store LIMIT 5;
 
 -- RECOMMENDATIONS
 -- Remove any unnecessary columns containing NULLs, optional information, duplicate
--- functions, dense or specialised metadata, duplicate values (Refer 4.5).
+-- functions, dense or specialised metadata, duplicate values (Refer 6.1).
 -- Impute empty strings in retained columns with placeholder values e.g. 'n/a'
--- (Refer 4.5).
+-- (Refer 6.1).
 -- Confirm the actual user-defined data type of mpaa_rating columns (Refer 2.3).
 -- Confirm composite key integrity in join tables (Refer 2.2.1).
 -- Flag inventory table as likely to contain duplicates (Refer 3.3).
 -- Communicate shared passwords to management as security risk (Reporting).
 -- Confirm if the database has a static timestamp (Refer 3.7.1).
--- Standardise inconsistent or ambiguous column names (Refer 4.5).
+-- Standardise inconsistent or ambiguous column names (Refer 6.1).
 -- View tables will not be used in the analysis and can be ignored going forward.

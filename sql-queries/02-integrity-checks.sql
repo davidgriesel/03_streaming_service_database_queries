@@ -57,20 +57,18 @@ ORDER BY
 
 -- RECOMMENDATIONS
 -- Cast retained timestamp columns to date where time-level precision is not
--- required (Refer 4.5).
+-- required (Refer 6.1).
 -- Cast columns of type character to varchar to prevent padding and standardise
--- formats for analysis(Refer 4.5).
+-- formats for analysis(Refer 6.1).
 -- Review column normally associated with boolean for binary logic, compare to
 -- boolean column, and remove if having similar functions (Refer 3.4 | 3.5).
 -- Remove columns with unusual or complex data types not needed in the analysis
--- (Refer 4.5).
+-- (Refer 6.1).
 -- Confirm the actual data type of the user-defined column (Refer 2.3).
 
-
--- ================================================================================
+-- --------------------------------------------------------------------------------
 -- 2.2 - CONSTRAINTS
--- ================================================================================
-
+-- --------------------------------------------------------------------------------
 -- --------------------------------------------------------------------------------
 -- 2.2.1 - PRIMARY KEY CONSTRAINTS
 -- --------------------------------------------------------------------------------
@@ -297,11 +295,9 @@ ORDER BY
 -- Confirm whether user-defined columns use ENUMERATED types by classifying the
 -- mpaa_rating type in the database (Refer 2.3).
 
-
--- ================================================================================
+-- --------------------------------------------------------------------------------
 -- 2.3 - USER_DEFINED TYPES
--- ================================================================================
-
+-- --------------------------------------------------------------------------------
 -- --------------------------------------------------------------------------------
 -- 2.3.1 - CLASSIFY USER-DEFINED TYPES
 -- --------------------------------------------------------------------------------
