@@ -1,6 +1,0 @@
-table_name,column_name,total_records,null_count,zero_count,min_value,max_value,mean_value,median_value,q1_value,q2_value,range_value,stddev_value,variance_value
-film,rental_duration,1000,0,0,3,7,4.99,5,4,6,4,1.41,1.99
-film,rental_rate,1000,0,0,0.99,4.99,2.98,2.99,0.99,4.99,4.00,1.65,2.71
-film,length,1000,0,0,46,185,115.27,114,80,149.25,139,40.41,1632.65
-film,replacement_cost,1000,0,0,9.99,29.99,19.98,19.99,14.99,24.99,20.00,6.05,36.58
-payment,amount,14596,0,24,0.00,11.99,4.20,3.99,2.99,4.99,11.99,2.37,5.61
