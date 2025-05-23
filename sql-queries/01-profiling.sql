@@ -1,19 +1,22 @@
 -- ================================================================================
--- 1. PROFILING
+-- 1 - PROFILING
 -- ================================================================================
 
--- PURPOSE
--- Understand the structure and content of the data.
+-- TABLE OF CONTENTS
+
+-- 1.1 - OVERVIEW OF TABLES
+-- 1.2 - ROW COUNTS
+-- 1.3 - SAMPLE ROWS
 
 -- --------------------------------------------------------------------------------
--- 1.1 OVERVIEW OF TABLES
+-- 1.1 - OVERVIEW OF TABLES
 -- --------------------------------------------------------------------------------
 
 -- PURPOSE
--- Retrieve all tables in the public schema to support database profiling and
--- validate the entity relationship diagram, which suggests a star-like structure
--- with transactional tables linking to descriptive dimension tables, sometimes via
--- join tables.
+-- Retrieve all tables in the public schema to profile the database and validate
+-- the entity relationship diagram, which suggests a star-like structure with
+-- transactional tables linking to descriptive dimension tables, and in some cases
+-- via join tables.
 
 SELECT table_schema, table_type, table_name
 FROM information_schema.tables
@@ -21,16 +24,17 @@ WHERE table_schema = 'public'
 ORDER BY table_type;
 
 -- INSIGHTS
--- Structure matches ERD expectations (transactional + dimension + join tables)
--- with 15 base tables and also revealed 7 view tables.
+-- Structure matched ERD expectations (transactional + dimension + join tables)
+-- with 15 base tables.
+-- Seven view tables were also revealed.
 
 -- --------------------------------------------------------------------------------
--- 1.2 ROW COUNTS
+-- 1.2 - ROW COUNTS
 -- --------------------------------------------------------------------------------
 
 -- PURPOSE
--- Count the number of records in each table to gain an understanding of relative
--- table sizes, and identify any unexpectedly empty or undersized tables.
+-- Count the number of records in each table to identify any unexpectedly empty or
+-- undersized tables.
 
 -- BASE Tables
 SELECT
@@ -123,7 +127,7 @@ SELECT
 FROM
     store;
 
--- VIEWS
+ -- VIEWS
 SELECT
     'actor_info' AS table_name,
     COUNT(*) AS row_count
@@ -168,24 +172,19 @@ FROM
 
 -- INSIGHTS
 -- No empty tables found.
--- The largest tables (rental and payment) are clearly transactional.
--- Join tables (film_actor, film_category) and inventory are relatively large.
--- Dimension tables (e.g. customer, film, address) are of appropriate mid-size.
--- Very small tables (e.g. language, staff, store) are consistent with lookup role.
+-- Transactional tables (payment, rental) are the largest as expected.
+-- Join and dimension tables range from small to mid size.
 -- Five view tables appear to represent enriched entity listings.
--- Two view tables suggest summarised sales data by category and by store.
-
--- RECOMMENDATIONS
--- Flag very small tables like staff and store for possible manual inspection.
+-- Two view tables suggest summarised sales data by store and category.
 
 -- --------------------------------------------------------------------------------
--- 1.3 SAMPLE ROWS
+-- 1.3 - SAMPLE ROWS
 -- --------------------------------------------------------------------------------
 
 -- PURPOSE
 -- Review a sample of 5 records from each base table to understand typical content,
--- data formats, and possible irregularities (e.g., NULLs, strange encodings,
--- unexpected field usage) before deeper integrity and quality checks.
+-- preview data formats, and identify possible irregularities (e.g., NULLs, strange
+-- encodings, unexpected column usage) before deeper integrity and quality checks.
 
 -- BASE Tables
 SELECT * FROM actor LIMIT 5;
@@ -215,41 +214,34 @@ SELECT * FROM sales_by_store LIMIT 5;
 
 -- INSIGHTS
 -- No structural anomalies were detected.
--- Visible NULLs (address2), and empty strings (phone, postal_code) in address
--- table suggesting optional or inconsistently captured contact data.
--- The customer table contains two fields (active and activebool) that seemingly
--- have a similar function.
--- The film table contain dense columns with non-standard data types (description
--- type text, fulltext type tsvector) and constrained categorical information
--- (rating type ENUM).
--- The film_actor and film_category follow expected join-table structure with
--- composite keys.
--- The inventory table records the physical stock of film copies held at each store,
--- linking inventory_id to both film and store.
--- The payment and rental tables contain transaction records linked to other tables
--- via foreign keys.
--- The staff table contains two staff records with visible nulls in specialised
--- fields (picture type bytea) and duplicates (password).
--- The last_update fields across all tables seeminlgy share the same timestamp.
--- Some inconsistencies (active vs activebool) and ambiguity (cagegory.name vs.
--- city.city)in column names.
--- View tables provide entity listings with foreign keys substituted with
--- descriptive fields, and aggregated sales data per category and store.
+-- Visible NULLs (address2) and empty strings (phone, postal_code) in address table.
+-- The customer table contains two columns of different data types with seemingly
+-- similar functions (active and activebool).
+-- The film table contains dense categorical columns with non-standard data types
+-- (description of type text, fulltext of type tsvector, rating of type mpaa_rating)
+-- The film_actor and film_category tables contain only composite keys functioning
+-- purely as join tables.
+-- The inventory table records physical stock per store with duplicate titles
+-- expected.
+-- The payment and rental tables contain transaction records linked to information
+-- in dimension tables via foreign keys.
+-- The staff table contains two staff records with a visible null in picture
+-- (type bytea) and duplicate values in password.
+-- The last_update columns across all tables seemingly have a static timestamp.
+-- Some inconsistencies (active vs activebool) and ambiguity (category.name vs.
+-- city.city) in column names.
+-- View tables provide entity listings substituting foreign keys with descriptive
+-- values, and aggregated sales data per category and store.
 
 -- RECOMMENDATIONS
--- Remove columns with NULLs, optional information, duplicate functions, dense
--- variables, specialised fields, fields containing duplicates, and any other
--- columns not needed in analysis for removal (Refer 4.3).
--- Impute columns with empty strings with placeholder values like 'Unknown'
--- (Refer 4.7).
--- Confirm ENUM values (Refer 2.2.7).
+-- Remove any unnecessary columns containing NULLs, optional information, duplicate
+-- functions, dense or specialised metadata, duplicate values (Refer 4.5).
+-- Impute empty strings in retained columns with placeholder values e.g. 'n/a'
+-- (Refer 4.5).
+-- Confirm the actual user-defined data type of mpaa_rating columns (Refer 2.3).
 -- Confirm composite key integrity in join tables (Refer 2.2.1).
--- Confirm if inventory table contains duplicate copies of film titles per store
--- distinguished only by inventory_id. (Refer 3.3).
--- Communicate shared passwords to management as potential security issue
--- (Reporting).
--- Confirm if the database has a static last_update date (Refer 3.7.1).
--- Rename columns with inconsistent naming or ambiguous names for standardisation
--- (Refer 4.4).
--- Drop and recreate VIEWs to ensure accuracy and alignment with the schema
--- (Refer 4.1).
+-- Flag inventory table as likely to contain duplicates (Refer 3.3).
+-- Communicate shared passwords to management as security risk (Reporting).
+-- Confirm if the database has a static timestamp (Refer 3.7.1).
+-- Standardise inconsistent or ambiguous column names (Refer 4.5).
+-- View tables will not be used in the analysis and can be ignored going forward.

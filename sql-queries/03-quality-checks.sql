@@ -2,17 +2,26 @@
 -- 3. QUALITY CHECKS
 -- ================================================================================
 
--- PURPOSE
--- Evaluate the quality and reliability of data through content-level checks across 
--- fields.
+-- TABLE OF CONTENTS
+
+-- 3.1 - NULL VALUE CHECKS (14 nullable columns)
+-- 3.2 - EMPTY STRINGS OR PLACEHOLDER VALUES (Columns with character based types)
+-- 3.3 - DUPLICATE RECORD CHECKS (All tables)
+-- 3.4 - COUNT DISTINCT VALUES (All tables & columns)
+-- 3.5 - FREQUENCY DISTRIBTIONS (Categorical columns) 
+-- 3.6 - DESCRIPTIVE STATISTICS (Numeric columns)
+-- 3.7 - TEMPORAL COLUMNS
+    -- 3.7.1 - COUNT DISTINCT VALUES (System update columns)
+    -- 3.7.2 - COUNT DISTINCT VALUES (Transaction date columns)
+    -- 3.7.3 - COUNT DISTINCT VALUES (Numeric date columns)
+    -- 3.7.4 - FREQUENCY DISTRIBUTIONS (Transaction date columns)
 
 -- --------------------------------------------------------------------------------
--- 3.1 NULL CHECKS (14 nullable fields)
+-- 3.1 - NULL VALUE CHECKS (14 nullable columns)
 -- --------------------------------------------------------------------------------
 
 -- PURPOSE
--- Identify and quantify missing values in 14 fields that allow NULLs that may
--- affect the analysis or business logic.
+-- Identify and quantify NULLs in the 14 columns without NOT NULL constraints.
 
 WITH null_check AS (
 
@@ -179,267 +188,294 @@ ORDER BY
     column_name;
 
 -- INSIGHTS
--- Three of the flagged fields contain NULLs.
--- Nulls are limited to optional data, information not needed in analysis, and 
--- operational fields where it could be valid.
+-- Nulls are observed address.address2, staff.picture, rental.return_date.
 
 -- RECOMMENDATIONS
--- Drop field containing NULLs that contain optional data or not be needed for
--- analysis (Refer 4.3). 
--- Include return_date for logic and dependency checks (Refer 3.8).
+-- Remove columns containing NULLs with optional information that are not needed in
+-- the analysis (Refer 4.5).
+-- Include columns allowing NULLs that contain operational information needed in
+-- the analysis for logic and dependency checks (Refer 5.2.1).
 
 -- --------------------------------------------------------------------------------
--- 3.2 MISSING RECORDS AND PLACEHOLDERS (Character-based data types)
+-- 3.2 - EMPTY STRINGS OR PLACEHOLDER VALUES (Columns with character based types)
 -- --------------------------------------------------------------------------------
 
 -- PURPOSE 
--- Identify fields in character-based columns where values are missing or 
--- replaced with placeholders such as empty strings, "unknown", or "n/a".
+-- Identify and quantify empty strings or placeholder values in columns with
+-- character based data types.
 
-WITH missing_check AS (
-
-    SELECT
+WITH incomplete_check AS (
+    SELECT 
         'actor' AS table_name,
         'first_name' AS column_name,
-        COUNT(*) AS missing_count
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(first_name, '')) = '') AS empty_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(first_name, '')) = 'n/a') AS na_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(first_name, '')) = 'unknown') AS unknown_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(first_name, '')) = 'none') AS none_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(first_name, '')) = 'blank') AS blank_count
     FROM actor
-    WHERE LOWER(COALESCE(first_name, ''))
-        IN ('', 'n/a', 'unknown', 'none', 'blank')
 
     UNION ALL
 
     SELECT
         'actor' AS table_name,
         'last_name' AS column_name,
-        COUNT(*) AS missing_count
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(last_name, '')) = '') AS empty_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(last_name, '')) = 'n/a') AS na_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(last_name, '')) = 'unknown') AS unknown_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(last_name, '')) = 'none') AS none_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(last_name, '')) = 'blank') AS blank_count
     FROM actor
-    WHERE LOWER(COALESCE(last_name, ''))
-        IN ('', 'n/a', 'unknown', 'none', 'blank')
 
     UNION ALL
 
     SELECT
         'address' AS table_name,
         'address' AS column_name,
-        COUNT(*) AS missing_count
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(address, '')) = '') AS empty_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(address, '')) = 'n/a') AS na_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(address, '')) = 'unknown') AS unknown_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(address, '')) = 'none') AS none_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(address, '')) = 'blank') AS blank_count
     FROM address
-    WHERE LOWER(COALESCE(address, ''))
-        IN ('', 'n/a', 'unknown', 'none', 'blank')
 
     UNION ALL
 
     SELECT
         'address' AS table_name,
         'address2' AS column_name,
-        COUNT(*) AS missing_count
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(address2, '')) = '') AS empty_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(address2, '')) = 'n/a') AS na_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(address2, '')) = 'unknown') AS unknown_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(address2, '')) = 'none') AS none_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(address2, '')) = 'blank') AS blank_count
     FROM address
-    WHERE LOWER(COALESCE(address2, ''))
-        IN ('', 'n/a', 'unknown', 'none', 'blank')
 
     UNION ALL
 
     SELECT
         'address' AS table_name,
         'district' AS column_name,
-        COUNT(*) AS missing_count
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(district, '')) = '') AS empty_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(district, '')) = 'n/a') AS na_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(district, '')) = 'unknown') AS unknown_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(district, '')) = 'none') AS none_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(district, '')) = 'blank') AS blank_count
     FROM address
-    WHERE LOWER(COALESCE(district, ''))
-        IN ('', 'n/a', 'unknown', 'none', 'blank')
 
     UNION ALL
 
     SELECT
         'address' AS table_name,
         'postal_code' AS column_name,
-        COUNT(*) AS missing_count
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(postal_code, '')) = '') AS empty_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(postal_code, '')) = 'n/a') AS na_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(postal_code, '')) = 'unknown') AS unknown_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(postal_code, '')) = 'none') AS none_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(postal_code, '')) = 'blank') AS blank_count
     FROM address
-    WHERE LOWER(COALESCE(postal_code, ''))
-        IN ('', 'n/a', 'unknown', 'none', 'blank')
 
     UNION ALL
 
     SELECT
         'address' AS table_name,
         'phone' AS column_name,
-        COUNT(*) AS missing_count
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(phone, '')) = '') AS empty_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(phone, '')) = 'n/a') AS na_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(phone, '')) = 'unknown') AS unknown_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(phone, '')) = 'none') AS none_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(phone, '')) = 'blank') AS blank_count
     FROM address
-    WHERE LOWER(COALESCE(phone, ''))
-        IN ('', 'n/a', 'unknown', 'none', 'blank')
 
     UNION ALL
 
     SELECT
         'category' AS table_name,
         'name' AS column_name,
-        COUNT(*) AS missing_count
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(name, '')) = '') AS empty_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(name, '')) = 'n/a') AS na_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(name, '')) = 'unknown') AS unknown_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(name, '')) = 'none') AS none_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(name, '')) = 'blank') AS blank_count
     FROM category
-    WHERE LOWER(COALESCE(name, ''))
-        IN ('', 'n/a', 'unknown', 'none', 'blank')
 
     UNION ALL
 
     SELECT
         'city' AS table_name,
         'city' AS column_name,
-        COUNT(*) AS missing_count
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(city, '')) = '') AS empty_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(city, '')) = 'n/a') AS na_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(city, '')) = 'unknown') AS unknown_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(city, '')) = 'none') AS none_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(city, '')) = 'blank') AS blank_count
     FROM city
-    WHERE LOWER(COALESCE(city, ''))
-        IN ('', 'n/a', 'unknown', 'none', 'blank')
 
     UNION ALL
 
     SELECT
         'country' AS table_name,
         'country' AS column_name,
-        COUNT(*) AS missing_count
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(country, '')) = '') AS empty_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(country, '')) = 'n/a') AS na_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(country, '')) = 'unknown') AS unknown_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(country, '')) = 'none') AS none_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(country, '')) = 'blank') AS blank_count
     FROM country
-    WHERE LOWER(COALESCE(country, ''))
-        IN ('', 'n/a', 'unknown', 'none', 'blank')
 
     UNION ALL
 
     SELECT
         'customer' AS table_name,
         'first_name' AS column_name,
-        COUNT(*) AS missing_count
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(first_name, '')) = '') AS empty_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(first_name, '')) = 'n/a') AS na_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(first_name, '')) = 'unknown') AS unknown_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(first_name, '')) = 'none') AS none_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(first_name, '')) = 'blank') AS blank_count
     FROM customer
-    WHERE LOWER(COALESCE(first_name, ''))
-        IN ('', 'n/a', 'unknown', 'none', 'blank')
 
     UNION ALL
 
     SELECT
         'customer' AS table_name,
         'last_name' AS column_name,
-        COUNT(*) AS missing_count
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(last_name, '')) = '') AS empty_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(last_name, '')) = 'n/a') AS na_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(last_name, '')) = 'unknown') AS unknown_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(last_name, '')) = 'none') AS none_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(last_name, '')) = 'blank') AS blank_count
     FROM customer
-    WHERE LOWER(COALESCE(last_name, ''))
-        IN ('', 'n/a', 'unknown', 'none', 'blank')
 
     UNION ALL
 
     SELECT
         'customer' AS table_name,
         'email' AS column_name,
-        COUNT(*) AS missing_count
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(email, '')) = '') AS empty_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(email, '')) = 'n/a') AS na_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(email, '')) = 'unknown') AS unknown_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(email, '')) = 'none') AS none_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(email, '')) = 'blank') AS blank_count
     FROM customer
-    WHERE LOWER(COALESCE(email, ''))
-        IN ('', 'n/a', 'unknown', 'none', 'blank')
 
     UNION ALL
 
     SELECT
         'film' AS table_name,
         'title' AS column_name,
-        COUNT(*) AS missing_count
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(title, '')) = '') AS empty_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(title, '')) = 'n/a') AS na_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(title, '')) = 'unknown') AS unknown_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(title, '')) = 'none') AS none_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(title, '')) = 'blank') AS blank_count
     FROM film
-    WHERE LOWER(COALESCE(title, ''))
-        IN ('', 'n/a', 'unknown', 'none', 'blank')
 
     UNION ALL
 
     SELECT
         'film' AS table_name,
         'description' AS column_name,
-        COUNT(*) AS missing_count
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(description, '')) = '') AS empty_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(description, '')) = 'n/a') AS na_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(description, '')) = 'unknown') AS unknown_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(description, '')) = 'none') AS none_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(description, '')) = 'blank') AS blank_count
     FROM film
-    WHERE LOWER(COALESCE(description, ''))
-        IN ('', 'n/a', 'unknown', 'none', 'blank')
-
-    UNION ALL
-
-    SELECT
-        'film' AS table_name,
-        'rating' AS column_name,
-        COUNT(*) AS missing_count
-    FROM film
-    WHERE LOWER(COALESCE(CAST(rating AS VARCHAR), ''))
-        IN ('', 'n/a', 'unknown', 'none', 'blank') -- note data type USER-DEFINED
 
     UNION ALL
 
     SELECT
         'language' AS table_name,
         'name' AS column_name,
-        COUNT(*) AS missing_count
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(name, '')) = '') AS empty_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(name, '')) = 'n/a') AS na_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(name, '')) = 'unknown') AS unknown_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(name, '')) = 'none') AS none_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(name, '')) = 'blank') AS blank_count
     FROM language
-    WHERE LOWER(COALESCE(name, ''))
-        IN ('', 'n/a', 'unknown', 'none', 'blank')
 
     UNION ALL
 
     SELECT
         'staff' AS table_name,
         'first_name' AS column_name,
-        COUNT(*) AS missing_count
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(first_name, '')) = '') AS empty_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(first_name, '')) = 'n/a') AS na_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(first_name, '')) = 'unknown') AS unknown_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(first_name, '')) = 'none') AS none_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(first_name, '')) = 'blank') AS blank_count
     FROM staff
-    WHERE LOWER(COALESCE(first_name, ''))
-        IN ('', 'n/a', 'unknown', 'none', 'blank')
 
     UNION ALL
 
     SELECT
         'staff' AS table_name,
         'last_name' AS column_name,
-        COUNT(*) AS missing_count
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(last_name, '')) = '') AS empty_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(last_name, '')) = 'n/a') AS na_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(last_name, '')) = 'unknown') AS unknown_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(last_name, '')) = 'none') AS none_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(last_name, '')) = 'blank') AS blank_count
     FROM staff
-    WHERE LOWER(COALESCE(last_name, ''))
-        IN ('', 'n/a', 'unknown', 'none', 'blank')
 
     UNION ALL
 
     SELECT
         'staff' AS table_name,
         'email' AS column_name,
-        COUNT(*) AS missing_count
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(email, '')) = '') AS empty_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(email, '')) = 'n/a') AS na_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(email, '')) = 'unknown') AS unknown_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(email, '')) = 'none') AS none_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(email, '')) = 'blank') AS blank_count
     FROM staff
-    WHERE LOWER(COALESCE(email, ''))
-        IN ('', 'n/a', 'unknown', 'none', 'blank')
 
     UNION ALL
 
     SELECT
         'staff' AS table_name,
         'username' AS column_name,
-        COUNT(*) AS missing_count
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(username, '')) = '') AS empty_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(username, '')) = 'n/a') AS na_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(username, '')) = 'unknown') AS unknown_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(username, '')) = 'none') AS none_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(username, '')) = 'blank') AS blank_count
     FROM staff
-    WHERE LOWER(COALESCE(username, ''))
-        IN ('', 'n/a', 'unknown', 'none', 'blank')
 
     UNION ALL
 
     SELECT
         'staff' AS table_name,
         'password' AS column_name,
-        COUNT(*) AS missing_count
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(password, '')) = '') AS empty_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(password, '')) = 'n/a') AS na_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(password, '')) = 'unknown') AS unknown_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(password, '')) = 'none') AS none_count,
+        COUNT(*) FILTER (WHERE LOWER(COALESCE(password, '')) = 'blank') AS blank_count
     FROM staff
-    WHERE LOWER(COALESCE(password, ''))
-        IN ('', 'n/a', 'unknown', 'none', 'blank')
 )
 
 SELECT *
-FROM missing_check
-WHERE missing_count > 0
+FROM incomplete_check
+WHERE empty_count + na_count + unknown_count + none_count + blank_count > 0
 ORDER BY table_name, column_name;
 
 -- INSIGHTS
--- Placeholder or empty values were found in 4 address-related fields, particularly
--- secondary address lines and contact fields.
+-- Empty values were found in the 4 columns in the address table.
 
 -- RECOMMENDATIONS
--- Drop address2 field containing optional information not needed for the analysis
--- (Refer 4.3).
-
--- Identify specific placeholder or missing values in the remaining 3 fields and
--- impute with more relevant placeholders if applicable (Refer 4.7).
+-- Remove columns containing empty strings with optional information not needed in the
+-- analysis (Refer 4.5).
+-- Impute empty strings with appropriate placeholder values in columns that will be
+-- retained (Refer 4.5).
 
 -- --------------------------------------------------------------------------------
--- 3.3 DUPLICATE CHECKS (All tables)
+-- 3.3 - DUPLICATE RECORD CHECKS (All tables)
 -- --------------------------------------------------------------------------------
 
 -- PURPOSE
--- Detect duplicates on the combination of non-key fields to assess uniqueness and
--- ensure data integrity where constraints are absent.
+-- Detect duplicate records.
 
 SELECT
     'actor' AS table_name,
@@ -708,25 +744,27 @@ FROM (
 ORDER BY table_name;
 
 -- INSIGHTS
--- Duplicate rows were limited to two fields.
--- In the case of inventory, repeated combinations may be valid due to multiple
--- copies of the same film titles per store.
+-- Duplicate records were identified in the actor and inventory tables.
+-- Duplicates are expected in the inventory table due to multiple physical
+-- copies held per title distinguished by inventory_id.
 
 -- RECOMMENDATIONS
 -- Confirm whether duplicates in the actor table reflect true data replication 
--- and drop if appropriate (Refer 4.2).
+-- and remove if appropriate (Refer 4.2).
+-- Confirm whether duplicates in the inventory table reflect actual copies held for
+-- rental in order to determine whether to remove or retain (Refer 4.2).
 
 -- --------------------------------------------------------------------------------
--- 3.4 COUNT DISTINCT VALUES (All tables | columns)
+-- 3.4 - COUNT DISTINCT VALUES (All tables & columns)
 -- --------------------------------------------------------------------------------
 
 -- PURPOSE
--- Count unique values per column across all tables to detect low-variance fields, 
--- constant values, or columns that may be redundant in analysis.
+-- Count unique values per column across all tables to detect columns with
+-- unexpected high or low variance, or constant values.
 
 -- TABLE: actor
 SELECT 
-    'actor_id' AS actor_variable, 
+    'actor_id' AS actor_column, 
     COUNT(DISTINCT actor_id) AS distinct_count 
 FROM actor
 UNION ALL
@@ -747,7 +785,7 @@ FROM actor;
 
 -- TABLE: address
 SELECT 
-    'address_id' AS address_variable, 
+    'address_id' AS address_column, 
     COUNT(DISTINCT address_id) AS distinct_count 
 FROM address
 UNION ALL
@@ -788,7 +826,7 @@ FROM address;
 
 -- TABLE: category
 SELECT 
-    'category_id' AS category_variable, 
+    'category_id' AS category_column, 
     COUNT(DISTINCT category_id) AS distinct_count 
 FROM category
 UNION ALL
@@ -804,7 +842,7 @@ FROM category;
 
 -- TABLE: city
 SELECT 
-    'city_id' AS city_variable, 
+    'city_id' AS city_column, 
     COUNT(DISTINCT city_id) AS distinct_count 
 FROM city
 UNION ALL
@@ -825,7 +863,7 @@ FROM city;
 
 -- TABLE: country
 SELECT 
-    'country_id' AS country_variable, 
+    'country_id' AS country_column, 
     COUNT(DISTINCT country_id) AS distinct_count 
 FROM country
 UNION ALL
@@ -841,7 +879,7 @@ FROM country;
 
 -- TABLE: customer
 SELECT 
-    'customer_id' AS customer_variable, 
+    'customer_id' AS customer_column, 
     COUNT(DISTINCT customer_id) AS distinct_count 
 FROM customer
 UNION ALL
@@ -892,7 +930,7 @@ FROM customer;
 
 -- TABLE: film
 SELECT 
-    'film_id' AS film_variable, 
+    'film_id' AS film_column, 
     COUNT(DISTINCT film_id) AS distinct_count 
 FROM film
 UNION ALL
@@ -958,7 +996,7 @@ FROM film;
 
 -- TABLE: film_actor
 SELECT 
-    'actor_id' AS film_actor_variable, 
+    'actor_id' AS film_actor_column, 
     COUNT(DISTINCT actor_id) AS distinct_count 
 FROM film_actor
 UNION ALL
@@ -974,7 +1012,7 @@ FROM film_actor;
 
 -- TABLE: film_category
 SELECT 
-    'film_id' AS film_category_variable, 
+    'film_id' AS film_category_column, 
     COUNT(DISTINCT film_id) AS distinct_count 
 FROM film_category
 UNION ALL
@@ -990,7 +1028,7 @@ FROM film_category;
 
 -- TABLE: inventory
 SELECT 
-    'inventory_id' AS inventory_variable, 
+    'inventory_id' AS inventory_column, 
     COUNT(DISTINCT inventory_id) AS distinct_count 
 FROM inventory
 UNION ALL
@@ -1011,7 +1049,7 @@ FROM inventory;
 
 -- TABLE: language
 SELECT 
-    'language_id' AS language_variable, 
+    'language_id' AS language_column, 
     COUNT(DISTINCT language_id) AS distinct_count 
 FROM language
 UNION ALL
@@ -1027,7 +1065,7 @@ FROM language;
 
 -- TABLE: payment
 SELECT 
-    'payment_id' AS payment_variable, 
+    'payment_id' AS payment_column, 
     COUNT(DISTINCT payment_id) AS distinct_count 
 FROM payment
 UNION ALL
@@ -1058,7 +1096,7 @@ FROM payment;
 
 -- TABLE: rental
 SELECT 
-    'rental_id' AS rental_variable, 
+    'rental_id' AS rental_column, 
     COUNT(DISTINCT rental_id) AS distinct_count 
 FROM rental
 UNION ALL
@@ -1094,7 +1132,7 @@ FROM rental;
 
 -- TABLE: staff
 SELECT 
-    'staff_id' AS staff_variable, 
+    'staff_id' AS staff_column, 
     COUNT(DISTINCT staff_id) AS distinct_count 
 FROM staff
 UNION ALL
@@ -1150,7 +1188,7 @@ FROM staff;
 
 -- TABLE: store
 SELECT 
-    'store_id' AS store_variable, 
+    'store_id' AS store_column, 
     COUNT(DISTINCT store_id) AS distinct_count 
 FROM store
 UNION ALL
@@ -1170,42 +1208,37 @@ SELECT
 FROM store;
 
 -- INSIGHTS
--- Several fields have extremely low distinct counts relative to total rows,
--- including last_update, status flags, the ENUM-type field, as well as some
--- fields across staff, store, language, and category tables.
--- Some ID or key fields have identical counts to row totals and descriptions,
--- confirming their uniqueness.
--- There is one more city_id values than city values in city table. 
--- Not all film titles are linked actors, and not all titles are available for 
--- rent. 
--- Timestamps show no variance, supporting earlier observations of uniform 
--- update behaviour.
+-- Several columns have extremely low distinct counts relative to total rows 
+-- (address.address2 and several columns in the film table).
+-- Only 997 of the 1000 film titles are linked to actors (film_actor table).
+-- Only 958 of the 1000 film titles are available for rent (inventory table).
+-- Timestamp columns all show 1 distinct value supporting earlier observations of
+-- uniform update behaviour.
+-- Status columns show either 1 or 2 distinct records supporting binary expectation.
 
 -- RECOMMENDATIONS
--- Remove low-variance or constant fields from the analysis view that add no
--- value to the analysis.
+-- Remove columns with low or no variance, or redundant status columns that add no
+-- value to the analysis (Refer 4.5).
 
 -- --------------------------------------------------------------------------------
--- 3.5 FREQUENCY DISTRIBTIONS (Categorical Variables) 
+-- 3.5 - FREQUENCY DISTRIBTIONS (Categorical columns)
 -- --------------------------------------------------------------------------------
 
 -- PURPOSE
--- Show the most common values for selected categorical variables to detect skew,
--- repetitive entries, or overly dominant values.
+-- Show frequency of values in categorical columns to assess distribution, overly
+-- dominant or repetitive values, or other undetected placeholder values.
 
 -- TABLE:  actor
 SELECT
     first_name as actor_first_name,
-    COUNT(*) AS frequency,
-    ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM actor), 2) AS percentage
+    COUNT(*) AS frequency
 FROM actor
 GROUP BY actor_first_name
 ORDER BY frequency DESC;
 
 SELECT
     last_name as actor_last_name,
-    COUNT(*) AS frequency,
-    ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM actor), 2) AS percentage
+    COUNT(*) AS frequency
 FROM actor
 GROUP BY actor_last_name
 ORDER BY frequency DESC;
@@ -1213,40 +1246,35 @@ ORDER BY frequency DESC;
 -- TABLE: address
 SELECT
     address AS address_address,
-    COUNT(*) AS frequency,
-    ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM address), 2) AS percentage
+    COUNT(*) AS frequency
 FROM address
 GROUP BY address_address
 ORDER BY frequency DESC;
 
 SELECT
     address2 AS address_address2,
-    COUNT(*) AS frequency,
-    ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM address), 2) AS percentage
+    COUNT(*) AS frequency
 FROM address
 GROUP BY address_address2
 ORDER BY frequency DESC;
 
 SELECT
     district AS address_district,
-    COUNT(*) AS frequency,
-    ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM address), 2) AS percentage
+    COUNT(*) AS frequency
 FROM address
 GROUP BY address_district
 ORDER BY frequency DESC;
 
 SELECT
     postal_code AS address_postal_code,
-    COUNT(*) AS frequency,
-    ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM address), 2) AS percentage
+    COUNT(*) AS frequency
 FROM address
 GROUP BY address_postal_code
 ORDER BY frequency DESC;
 
 SELECT
     phone AS address_phone,
-    COUNT(*) AS frequency,
-    ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM address), 2) AS percentage
+    COUNT(*) AS frequency
 FROM address
 GROUP BY address_phone
 ORDER BY frequency DESC;
@@ -1254,8 +1282,7 @@ ORDER BY frequency DESC;
 -- TABLE: category
 SELECT
     name AS category_name,
-    COUNT(*) AS frequency,
-    ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM category), 2) AS percentage
+    COUNT(*) AS frequency
 FROM category
 GROUP BY category_name
 ORDER BY frequency DESC;
@@ -1263,8 +1290,7 @@ ORDER BY frequency DESC;
 -- TABLE: city
 SELECT
     city AS city_city,
-    COUNT(*) AS frequency,
-    ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM city), 2) AS percentage
+    COUNT(*) AS frequency
 FROM city
 GROUP BY city_city
 ORDER BY frequency DESC;
@@ -1272,8 +1298,7 @@ ORDER BY frequency DESC;
 -- TABLE: country
 SELECT
     country AS country_country,
-    COUNT(*) AS frequency,
-    ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM country), 2) AS percentage
+    COUNT(*) AS frequency
 FROM country
 GROUP BY country_country
 ORDER BY frequency DESC;
@@ -1281,40 +1306,35 @@ ORDER BY frequency DESC;
 -- TABLE: customer
 SELECT
     first_name AS customer_first_name,
-    COUNT(*) AS frequency,
-    ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM customer), 2) AS percentage
+    COUNT(*) AS frequency
 FROM customer
 GROUP BY customer_first_name
 ORDER BY frequency DESC;
 
 SELECT
     last_name AS customer_last_name,
-    COUNT(*) AS frequency,
-    ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM customer), 2) AS percentage
+    COUNT(*) AS frequency
 FROM customer
 GROUP BY customer_last_name
 ORDER BY frequency DESC;
 
 SELECT
     email AS customer_email,
-    COUNT(*) AS frequency,
-    ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM customer), 2) AS percentage
+    COUNT(*) AS frequency
 FROM customer
 GROUP BY customer_email
 ORDER BY frequency DESC;
 
 SELECT
     activebool AS customer_activebool,
-    COUNT(*) AS frequency,
-    ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM customer), 2) AS percentage
+    COUNT(*) AS frequency
 FROM customer
 GROUP BY customer_activebool
 ORDER BY frequency DESC;
 
 SELECT
     active AS customer_active,
-    COUNT(*) AS frequency,
-    ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM customer), 2) AS percentage
+    COUNT(*) AS frequency
 FROM customer
 GROUP BY customer_active
 ORDER BY frequency DESC;
@@ -1322,32 +1342,28 @@ ORDER BY frequency DESC;
 -- TABLE: film
 SELECT
     title AS film_title,
-    COUNT(*) AS frequency,
-    ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM film), 2) AS percentage
+    COUNT(*) AS frequency
 FROM film
 GROUP BY film_title
 ORDER BY frequency DESC;
 
 SELECT
     description AS film_description,
-    COUNT(*) AS frequency,
-    ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM film), 2) AS percentage
+    COUNT(*) AS frequency
 FROM film
 GROUP BY film_description
 ORDER BY frequency DESC;
 
 SELECT
     rating AS film_rating,
-    COUNT(*) AS frequency,
-    ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM film), 2) AS percentage
+    COUNT(*) AS frequency
 FROM film
 GROUP BY film_rating
 ORDER BY frequency DESC;
 
 SELECT
     special_features AS film_special_features,
-    COUNT(*) AS frequency,
-    ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM film), 2) AS percentage
+    COUNT(*) AS frequency
 FROM film
 GROUP BY film_special_features
 ORDER BY frequency DESC;
@@ -1355,8 +1371,7 @@ ORDER BY frequency DESC;
 -- TABLE: language
 SELECT 
     name AS language_name,
-    COUNT(*) AS frequency,
-    ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM language), 2) AS percentage
+    COUNT(*) AS frequency
 FROM language
 GROUP BY language_name
 ORDER BY frequency DESC;
@@ -1364,198 +1379,242 @@ ORDER BY frequency DESC;
 -- TABLE: staff
 SELECT 
     first_name AS staff_first_name,
-    COUNT(*) AS frequency,
-    ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM staff), 2) AS percentage
+    COUNT(*) AS frequency
 FROM staff
 GROUP BY staff_first_name
 ORDER BY frequency DESC;
 
 SELECT 
     last_name AS staff_last_name,
-    COUNT(*) AS frequency,
-    ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM staff), 2) AS percentage
+    COUNT(*) AS frequency
 FROM staff
 GROUP BY staff_last_name
 ORDER BY frequency DESC;
 
 SELECT 
     email AS staff_email,
-    COUNT(*) AS frequency,
-    ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM staff), 2) AS percentage
+    COUNT(*) AS frequency
 FROM staff
 GROUP BY staff_email
 ORDER BY frequency DESC;
 
 SELECT 
     active AS staff_active,
-    COUNT(*) AS frequency,
-    ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM staff), 2) AS percentage
+    COUNT(*) AS frequency
 FROM staff
 GROUP BY staff_active
 ORDER BY frequency DESC;
 
 SELECT 
     username AS staff_username,
-    COUNT(*) AS frequency, 
-    ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM staff), 2) AS percentage
+    COUNT(*) AS frequency
 FROM staff
 GROUP BY staff_username
 ORDER BY frequency DESC;
 
 SELECT 
     password AS staff_password,
-    COUNT(*) AS frequency, 
-    ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM staff), 2) AS percentage
+    COUNT(*) AS frequency
 FROM staff
 GROUP BY staff_password
 ORDER BY frequency DESC;
 
 -- INSIGHTS
--- Some categorical fields show small number of uniform values (e.g. active, 
--- activebool, address2).
--- Fields such as names, cities, and emails display healthy distribution with 
--- limited repetition — London appear twice in city table.
--- ENUMs and structured arrays (e.g. rating, special_features) follow standardised 
--- patterns as expected.
--- Some fields (e.g. password) reflect duplicate values.
-
--- Some fields show nearly complete absence or repetition of a single value.
--- activebool is uniform across all customers — expected, but confirms it’s a redundant field for analysis.
--- change to boolean or removal if redundant
-
--- Customer names are distributed with modest repetition; no dominant entries, indicating diverse inputs.
--- activebool is uniform across all customers — expected, but confirms it’s a redundant field for analysis.
--- active shows limited variation and inconsistent typing — flagged earlier as unreliable.
--- Film ratings and special features are categorised into a small number of standard values, aligning with known ENUM and ARRAY structures.
--- Language names are well-controlled, with six defined options as per earlier ENUM review.
+-- The address.address2 contains only null values (4) and empty strings (599).
+-- Empty strings detected in address.district (3), address.phone (2),
+-- address.postal_code (4), are consistent with earlier observations.
+-- London appears twice in city table but but earlier observations confirmed it
+-- links to different countries.
+-- Duplicates noted in field expected to hold unique values (staff.password), but
+-- others (customer.email, staff.email) all hold unique values.
+-- Boolean status columns (customer.activebool, staff.active) contain only one value
+-- (true) while status column of type integer contain 0 and 1 (customer.active).
 
 -- RECOMMENDATIONS
--- Drop fields that are constant or carry no analytical value (e.g. activebool, address2, active in staff).
--- Exclude technical fields (e.g. password, username) from business views unless required.
--- Retain well-distributed identifiers and descriptive fields that support segmentation or joins.
--- Standardise handling of ENUMs and ARRAYs during view creation if used in grouping or filtering.
-
--- Drop categorical fields with uniform or near-uniform distributions
--- (e.g. address2, last_update) from analytical views.
---  Drop customer.activebool and consider excluding or renaming customer.active after resolving type ambiguity.
--- Retain film.rating and special_features but standardise their handling in views (e.g., cast ENUMs and flatten ARRAYs).
+-- Remove empty columns (Refer 4.5).
+-- Impute empty strings in retained columns with placeholder values e.g. 'n/a'
+-- (Refer 4.5).
+-- Remove the redundant status column of type integer. The boolean status column
+-- indicates that all customers are active, which is supported by the presence of
+-- transactions, which provide a more reliable indicator of customer activity
+-- (Refer 4.5).
+-- Communicate duplicate passwords to management as security risk (Reporting).
 
 -- --------------------------------------------------------------------------------
--- 3.6 DESCRIPTIVE STATISTICS (Numeric Variables)
+-- 3.6 - DESCRIPTIVE STATISTICS (Numeric columns)
 -- --------------------------------------------------------------------------------
 
 -- PURPOSE
--- Summarise numerical fields (min, max, mean, std, etc.) to detect outliers and skew.
+-- Summarise numerical columns using descriptive statistics to assess distributions
+-- and skew, detect outliers, or other anomalies.
+
+WITH 
+stats_rental_duration AS (
+    SELECT 
+        COUNT(*) AS total_records,
+        COUNT(DISTINCT rental_duration) AS distinct_count,
+        SUM(CASE WHEN rental_duration = 0 THEN 1 ELSE 0 END) AS zero_count,
+        MIN(rental_duration) AS min_value,
+        MAX(rental_duration) AS max_value,
+        ROUND(AVG(rental_duration), 2) AS mean_value,
+        PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY rental_duration) AS median_value,
+        (MAX(rental_duration) - MIN(rental_duration)) AS range_value,
+        ROUND(STDDEV_POP(rental_duration), 2) AS stddev_value
+    FROM film
+),
+
+stats_rental_rate AS (
+    SELECT 
+        COUNT(*) AS total_records,
+        COUNT(DISTINCT rental_rate) AS distinct_count,
+        SUM(CASE WHEN rental_rate = 0 THEN 1 ELSE 0 END) AS zero_count,
+        MIN(rental_rate) AS min_value,
+        MAX(rental_rate) AS max_value,
+        ROUND(AVG(rental_rate), 2) AS mean_value,
+        PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY rental_rate) AS median_value,
+        (MAX(rental_rate) - MIN(rental_rate)) AS range_value,
+        ROUND(STDDEV_POP(rental_rate), 2) AS stddev_value
+    FROM film
+),
+
+stats_length AS (
+    SELECT 
+        COUNT(*) AS total_records,
+        COUNT(DISTINCT length) AS distinct_count,
+        SUM(CASE WHEN length = 0 THEN 1 ELSE 0 END) AS zero_count,
+        MIN(length) AS min_value,
+        MAX(length) AS max_value,
+        ROUND(AVG(length), 2) AS mean_value,
+        PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY length) AS median_value,
+        (MAX(length) - MIN(length)) AS range_value,
+        ROUND(STDDEV_POP(length), 2) AS stddev_value
+    FROM film
+),
+
+stats_replacement_cost AS (
+    SELECT 
+        COUNT(*) AS total_records,
+        COUNT(DISTINCT replacement_cost) AS distinct_count,
+        SUM(CASE WHEN replacement_cost = 0 THEN 1 ELSE 0 END) AS zero_count,
+        MIN(replacement_cost) AS min_value,
+        MAX(replacement_cost) AS max_value,
+        ROUND(AVG(replacement_cost), 2) AS mean_value,
+        PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY replacement_cost) AS median_value,
+        (MAX(replacement_cost) - MIN(replacement_cost)) AS range_value,
+        ROUND(STDDEV_POP(replacement_cost), 2) AS stddev_value
+    FROM film
+),
+
+stats_amount AS (
+    SELECT 
+        COUNT(*) AS total_records,
+        COUNT(DISTINCT amount) AS distinct_count,
+        SUM(CASE WHEN amount = 0 THEN 1 ELSE 0 END) AS zero_count,
+        MIN(amount) AS min_value,
+        MAX(amount) AS max_value,
+        ROUND(AVG(amount), 2) AS mean_value,
+        PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY amount) AS median_value,
+        (MAX(amount) - MIN(amount)) AS range_value,
+        ROUND(STDDEV_POP(amount), 2) AS stddev_value
+    FROM payment
+),
+
+outliers_rental_duration AS (
+    SELECT 
+        COUNT(*) FILTER (WHERE rental_duration < (mean_value - 3 * stddev_value)) AS lower_outlier_count,
+        COUNT(*) FILTER (WHERE rental_duration > (mean_value + 3 * stddev_value)) AS upper_outlier_count
+    FROM film, stats_rental_duration
+),
+
+outliers_rental_rate AS (
+    SELECT 
+        COUNT(*) FILTER (WHERE rental_rate < (mean_value - 3 * stddev_value)) AS lower_outlier_count,
+        COUNT(*) FILTER (WHERE rental_rate > (mean_value + 3 * stddev_value)) AS upper_outlier_count
+    FROM film, stats_rental_rate
+),
+
+outliers_length AS (
+    SELECT 
+        COUNT(*) FILTER (WHERE length < (mean_value - 3 * stddev_value)) AS lower_outlier_count,
+        COUNT(*) FILTER (WHERE length > (mean_value + 3 * stddev_value)) AS upper_outlier_count
+    FROM film, stats_length
+),
+outliers_replacement_cost AS (
+    SELECT 
+        COUNT(*) FILTER (WHERE replacement_cost < (mean_value - 3 * stddev_value)) AS lower_outlier_count,
+        COUNT(*) FILTER (WHERE replacement_cost > (mean_value + 3 * stddev_value)) AS upper_outlier_count
+    FROM film, stats_replacement_cost
+),
+
+outliers_amount AS (
+    SELECT 
+        COUNT(*) FILTER (WHERE amount < (mean_value - 3 * stddev_value)) AS lower_outlier_count,
+        COUNT(*) FILTER (WHERE amount > (mean_value + 3 * stddev_value)) AS upper_outlier_count
+    FROM payment, stats_amount
+)
 
 SELECT 
     'film' AS table_name,
     'rental_duration' AS column_name,
-    COUNT(*) AS total_records,
-    SUM(CASE WHEN rental_duration IS NULL THEN 1 ELSE 0 END) AS null_count,
-    SUM(CASE WHEN rental_duration = 0 THEN 1 ELSE 0 END) AS zero_count,
-    MIN(rental_duration) AS min_value,
-    MAX(rental_duration) AS max_value,
-    ROUND(AVG(rental_duration), 2) AS mean_value,
-    PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY rental_duration) AS median_value,
-    PERCENTILE_CONT(0.25) WITHIN GROUP (ORDER BY rental_duration) AS q1_value,
-    PERCENTILE_CONT(0.75) WITHIN GROUP (ORDER BY rental_duration) AS q2_value,
-    (MAX(rental_duration) - MIN(rental_duration)) AS range_value,
-    ROUND(STDDEV_POP(rental_duration), 2) AS stddev_value,
-    ROUND(VAR_POP(rental_duration), 2) AS variance_value
-FROM film
+    * 
+FROM stats_rental_duration CROSS JOIN outliers_rental_duration
 
 UNION ALL
 
 SELECT 
     'film',
     'rental_rate',
-    COUNT(*),
-    SUM(CASE WHEN rental_rate IS NULL THEN 1 ELSE 0 END),
-    SUM(CASE WHEN rental_rate = 0 THEN 1 ELSE 0 END),
-    MIN(rental_rate),
-    MAX(rental_rate),
-    ROUND(AVG(rental_rate), 2),
-    PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY rental_rate),
-    PERCENTILE_CONT(0.25) WITHIN GROUP (ORDER BY rental_rate),
-    PERCENTILE_CONT(0.75) WITHIN GROUP (ORDER BY rental_rate),
-    (MAX(rental_rate) - MIN(rental_rate)),
-    ROUND(STDDEV_POP(rental_rate), 2),
-    ROUND(VAR_POP(rental_rate), 2)
-FROM film
+    * 
+FROM stats_rental_rate CROSS JOIN outliers_rental_rate
 
 UNION ALL
 
 SELECT 
     'film',
     'length',
-    COUNT(*),
-    SUM(CASE WHEN length IS NULL THEN 1 ELSE 0 END),
-    SUM(CASE WHEN length = 0 THEN 1 ELSE 0 END),
-    MIN(length),
-    MAX(length),
-    ROUND(AVG(length), 2),
-    PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY length),
-    PERCENTILE_CONT(0.25) WITHIN GROUP (ORDER BY length),
-    PERCENTILE_CONT(0.75) WITHIN GROUP (ORDER BY length),
-    (MAX(length) - MIN(length)),
-    ROUND(STDDEV_POP(length), 2),
-    ROUND(VAR_POP(length), 2)
-FROM film
+    * 
+FROM stats_length CROSS JOIN outliers_length
 
 UNION ALL
 
 SELECT 
     'film',
     'replacement_cost',
-    COUNT(*),
-    SUM(CASE WHEN replacement_cost IS NULL THEN 1 ELSE 0 END),
-    SUM(CASE WHEN replacement_cost = 0 THEN 1 ELSE 0 END),
-    MIN(replacement_cost),
-    MAX(replacement_cost),
-    ROUND(AVG(replacement_cost), 2),
-    PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY replacement_cost),
-    PERCENTILE_CONT(0.25) WITHIN GROUP (ORDER BY replacement_cost),
-    PERCENTILE_CONT(0.75) WITHIN GROUP (ORDER BY replacement_cost),
-    (MAX(replacement_cost) - MIN(replacement_cost)),
-    ROUND(STDDEV_POP(replacement_cost), 2),
-    ROUND(VAR_POP(replacement_cost), 2)
-FROM film
+    * 
+FROM stats_replacement_cost CROSS JOIN outliers_replacement_cost
 
 UNION ALL
 
 SELECT 
     'payment',
     'amount',
-    COUNT(*),
-    SUM(CASE WHEN amount IS NULL THEN 1 ELSE 0 END),
-    SUM(CASE WHEN amount = 0 THEN 1 ELSE 0 END),
-    MIN(amount),
-    MAX(amount),
-    ROUND(AVG(amount), 2),
-    PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY amount),
-    PERCENTILE_CONT(0.25) WITHIN GROUP (ORDER BY amount),
-    PERCENTILE_CONT(0.75) WITHIN GROUP (ORDER BY amount),
-    (MAX(amount) - MIN(amount)),
-    ROUND(STDDEV_POP(amount), 2),
-    ROUND(VAR_POP(amount), 2)
-FROM payment;
+    * 
+FROM stats_amount CROSS JOIN outliers_amount;
 
 -- INSIGHTS
--- No NULL values were found across any numeric fields.
--- All values fall within reasonable expected ranges — no outliers or unexpected spikes.
--- Only one field (payment.amount) includes zero values, which may represent special transactions.
+-- One column (payment.amount) contains 24 unexpected zero values.
+-- The mean and median are relatively close across all columns, indicating only a
+-- slight right skew in the payment.amount column.
+-- The query identified 8 upper outliers in the payment.amount column, each
+-- exceeding three standard deviations above the mean.
 
 -- RECOMMENDATIONS
--- Review zero amounts in the payment table for validity — may indicate system errors or test records.
+-- Validate the zero values and outliers in the payment.amount column (Refer 5.2.1 &
+-- 5.3).
+
+
+-- ================================================================================
+-- 3.7 - TEMPORAL COLUMNS
+-- ================================================================================
 
 -- --------------------------------------------------------------------------------
--- 3.7.1 - COUNT DISTINCT VALUES (Timestamp Variables)
+-- 3.7.1 - COUNT DISTINCT VALUES (System update columns)
 -- --------------------------------------------------------------------------------
 
 -- PURPOSE
--- Assess the number of distinct update and creation timestamps across all base 
--- tables to evaluate whether these fields reflect real activity or static/default 
--- values.
+-- Assess the number of distinct values in timestamp columns across all base tables
+-- that track system updates to evaluate whether they track real activity or
+-- indicate static metadata.
 
 SELECT 
     'actor' AS table_name, 
@@ -1709,19 +1768,20 @@ ORDER BY
     table_name;
 
 -- INSIGHTS
--- Most last_update fields contain only a single distinct timestamp — suggesting default values or initial load timestamps rather than true update tracking.
--- rental.last_update is the exception, with multiple distinct values — possibly reflecting genuine activity or system processes.
+-- All but one last_update columns contain a single distinct timestamp which 
+-- suggests singular creation rather than true update tracking.
 
 -- RECOMMENDATIONS
--- Remove static last_update fields from analytical views.
-    
+-- Remove last_update and create_date columns for analysis (Refer 4.5).
+
 -- --------------------------------------------------------------------------------
--- 3.7.2 - COUNT DISTINCT VALUES (Transaction Date Variables) 
+-- 3.7.2 - COUNT DISTINCT VALUES (Transaction date columns)
 -- --------------------------------------------------------------------------------
 
 -- PURPOSE
--- Evaluate the distribution and coverage of transaction-related timestamps to 
--- confirm the presence of realistic activity periods and identify gaps or irregularities.
+-- Assess the number of distinct values in timestamp columns that track transactions
+-- to assess whether these columns reflect realistic temporal patterns or static
+-- entries.
 
 SELECT
     'payment' AS table_name, 
@@ -1748,16 +1808,20 @@ SELECT
 FROM rental;
 
 -- INSIGHTS
--- Distinct transaction dates are present across all fields, indicating operational activity over time.
--- The date ranges for rentals, returns, and payments appear coherent, suggesting logical sequencing.
+-- A wide range of distinct values is present across all columns, indicating
+-- temporal variation in transaction activity, including time components.
+
+-- RECOMMENDATIONS
+-- Cast retained timestamp columns tracking operational activity to date as
+-- time-level detail is not required in the analysis (Refer 4.5).
 
 -- --------------------------------------------------------------------------------
--- 3.7.3 - COUNT DISTINCT VALUES (Numeric date fields)
+-- 3.7.3 - COUNT DISTINCT VALUES (Numeric date columns)
 -- --------------------------------------------------------------------------------
-    
+
 -- PURPOSE
--- Verify that numeric date fields such as `release_year` hold plausible values 
--- and fall within a consistent, analysable range.
+-- Verify that the numeric date column holds plausible values for time-based
+-- interpretation. 
 
 SELECT
     'film' AS table_name, 
@@ -1767,23 +1831,21 @@ SELECT
     MAX(release_year) AS max_date 
 FROM film;
 
---
 -- INSIGHTS
--- Only one unique release_year value was found confirming single release year 
--- catalogue.
+-- Only one unique value was found confirming a single release year for the
+-- cataloque.
 
 -- RECOMMENDATIONS
--- Treat release_year as a fixed attribute for context, not as a timeline for 
--- trend analysis.
+-- Flag film.release_year as a fixed attribute for contextual reference, not as a
+-- timeline for temporal analysis.
     
 -- --------------------------------------------------------------------------------
--- 3.7.4 - FREQUENCY DISTRIBUTIONS (Transaction Date Variables)
+-- 3.7.4 - FREQUENCY DISTRIBUTIONS (Transaction date columns)
 -- --------------------------------------------------------------------------------
 
 -- PURPOSE
 -- Assess the daily distribution of transaction events to identify irregular 
--- patterns, gaps, or system-generated activity that may require cleaning or 
--- explanation.
+-- patterns, gaps, or system-generated activity. All timestamps are cast to date.
 
 SELECT 
     'rental' AS table_name,
@@ -1809,95 +1871,19 @@ FROM payment
 GROUP BY payment_date::date
 ORDER BY payment_date::date;
 
---
 -- INSIGHTS
--- All three date fields (rental_date, return_date, payment_date) span continuous timeframes with varying frequency.
--- Noticeable dips in frequency occur at semi-regular intervals — potentially reflecting system cycles or business logic.
+
+-- The transactional date columns (rental_date, return_date, and payment_date) show
+-- five distinct periods of activity, each followed by a period of inactivity.
+-- Both rental_date and payment_date conclude with a single isolated entry.
+-- The return_date column includes 184 null values.
+-- The activity patterns do not reflect typical weekly, monthly, or seasonal trends.
+-- Return activity typically begins one day after the first rentals which start in
+-- late May 2005, but return cycles span nearly twice the duration of rental
+-- periods.
+-- Payment activity starts much later, in mid-February 2007 with each cycle lasting
+-- around seven days.
 
 -- RECOMMENDATIONS
--- Flag recurring dips for further context — may represent batch processing or planned system downtimes.
-
--- --------------------------------------------------------------------------------
--- 3.8.1 - LOGIC CHECK FOR UNCONSTRAINED KEYS
--- --------------------------------------------------------------------------------
-
-
--- Include return_date for logic and dependency checks (Refer 3.1).
-
-
--- PURPOSE
--- Manually verify whether all store_id values in related tables have a matching 
--- entry in the store table.
-
-SELECT 'customer' AS table_name, 'store_id' AS foreign_key, COUNT(*) AS orphaned_customers FROM customer
-LEFT JOIN store ON customer.store_id = store.store_id
-WHERE store.store_id IS NULL
-UNION ALL
-SELECT 'inventory' AS table_name, 'store_id' AS foreign_key, COUNT(*) AS orphaned_inventory
-FROM inventory
-LEFT JOIN store ON inventory.store_id = store.store_id
-WHERE store.store_id IS NULL
-UNION ALL
-SELECT 'staff' AS table_name, 'store_id' AS foreign_key, COUNT(*) AS orphaned_staff
-FROM staff
-LEFT JOIN store ON staff.store_id = store.store_id
-WHERE store.store_id IS NULL;
-
---
--- INSIGHTS
--- All store_id values in customer, inventory, and staff tables are valid — no 
--- orphan records found.
-
--- --------------------------------------------------------------------------------
--- 3.8.2 - BUSINESS CHECK - ORPHANED PAYMENTS
--- --------------------------------------------------------------------------------
-
--- PURPOSE
-
-SELECT COUNT(*) AS payments_without_rental
-FROM payment p
-LEFT JOIN rental r ON p.rental_id = r.rental_id
-WHERE r.rental_id IS NULL;
-
---
--- INSIGHTS
-
--- --------------------------------------------------------------------------------
--- 3.8.3 - BUSINESS CHECK - RETURN DATES BEFORE RENTAL DATES
--- --------------------------------------------------------------------------------
-
--- PURPOSE
-
-SELECT COUNT(*) AS invalid_return_dates
-FROM rental
-WHERE return_date < rental_date;
-
---
--- INSIGHTS
-
--- --------------------------------------------------------------------------------
--- 3.8.4 - BUSINESS CHECK - RENTAL WITHOUT RENTURN DATES
--- --------------------------------------------------------------------------------
-
--- PURPOSE
-
-SELECT COUNT(*) AS rentals_without_return
-FROM rental
-WHERE return_date IS NULL;
-
---
--- INSIGHTS
-
--- --------------------------------------------------------------------------------
--- 3.8.5 - BUSINESS CHECK - PAYMENTS BEFORE RENTAL DATE
--- --------------------------------------------------------------------------------
-
--- PURPOSE
-
-SELECT COUNT(*) AS payments_before_rental
-FROM payment p
-JOIN rental r ON p.rental_id = r.rental_id
-WHERE p.payment_date < r.rental_date;
-
---
--- INSIGHTS
+-- Confirm that return_date is later than or equal to rental_date (Refer 5.4).
+-- Confirm that payment_date is later than or equal to rental_date (Refer 5.5).

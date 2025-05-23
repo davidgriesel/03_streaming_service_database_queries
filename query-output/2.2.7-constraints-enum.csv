@@ -1,6 +1,0 @@
-schema_name,enum_type,enum_value
-public,mpaa_rating,G
-public,mpaa_rating,NC-17
-public,mpaa_rating,PG
-public,mpaa_rating,PG-13
-public,mpaa_rating,R

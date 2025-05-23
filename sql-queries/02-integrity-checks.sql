@@ -1,17 +1,28 @@
 -- ================================================================================
--- 2. INTEGRITY CHECKS
+-- 2 - INTEGRITY CHECKS
 -- ================================================================================
 
--- PURPOSE 
--- Validate data types and constraints to ensure data integrity.
+-- TABLE OF CONTENTS
+
+-- 2.1 - DATA TYPES
+-- 2.2 - CONSTRAINTS
+    -- 2.2.1 - PRIMARY KEY CONSTRAINTS
+    -- 2.2.2 - FOREIGN KEY CONSTRAINTS
+    -- 2.2.3 - NOT NULL CONSTRAINTS
+    -- 2.2.4 - UNIQUE CONSTRAINTS
+    -- 2.2.5 - CHECK CONSTRAINTS
+    -- 2.2.6 - DEFAULT VALUES
+-- 2.3 - USER_DEFINED TYPES
+    -- 2.3.1 - CLASSIFY USER-DEFINED TYPES
+    -- 2.3.2 - RETRIEVE ENUMERATED VALUE SETS
 
 -- --------------------------------------------------------------------------------
--- 2.1 DATA TYPES
+-- 2.1 - DATA TYPES
 -- --------------------------------------------------------------------------------
 
 -- PURPOSE
--- Validate the data types of columns across all base tables to ensure consistency and
--- compatibility for downstream cleaning and analysis.
+-- Validate data types across all columns of all base tables to ensure consistency
+-- with content and compatibility in downstream analysis.
 
 SELECT 
     c.table_name,
@@ -30,30 +41,33 @@ ORDER BY
     c.data_type;
 
 -- INSIGHTS
--- Most fields are type smallint, integer, or character varying.
--- 17 columns use timestamp without time zone, typical of system-generated or
--- transactional date fields.
--- A single column uses date while the rest use full timestamps.
--- One column uses character rather than character varying which may cause padding
--- or formatting inconsistencies.
--- One column normally associated with boolean uses integer.
--- Less common data types include ARRAY, USER-DEFINED ENUM, bytea, and tsvector
--- suggesting less common or rich metadata fields.
+-- Most columns are of type smallint, integer, character varying, or timestamp.
+-- Timestamp columns are typical system-generated columns tracking database updates.
+-- A single column uses date (customer.create_date) while the rest all use full
+-- timestamps.
+-- One column (language.name) uses character rather than character varying like the
+-- rest.
+-- One column normally associated with boolean (customer.active) uses integer while
+-- there is already a boolean column in the table.
+-- Columns with less common or unusual data types include ARRAY 
+-- (film.special_features), bytea (staff.picture), and tsvector (film.full_text).
+-- One column (film.rating) with USER-DEFINED data type.
 
 -- RECOMMENDATIONS
--- Change fields with type timestamp where time-level precision is not required to
--- date for standardisation (Refer 4.5).
+-- Cast retained timestamp columns to date where time-level precision is not
+-- required (Refer 4.5).
+-- Cast columns of type character to varchar to prevent padding and standardise
+-- formats for analysis(Refer 4.5).
+-- Review column normally associated with boolean for binary logic, compare to
+-- boolean column, and remove if having similar functions (Refer 3.5).
+-- Remove columns with unusual or complex data types not needed in the analysis
+-- (Refer 4.5).
+-- Confirm the actual data type of the user-defined column (Refer 2.3).
 
--- Change fields with type character to varchar for standardisation (Refer 4.5).
 
--- Confirm ENUM values for fields with type USER-DEFINED needed in analysis 
--- (Refer 2.2.7).
-
--- Review variable normally associated with boolean for binary logic (Refer 3.5).
-
--- Remove columns with unusual or complex data types if not needed in the analysis
--- Refer 4.3).
-
+-- ================================================================================
+-- 2.2 - CONSTRAINTS
+-- ================================================================================
 
 -- --------------------------------------------------------------------------------
 -- 2.2.1 - PRIMARY KEY CONSTRAINTS
@@ -61,8 +75,7 @@ ORDER BY
     
 -- PURPOSE
 -- Identify all primary key constraints (including composite keys) across base
--- tables to validate that each table has a unique identifier & enforce row-level
--- integrity.
+-- tables to validate that each table has a unique identifier.
 
 SELECT 
     tc.table_name,
@@ -88,16 +101,15 @@ ORDER BY
     tc.table_name;
 
 -- INSIGHTS
--- All tables have a defined primary key with two tables having composite keys.
+-- All tables have a defined primary key with two being composite keys.
 
 -- --------------------------------------------------------------------------------
 -- 2.2.2 - FOREIGN KEY CONSTRAINTS
 -- --------------------------------------------------------------------------------
 
 -- PURPOSE
--- Identify foreign key relationships for all base tables to confirm that child
--- tables are properly linked to referenced tables, supporting referential
--- integrity across the schema.
+-- Identify foreign key relationships in all base tables to confirm whether
+-- referential integrity is enforced to prevent invalid entries.
 
 SELECT
     tc.table_name AS table_name,
@@ -127,12 +139,13 @@ ORDER BY
     tc.table_name, kcu.column_name;
 
 -- INSIGHTS
--- Foreign key relationships are defined and generally align with the expected
--- relational structure of the schema.
--- Constraints are missing for some expected links to the store table.
+-- Foreign key relationships are defined in 18 instances linking child tables to the
+-- respective reference tables.
+-- No relationships were defined to link the customer, inventory, and staff tables
+-- to the store table via store_id.
 
 -- RECOMMENDATIONS
--- Manually validate integrity for store-linked fields where constraints are absent
+-- Manually validate integrity for store_id columns where constraints are absent
 -- (Refer 3.8.1).
 
 -- --------------------------------------------------------------------------------
@@ -140,8 +153,8 @@ ORDER BY
 -- --------------------------------------------------------------------------------
 
 -- PURPOSE
--- Identify fields that allow NULLs across al base tables, helping to isolate
--- columns that require additional quality checks.
+-- Identify columns that allow NULLs across al base tables to isolate columns for
+-- targeted checks.
 
 SELECT 
     c.table_name,
@@ -160,11 +173,11 @@ ORDER BY
     c.is_nullable;
 
 -- INSIGHTS
--- 72 varaibles are not nullable.
--- 14 columns across 5 tables are declared nullable.
+-- 72 columns are not nullable.
+-- 14 columns are declared nullable.
 
 -- RECOMMENDATIONS
--- Perform targeted null profiling for fields that are nullable (Refer 3.1).
+-- Perform targeted null profiling for columns that are nullable (Refer 3.1).
 
 -- --------------------------------------------------------------------------------
 -- 2.2.4 - UNIQUE CONSTRAINTS
@@ -172,7 +185,7 @@ ORDER BY
 
 -- PURPOSE
 -- Check for columns explicitly constrained to hold only unique values, beyond
--- those already enforced as keys helping to reveal additional integrity rules.
+-- those already enforced as keys.
 
 SELECT 
     tc.table_name,
@@ -198,11 +211,11 @@ ORDER BY
 -- INSIGHTS
 -- No explicit UNIQUE constraints were defined beyond those enforced by primary
 -- keys.
--- Any expected uniqueness in other fields (e.g. emails or usernames) is not
--- structurally guaranteed.
+-- Columns expected to hold unique values (e.g. emails or usernames) are not
+-- constrained as unique.
 
 -- RECOMMENDATIONS
--- Review frequency tables for duplicates where variables are expected to hold
+-- Review frequency tables for duplicates where columns are expected to hold
 -- unique values (Refer 3.5 | 3.7.4).
 
 -- --------------------------------------------------------------------------------
@@ -210,8 +223,8 @@ ORDER BY
 -- --------------------------------------------------------------------------------
 
 -- PURPOSE
--- Identify all CHECK constraints applied at table level to understand enforced
--- business rules or structural protections beyond primary and foreign keys.
+-- Identify all CHECK constraints to understand business rules enforced beyond
+-- primary and foreign keys.
 
 SELECT 
     tc.table_name,
@@ -234,22 +247,22 @@ ORDER BY
     tc.table_name;
 
 -- INSIGHTS
--- All CHECK constraints enforce IS NOT NULL conditions and align exactly with
--- the list of 72 non-nullable fields identified in 2.2.3.
--- No additional busienss rules are enforced at the table level, indicating that
+-- All CHECK constraints enforce IS NOT NULL conditions and align with the list of
+-- 72 non-nullable columns identified in 2.2.3.
+-- No additional business rules are enforced at the table level, indicating that
 -- such rules must be enforced manually.
 
 -- RECOMMENDATIONS
 -- Perform manual checks to confirm whether expected business rules are applied
--- (Refer 3.8).
+-- (Refer 3.9).
 
 -- --------------------------------------------------------------------------------
--- 2.2.6 - DEFAULT VALUES
+ -- 2.2.6 - DEFAULT VALUES
 -- --------------------------------------------------------------------------------
 
 -- PURPOSE
--- Identify columns with default values to understand where the database is
--- automatically assigning values when no input is provided.
+-- Identify columns with default values to understand where the database
+-- automatically assigns values when no input is provided.
 
 SELECT 
     c.table_name,
@@ -269,24 +282,65 @@ ORDER BY
     c.column_default, c.table_name;
 
 -- INSIGHTS
--- No unexpected default values identified. 
--- Default values are defined for some columns, related to classifications, dates,
--- primary keys, and boolean flags.
--- In primary key fields, defaults enforce unique ID generation.
--- Timestamp fields default to the current time to track record changes.
--- A small set of business-related fields include predefined default values to
--- classify records or populate known attributes.
+-- In columns with primary keys, defaults enforce unique ID generation.
+-- All last_update columns default to the current time to track database changes.
+-- Column of type date captures changes but truncates the current timestamp to
+-- retain only the date.
+-- Business-related columns include some predefined defaults.
 -- Boolean values default to true.
+-- Column with USER-DEFINED data type 'mpaa_rating' defaults to 'G', suggesting
+-- that the type is likely ENUMERATED with constrained categorical values.
+
+-- RECOMMENDATIONS
+-- Confirm whether user-defined columns use ENUMERATED types by classifying the
+-- mpaa_rating type in the database (Refer 2.3).
+
+
+-- ================================================================================
+-- 2.3 - USER_DEFINED TYPES
+-- ================================================================================
 
 -- --------------------------------------------------------------------------------
--- 2.2.7 - ENUMERATED | DOMAIN CONSTRAINTS
+-- 2.3.1 - CLASSIFY USER-DEFINED TYPES
 -- --------------------------------------------------------------------------------
 
 -- PURPOSE
--- Identify enumerated types defined in the database and list their allowed values.
+-- Classify USER-DEFINED data types for columns using the mpaa_rating type to
+-- uncover implicit constraints and guide downstream analysis.
 
 SELECT 
-    n.nspname AS schema_name,
+    t.typname AS type_name,
+    t.typtype,
+    CASE t.typtype
+        WHEN 'e' THEN 'enum'
+        WHEN 'd' THEN 'domain'
+        WHEN 'c' THEN 'composite'
+        WHEN 'r' THEN 'range'
+        WHEN 'b' THEN 'base'
+        ELSE 'other'
+    END AS type_kind
+FROM 
+    pg_type t
+JOIN 
+    pg_namespace n ON t.typnamespace = n.oid
+WHERE 
+    t.typname = 'mpaa_rating';
+
+-- INSIGHTS
+-- The USER-DEFINED type 'mpaa_rating' is classified as ENUM, confirming that 
+-- 'rating' in the film table is restricted to a predefined set of values.
+
+-- RECOMMENDATION
+-- Retrieve the ENUM values for further analysis (Refer 2.3.2).
+
+-- --------------------------------------------------------------------------------
+-- 2.3.2 - RETRIEVE ENUMERATED VALUE SETS
+-- --------------------------------------------------------------------------------
+
+-- PURPOSE
+-- Retrieve the set of values defined for the ENUM type 'mpaa_rating'. 
+
+SELECT 
     t.typname AS enum_type,
     e.enumlabel AS enum_value
 FROM 
@@ -301,40 +355,4 @@ ORDER BY
     enum_type, enum_value;
 
 -- INSIGHTS
--- A single ENUM type (mpaa_rating) is defined, providing a controlled list of
--- classification values.
-
--- RECOMMENDATIONS
--- Confirm columns using ENUMs (Refer 2.2.8).
-
--- --------------------------------------------------------------------------------
--- 2.2.8 - ENUMERATED | DOMAIN CONSTRAINT MAPPING TO COLUMNS
--- --------------------------------------------------------------------------------
-
--- PURPOSE
--- Identify which base table columns are assigned user-defined ENUM types to ensure
--- consistency in categorisation and assess compatibility with tools or exports.
-
-SELECT 
-    c.table_name,
-    c.column_name,
-    c.udt_name AS enum_type
-FROM 
-    information_schema.columns AS c
-JOIN 
-    information_schema.tables AS t
-    ON c.table_schema = t.table_schema
-    AND c.table_name = t.table_name
-WHERE 
-    c.table_schema = 'public'
-    AND t.table_type = 'BASE TABLE'
-    AND c.data_type = 'USER-DEFINED'
-ORDER BY 
-    c.table_name, c.column_name;
-
--- INSIGHTS
--- One user-defined ENUM (mpaa_rating) is applied to the rating column in the
--- film table.
-
--- RECOMMENDATIONS
--- Transform data type of film.rating to varchar for use in analysis (Refer 4.5).
+-- The ENUM type 'mpaa_rating' defines a fixed set of five permissible values.
