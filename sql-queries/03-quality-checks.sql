@@ -8,13 +8,14 @@
 -- 3.2 - EMPTY STRINGS OR PLACEHOLDER VALUES (Columns with character based types)
 -- 3.3 - DUPLICATE RECORD CHECKS (All tables)
 -- 3.4 - COUNT DISTINCT VALUES (All tables & columns)
--- 3.5 - FREQUENCY DISTRIBTIONS (Categorical columns) 
+-- 3.5 - FREQUENCY DISTRIBTIONS (Categorical columns)
 -- 3.6 - DESCRIPTIVE STATISTICS (Numeric columns)
+
 -- 3.7 - TEMPORAL COLUMNS
-    -- 3.7.1 - COUNT DISTINCT VALUES (System update columns)
-    -- 3.7.2 - COUNT DISTINCT VALUES (Transaction date columns)
-    -- 3.7.3 - COUNT DISTINCT VALUES (Numeric date columns)
-    -- 3.7.4 - FREQUENCY DISTRIBUTIONS (Transaction date columns)
+-- 3.7.1 - COUNT DISTINCT VALUES (System update columns)
+-- 3.7.2 - COUNT DISTINCT VALUES (Transaction date columns)
+-- 3.7.3 - COUNT DISTINCT VALUES (Numeric date columns)
+-- 3.7.4 - FREQUENCY DISTRIBUTIONS (Transaction date columns)
 
 -- --------------------------------------------------------------------------------
 -- 3.1 - NULL VALUE CHECKS (14 nullable columns)
@@ -194,7 +195,7 @@ ORDER BY
 -- Remove columns containing NULLs with optional information that are not needed in
 -- the analysis (Refer 4.5).
 -- Include columns allowing NULLs that contain operational information needed in
--- the analysis for logic and dependency checks (Refer 5.2.1).
+-- the analysis for logic and business checks (Refer 5.2.1).
 
 -- --------------------------------------------------------------------------------
 -- 3.2 - EMPTY STRINGS OR PLACEHOLDER VALUES (Columns with character based types)
@@ -750,9 +751,9 @@ ORDER BY table_name;
 
 -- RECOMMENDATIONS
 -- Confirm whether duplicates in the actor table reflect true data replication 
--- and remove if appropriate (Refer 4.2).
+-- and remove if appropriate (Refer 4.1).
 -- Confirm whether duplicates in the inventory table reflect actual copies held for
--- rental in order to determine whether to remove or retain (Refer 4.2).
+-- rental in order to determine whether to remove or retain (Refer 4.1).
 
 -- --------------------------------------------------------------------------------
 -- 3.4 - COUNT DISTINCT VALUES (All tables & columns)
@@ -1599,8 +1600,7 @@ FROM stats_amount CROSS JOIN outliers_amount;
 -- exceeding three standard deviations above the mean.
 
 -- RECOMMENDATIONS
--- Validate the zero values and outliers in the payment.amount column (Refer 5.2.1 &
--- 5.3).
+-- Validate the zero values and outliers in the payment.amount column (Refer 5.2).
 
 
 -- ================================================================================
@@ -1885,5 +1885,5 @@ ORDER BY payment_date::date;
 -- around seven days.
 
 -- RECOMMENDATIONS
--- Confirm that return_date is later than or equal to rental_date (Refer 5.4).
--- Confirm that payment_date is later than or equal to rental_date (Refer 5.5).
+-- Confirm that return_date is later than or equal to rental_date (Refer 5.3.1).
+-- Confirm that payment_date is later than or equal to rental_date (Refer 5.3.2).

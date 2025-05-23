@@ -1,10 +1,8 @@
--- ********************************************************************************
+-- ================================================================================
 -- 5. LOGIC AND BUSINESS CHECKS
--- ********************************************************************************
+-- ================================================================================
 
--- ================================================================================
 -- TABLE OF CONTENTS
--- ================================================================================
 
 -- 5.1 MANUAL RULE VALIDATIONS
 -- 5.1.1 UNCONSTRAINED KEYS
@@ -15,15 +13,18 @@
         -- 5.2.1.2 SUMMARISE PAYMENT STATUS FOR MISSING RETURNS
     -- 5.2.3 OUTLIER PAYMENTS (8 records)
         -- 5.2.3.1 EXPLORE OUTLIER PAYMENTS 
+
 -- 5.3 TEMPORAL LOGIC CHECKS
     -- 5.3.1 CONFIRM IF RETURN DATES FOLLOW RENTAL DATES
     -- 5.3.2 CONFIRM IF PAYMENT DATES FOLLOW RENTAL DATES
+
 -- 5.4 BUSINESS RULE CHECKS
--- 5.4.1 IDENTIFY ORPHANED PAYMENTS
--- 5.4.2 IDENTIFY RENTALS WITH NO PAYMENTS
--- 5.4.3 IDENTIFY LATE RETURNS
--- 5.4.4 EXPLORE LATE RETURNS
--- 5.9 IDENTIFY PAYMENT DISCREPANCIES
+    -- 5.4.1 IDENTIFY ORPHANED PAYMENTS
+    -- 5.4.2 IDENTIFY RENTALS WITH NO PAYMENTS
+    -- 5.4.3 IDENTIFY LATE RETURNS
+    -- 5.4.4 EXPLORE LATE RETURNS
+
+-- 5.5 IDENTIFY PAYMENT DISCREPANCIES
 
 -- ================================================================================
 -- 5.1 UNCONSTRAINED KEYS
@@ -385,8 +386,8 @@
 -- 7398
 
 -- Include columns allowing NULLs with operational information for logic and
--- dependency checks (Refer 3.1).
--- Validate the zero values and outliers in the payment.amount column (Refer 3.6).
+-- dependency checks (Refer 3.1).####
+-- Validate the zero values and outliers in the payment.amount column (Refer 3.6).####
 
 
 

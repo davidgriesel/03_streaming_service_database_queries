@@ -5,16 +5,18 @@
 -- TABLE OF CONTENTS
 
 -- 2.1 - DATA TYPES
+
 -- 2.2 - CONSTRAINTS
-    -- 2.2.1 - PRIMARY KEY CONSTRAINTS
-    -- 2.2.2 - FOREIGN KEY CONSTRAINTS
-    -- 2.2.3 - NOT NULL CONSTRAINTS
-    -- 2.2.4 - UNIQUE CONSTRAINTS
-    -- 2.2.5 - CHECK CONSTRAINTS
-    -- 2.2.6 - DEFAULT VALUES
+-- 2.2.1 - PRIMARY KEY CONSTRAINTS
+-- 2.2.2 - FOREIGN KEY CONSTRAINTS
+-- 2.2.3 - NOT NULL CONSTRAINTS
+-- 2.2.4 - UNIQUE CONSTRAINTS
+-- 2.2.5 - CHECK CONSTRAINTS
+-- 2.2.6 - DEFAULT VALUES
+
 -- 2.3 - USER_DEFINED TYPES
-    -- 2.3.1 - CLASSIFY USER-DEFINED TYPES
-    -- 2.3.2 - RETRIEVE ENUMERATED VALUE SETS
+-- 2.3.1 - CLASSIFY USER-DEFINED TYPES
+-- 2.3.2 - RETRIEVE ENUMERATED VALUE SETS
 
 -- --------------------------------------------------------------------------------
 -- 2.1 - DATA TYPES
@@ -59,7 +61,7 @@ ORDER BY
 -- Cast columns of type character to varchar to prevent padding and standardise
 -- formats for analysis(Refer 4.5).
 -- Review column normally associated with boolean for binary logic, compare to
--- boolean column, and remove if having similar functions (Refer 3.5).
+-- boolean column, and remove if having similar functions (Refer 3.4 | 3.5).
 -- Remove columns with unusual or complex data types not needed in the analysis
 -- (Refer 4.5).
 -- Confirm the actual data type of the user-defined column (Refer 2.3).
@@ -146,7 +148,7 @@ ORDER BY
 
 -- RECOMMENDATIONS
 -- Manually validate integrity for store_id columns where constraints are absent
--- (Refer 3.8.1).
+-- (Refer 5.1.1).
 
 -- --------------------------------------------------------------------------------
 -- 2.2.3 - NOT NULL CONSTRAINTS
@@ -254,7 +256,7 @@ ORDER BY
 
 -- RECOMMENDATIONS
 -- Perform manual checks to confirm whether expected business rules are applied
--- (Refer 3.9).
+-- (Refer 5.3 | 5.4).
 
 -- --------------------------------------------------------------------------------
  -- 2.2.6 - DEFAULT VALUES
