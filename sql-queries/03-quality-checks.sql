@@ -1,6 +1,6 @@
--- ================================================================================
+-- ==================================================================================
 -- 3 - QUALITY CHECKS
--- ================================================================================
+-- ==================================================================================
 
 -- TABLE OF CONTENTS
 
@@ -17,12 +17,12 @@
 -- 3.7.3 - COUNT DISTINCT VALUES (Numeric date columns)
 -- 3.7.4 - FREQUENCY DISTRIBUTIONS (Transaction date columns)
 
--- --------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
 -- 3.1 - NULL VALUE CHECKS (14 nullable columns)
--- --------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
 
 -- PURPOSE
--- Identify and quantify NULLs in the 14 columns without NOT NULL constraints.
+-- Identify and quantify NULLs in columns that do not enforce NOT NULL constraints.
 
 WITH null_check AS (
 
@@ -30,10 +30,8 @@ WITH null_check AS (
         'address' AS table_name,
         'address2' AS column_name,
         COUNT(*) AS null_count
-    FROM
-        address
-    WHERE
-        address2 IS NULL
+    FROM address
+    WHERE address2 IS NULL
 
     UNION ALL
 
@@ -41,10 +39,8 @@ WITH null_check AS (
         'address' AS table_name,
         'postal_code' AS column_name,
         COUNT(*) AS null_count
-    FROM
-        address
-    WHERE
-        postal_code IS NULL
+    FROM address
+    WHERE postal_code IS NULL
 
     UNION ALL
 
@@ -52,10 +48,8 @@ WITH null_check AS (
         'customer' AS table_name,
         'email' AS column_name,
         COUNT(*) AS null_count
-    FROM
-        customer
-    WHERE
-        email IS NULL
+    FROM customer
+    WHERE email IS NULL
 
     UNION ALL
 
@@ -63,10 +57,8 @@ WITH null_check AS (
         'customer' AS table_name,
         'last_update' AS column_name,
         COUNT(*) AS null_count
-    FROM
-        customer
-    WHERE
-        last_update IS NULL
+    FROM customer
+    WHERE last_update IS NULL
 
     UNION ALL
 
@@ -74,10 +66,8 @@ WITH null_check AS (
         'customer' AS table_name,
         'active' AS column_name,
         COUNT(*) AS null_count
-    FROM
-        customer
-    WHERE
-        active IS NULL
+    FROM customer
+    WHERE active IS NULL
 
     UNION ALL
 
@@ -85,10 +75,8 @@ WITH null_check AS (
         'film' AS table_name,
         'description' AS column_name,
         COUNT(*) AS null_count
-    FROM
-        film
-    WHERE
-        description IS NULL
+    FROM film
+    WHERE description IS NULL
 
     UNION ALL
 
@@ -96,10 +84,8 @@ WITH null_check AS (
         'film' AS table_name,
         'release_year' AS column_name,
         COUNT(*) AS null_count
-    FROM
-        film
-    WHERE
-        release_year IS NULL
+    FROM film
+    WHERE release_year IS NULL
 
     UNION ALL
 
@@ -107,10 +93,8 @@ WITH null_check AS (
         'film' AS table_name,
         'length' AS column_name,
         COUNT(*) AS null_count
-    FROM
-        film
-    WHERE
-        length IS NULL
+    FROM film
+    WHERE length IS NULL
 
     UNION ALL
 
@@ -118,10 +102,8 @@ WITH null_check AS (
         'film' AS table_name,
         'rating' AS column_name,
         COUNT(*) AS null_count
-    FROM
-        film
-    WHERE
-        rating IS NULL
+    FROM film
+    WHERE rating IS NULL
 
     UNION ALL
 
@@ -129,10 +111,8 @@ WITH null_check AS (
         'film' AS table_name,
         'special_features' AS column_name,
         COUNT(*) AS null_count
-    FROM
-        film
-    WHERE
-        special_features IS NULL
+    FROM film
+    WHERE special_features IS NULL
 
     UNION ALL
 
@@ -140,10 +120,8 @@ WITH null_check AS (
         'rental' AS table_name,
         'return_date' AS column_name,
         COUNT(*) AS null_count
-    FROM
-        rental
-    WHERE
-        return_date IS NULL
+    FROM rental
+    WHERE return_date IS NULL
 
     UNION ALL
 
@@ -151,10 +129,8 @@ WITH null_check AS (
         'staff' AS table_name,
         'email' AS column_name,
         COUNT(*) AS null_count
-    FROM
-        staff
-    WHERE
-        email IS NULL
+    FROM staff
+    WHERE email IS NULL
 
     UNION ALL
 
@@ -162,10 +138,8 @@ WITH null_check AS (
         'staff' AS table_name,
         'password' AS column_name,
         COUNT(*) AS null_count
-    FROM
-        staff
-    WHERE
-        password IS NULL
+    FROM staff
+    WHERE password IS NULL
 
     UNION ALL
 
@@ -173,40 +147,34 @@ WITH null_check AS (
         'staff' AS table_name,
         'picture' AS column_name,
         COUNT(*) AS null_count
-    FROM
-        staff
-    WHERE
-        picture IS NULL
+    FROM staff
+    WHERE picture IS NULL
 )
 SELECT
     *
-FROM
-    null_check
-WHERE
-    null_count > 0
-ORDER BY
-    table_name,
-    column_name;
+FROM null_check
+WHERE null_count > 0
+ORDER BY table_name, column_name;
 
 -- INSIGHTS
--- Nulls are observed address.address2, staff.picture, rental.return_date.
+-- Nulls are observed in address.address2, staff.picture, rental.return_date.
 
 -- RECOMMENDATIONS
 -- Remove columns containing NULLs with optional information that are not needed in
 -- the analysis (Refer 6.1).
 -- Include columns allowing NULLs that contain operational information needed in
--- the analysis for logic and business checks (Refer 5.2.1).
+-- the analysis for logic and business checks (Refer Section 5).
 
--- --------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
 -- 3.2 - EMPTY STRINGS OR PLACEHOLDER VALUES (Columns with character based types)
--- --------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
 
 -- PURPOSE 
 -- Identify and quantify empty strings or placeholder values in columns with
 -- character based data types.
 
 WITH incomplete_check AS (
-    SELECT 
+    SELECT
         'actor' AS table_name,
         'first_name' AS column_name,
         COUNT(*) FILTER (WHERE LOWER(COALESCE(first_name, '')) = '') AS empty_count,
@@ -471,12 +439,12 @@ ORDER BY table_name, column_name;
 -- Impute empty strings with appropriate placeholder values in columns that will be
 -- retained (Refer 6.1).
 
--- --------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
 -- 3.3 - DUPLICATE RECORD CHECKS (All tables)
--- --------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
 
 -- PURPOSE
--- Detect duplicate records.
+-- Identify and quantify duplicate records per table.
 
 SELECT
     'actor' AS table_name,
@@ -746,492 +714,499 @@ ORDER BY table_name;
 
 -- INSIGHTS
 -- Duplicate records were identified in the actor and inventory tables.
--- Duplicates are expected in the inventory table due to multiple physical
--- copies held per title distinguished by inventory_id.
+-- Duplicates are expected in the inventory table due to stores holding more than one
+-- physical copy per title distinguished only by inventory_id.
 
 -- RECOMMENDATIONS
--- Confirm whether duplicates in the actor table reflect true data replication 
+-- Confirm whether duplicates in the actor table reflect true data replication
 -- and remove if appropriate (Refer 4.1).
 -- Confirm whether duplicates in the inventory table reflect actual copies held for
 -- rental in order to determine whether to remove or retain (Refer 4.1).
 
--- --------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
 -- 3.4 - COUNT DISTINCT VALUES (All tables & columns)
--- --------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
 
 -- PURPOSE
 -- Count unique values per column across all tables to detect columns with
 -- unexpected high or low variance, or constant values.
 
 -- TABLE: actor
-SELECT 
-    'actor_id' AS actor_column, 
-    COUNT(DISTINCT actor_id) AS distinct_count 
+SELECT
+    'actor_id' AS actor_column,
+    COUNT(DISTINCT actor_id) AS distinct_count
 FROM actor
 UNION ALL
-SELECT 
-    'first_name', 
-    COUNT(DISTINCT first_name) 
+SELECT
+    'first_name',
+    COUNT(DISTINCT first_name)
 FROM actor
 UNION ALL
-SELECT 
-    'last_name', 
-    COUNT(DISTINCT last_name) 
+SELECT
+    'last_name',
+    COUNT(DISTINCT last_name)
 FROM actor
 UNION ALL
-SELECT 
-    'last_update', 
-    COUNT(DISTINCT last_update) 
+SELECT
+    'last_update',
+    COUNT(DISTINCT last_update)
 FROM actor;
 
 -- TABLE: address
-SELECT 
-    'address_id' AS address_column, 
-    COUNT(DISTINCT address_id) AS distinct_count 
+SELECT
+    'address_id' AS address_column,
+    COUNT(DISTINCT address_id) AS distinct_count
 FROM address
 UNION ALL
-SELECT 
-    'address', 
-    COUNT(DISTINCT address) 
+SELECT
+    'address',
+    COUNT(DISTINCT address)
 FROM address
 UNION ALL
-SELECT 
-    'address2', 
-    COUNT(DISTINCT address2) 
+SELECT
+    'address2',
+    COUNT(DISTINCT address2)
 FROM address
 UNION ALL
-SELECT 
-    'district', 
-    COUNT(DISTINCT district) 
+SELECT
+    'district',
+    COUNT(DISTINCT district)
 FROM address
 UNION ALL
-SELECT 
-    'city_id', 
-    COUNT(DISTINCT city_id) 
+SELECT
+    'city_id',
+    COUNT(DISTINCT city_id)
 FROM address
 UNION ALL
-SELECT 
-    'postal_code', 
-    COUNT(DISTINCT postal_code) 
+SELECT
+    'postal_code',
+    COUNT(DISTINCT postal_code)
 FROM address
 UNION ALL
-SELECT 
-    'phone', 
-    COUNT(DISTINCT phone) 
+SELECT
+    'phone',
+    COUNT(DISTINCT phone)
 FROM address
 UNION ALL
-SELECT 
-    'last_update', 
-    COUNT(DISTINCT last_update) 
+SELECT
+    'last_update',
+    COUNT(DISTINCT last_update)
 FROM address;
 
 -- TABLE: category
-SELECT 
-    'category_id' AS category_column, 
-    COUNT(DISTINCT category_id) AS distinct_count 
+SELECT
+    'category_id' AS category_column,
+    COUNT(DISTINCT category_id) AS distinct_count
 FROM category
 UNION ALL
-SELECT 
-    'name', 
-    COUNT(DISTINCT name) 
+SELECT
+    'name',
+    COUNT(DISTINCT name)
 FROM category
 UNION ALL
-SELECT 
-    'last_update', 
-    COUNT(DISTINCT last_update) 
+SELECT
+    'last_update',
+    COUNT(DISTINCT last_update)
 FROM category;
 
 -- TABLE: city
-SELECT 
-    'city_id' AS city_column, 
-    COUNT(DISTINCT city_id) AS distinct_count 
+SELECT
+    'city_id' AS city_column,
+    COUNT(DISTINCT city_id) AS distinct_count
 FROM city
 UNION ALL
-SELECT 
-    'city', 
-    COUNT(DISTINCT city) 
+SELECT
+    'city',
+    COUNT(DISTINCT city)
 FROM city
 UNION ALL
-SELECT 
-    'country_id', 
-    COUNT(DISTINCT country_id) 
+SELECT
+    'country_id',
+    COUNT(DISTINCT country_id)
 FROM city
 UNION ALL
-SELECT 
-    'last_update', 
-    COUNT(DISTINCT last_update) 
+SELECT
+    'last_update',
+    COUNT(DISTINCT last_update)
 FROM city;
 
 -- TABLE: country
-SELECT 
-    'country_id' AS country_column, 
-    COUNT(DISTINCT country_id) AS distinct_count 
+SELECT
+    'country_id' AS country_column,
+    COUNT(DISTINCT country_id) AS distinct_count
 FROM country
 UNION ALL
-SELECT 
-    'country', 
-    COUNT(DISTINCT country) 
+SELECT
+    'country',
+    COUNT(DISTINCT country)
 FROM country
 UNION ALL
-SELECT 
-    'last_update', 
-    COUNT(DISTINCT last_update) 
+SELECT
+    'last_update',
+    COUNT(DISTINCT last_update)
 FROM country;
 
 -- TABLE: customer
-SELECT 
-    'customer_id' AS customer_column, 
-    COUNT(DISTINCT customer_id) AS distinct_count 
+SELECT
+    'customer_id' AS customer_column,
+    COUNT(DISTINCT customer_id) AS distinct_count
 FROM customer
 UNION ALL
-SELECT 
-    'store_id', 
-    COUNT(DISTINCT store_id) 
+SELECT
+    'store_id',
+    COUNT(DISTINCT store_id)
 FROM customer
 UNION ALL
-SELECT 
-    'first_name', 
-    COUNT(DISTINCT first_name) 
+SELECT
+    'first_name',
+    COUNT(DISTINCT first_name)
 FROM customer
 UNION ALL
-SELECT 
-    'last_name', 
-    COUNT(DISTINCT last_name) 
+SELECT
+    'last_name',
+    COUNT(DISTINCT last_name)
 FROM customer
 UNION ALL
-SELECT 
-    'email', 
-    COUNT(DISTINCT email) 
+SELECT
+    'email',
+    COUNT(DISTINCT email)
 FROM customer
 UNION ALL
-SELECT 
-    'address_id', 
-    COUNT(DISTINCT address_id) 
+SELECT
+    'address_id',
+    COUNT(DISTINCT address_id)
 FROM customer
 UNION ALL
-SELECT 
-    'activebool', 
-    COUNT(DISTINCT activebool) 
+SELECT
+    'activebool',
+    COUNT(DISTINCT activebool)
 FROM customer
 UNION ALL
-SELECT 
-    'create_date', 
-    COUNT(DISTINCT create_date) 
+SELECT
+    'create_date',
+    COUNT(DISTINCT create_date)
 FROM customer
 UNION ALL
-SELECT 
-    'last_update', 
-    COUNT(DISTINCT last_update) 
+SELECT
+    'last_update',
+    COUNT(DISTINCT last_update)
 FROM customer
 UNION ALL
-SELECT 
-    'active', 
-    COUNT(DISTINCT active) 
+SELECT
+    'active',
+    COUNT(DISTINCT active)
 FROM customer;
 
 -- TABLE: film
-SELECT 
-    'film_id' AS film_column, 
-    COUNT(DISTINCT film_id) AS distinct_count 
+SELECT
+    'film_id' AS film_column,
+    COUNT(DISTINCT film_id) AS distinct_count
 FROM film
 UNION ALL
-SELECT 
-    'title', 
-    COUNT(DISTINCT title) 
+SELECT
+    'title',
+    COUNT(DISTINCT title)
 FROM film
 UNION ALL
-SELECT 
-    'description', 
-    COUNT(DISTINCT description) 
+SELECT
+    'description',
+    COUNT(DISTINCT description)
 FROM film
 UNION ALL
-SELECT 
-    'release_year', 
-    COUNT(DISTINCT release_year) 
+SELECT
+    'release_year',
+    COUNT(DISTINCT release_year)
 FROM film
 UNION ALL
-SELECT 
-    'language_id', 
-    COUNT(DISTINCT language_id) 
+SELECT
+    'language_id',
+    COUNT(DISTINCT language_id)
 FROM film
 UNION ALL
-SELECT 
-    'rental_duration', 
-    COUNT(DISTINCT rental_duration) 
+SELECT
+    'rental_duration',
+    COUNT(DISTINCT rental_duration)
 FROM film
 UNION ALL
-SELECT 
-    'rental_rate', 
-    COUNT(DISTINCT rental_rate) 
+SELECT
+    'rental_rate',
+    COUNT(DISTINCT rental_rate)
 FROM film
 UNION ALL
-SELECT 
-    'length', 
-    COUNT(DISTINCT length) 
+SELECT
+    'length',
+    COUNT(DISTINCT length)
 FROM film
 UNION ALL
-SELECT 
-    'replacement_cost', 
-    COUNT(DISTINCT replacement_cost) 
+SELECT
+    'replacement_cost',
+    COUNT(DISTINCT replacement_cost)
 FROM film
 UNION ALL
-SELECT 
-    'rating', 
-    COUNT(DISTINCT rating) 
+SELECT
+    'rating',
+    COUNT(DISTINCT rating)
 FROM film
 UNION ALL
-SELECT 
-    'last_update', 
-    COUNT(DISTINCT last_update) 
+SELECT
+    'last_update',
+    COUNT(DISTINCT last_update)
 FROM film
 UNION ALL
-SELECT 
-    'special_features', 
-    COUNT(DISTINCT special_features) 
+SELECT
+    'special_features',
+    COUNT(DISTINCT special_features)
 FROM film
 UNION ALL
-SELECT 
-    'fulltext', 
-    COUNT(DISTINCT fulltext) 
+SELECT
+    'fulltext',
+    COUNT(DISTINCT fulltext)
 FROM film;
 
 -- TABLE: film_actor
-SELECT 
-    'actor_id' AS film_actor_column, 
-    COUNT(DISTINCT actor_id) AS distinct_count 
+SELECT
+    'actor_id' AS film_actor_column,
+    COUNT(DISTINCT actor_id) AS distinct_count
 FROM film_actor
 UNION ALL
-SELECT 
-    'film_id', 
-    COUNT(DISTINCT film_id) 
+SELECT
+    'film_id',
+    COUNT(DISTINCT film_id)
 FROM film_actor
 UNION ALL
-SELECT 
-    'last_update', 
-    COUNT(DISTINCT last_update) 
+SELECT
+    'last_update',
+    COUNT(DISTINCT last_update)
 FROM film_actor;
 
 -- TABLE: film_category
-SELECT 
-    'film_id' AS film_category_column, 
-    COUNT(DISTINCT film_id) AS distinct_count 
+SELECT
+    'film_id' AS film_category_column,
+    COUNT(DISTINCT film_id) AS distinct_count
 FROM film_category
 UNION ALL
-SELECT 
-    'category_id', 
-    COUNT(DISTINCT category_id) 
+SELECT
+    'category_id',
+    COUNT(DISTINCT category_id)
 FROM film_category
 UNION ALL
-SELECT 
-    'last_update', 
-    COUNT(DISTINCT last_update) 
+SELECT
+    'last_update',
+    COUNT(DISTINCT last_update)
 FROM film_category;
 
 -- TABLE: inventory
-SELECT 
-    'inventory_id' AS inventory_column, 
-    COUNT(DISTINCT inventory_id) AS distinct_count 
+SELECT
+    'inventory_id' AS inventory_column,
+    COUNT(DISTINCT inventory_id) AS distinct_count
 FROM inventory
 UNION ALL
-SELECT 
-    'film_id', 
-    COUNT(DISTINCT film_id) 
+SELECT
+    'film_id',
+    COUNT(DISTINCT film_id)
 FROM inventory
 UNION ALL
-SELECT 
-    'store_id', 
-    COUNT(DISTINCT store_id) 
+SELECT
+    'store_id',
+    COUNT(DISTINCT store_id)
 FROM inventory
 UNION ALL
-SELECT 
-    'last_update', 
-    COUNT(DISTINCT last_update) 
+SELECT
+    'last_update',
+    COUNT(DISTINCT last_update)
 FROM inventory;
 
 -- TABLE: language
-SELECT 
-    'language_id' AS language_column, 
-    COUNT(DISTINCT language_id) AS distinct_count 
+SELECT
+    'language_id' AS language_column,
+    COUNT(DISTINCT language_id) AS distinct_count
 FROM language
 UNION ALL
-SELECT 
-    'name', 
-    COUNT(DISTINCT name) 
+SELECT
+    'name',
+    COUNT(DISTINCT name)
 FROM language
 UNION ALL
-SELECT 
-    'last_update', 
-    COUNT(DISTINCT last_update) 
+SELECT
+    'last_update',
+    COUNT(DISTINCT last_update)
 FROM language;
 
 -- TABLE: payment
-SELECT 
-    'payment_id' AS payment_column, 
-    COUNT(DISTINCT payment_id) AS distinct_count 
+SELECT
+    'payment_id' AS payment_column,
+    COUNT(DISTINCT payment_id) AS distinct_count
 FROM payment
 UNION ALL
-SELECT 
-    'customer_id', 
-    COUNT(DISTINCT customer_id) 
+SELECT
+    'customer_id',
+    COUNT(DISTINCT customer_id)
 FROM payment
 UNION ALL
-SELECT 
-    'staff_id', 
-    COUNT(DISTINCT staff_id) 
+SELECT
+    'staff_id',
+    COUNT(DISTINCT staff_id)
 FROM payment
 UNION ALL
-SELECT 
-    'rental_id', 
-    COUNT(DISTINCT rental_id) 
+SELECT
+    'rental_id',
+    COUNT(DISTINCT rental_id)
 FROM payment
 UNION ALL
-SELECT 
-    'amount', 
-    COUNT(DISTINCT amount) 
+SELECT
+    'amount',
+    COUNT(DISTINCT amount)
 FROM payment
 UNION ALL
-SELECT 
-    'payment_date', 
-    COUNT(DISTINCT payment_date) 
+SELECT
+    'payment_date',
+    COUNT(DISTINCT payment_date)
 FROM payment;
 
 -- TABLE: rental
-SELECT 
-    'rental_id' AS rental_column, 
-    COUNT(DISTINCT rental_id) AS distinct_count 
+SELECT
+    'rental_id' AS rental_column,
+    COUNT(DISTINCT rental_id) AS distinct_count
 FROM rental
 UNION ALL
-SELECT 
-    'rental_date', 
-    COUNT(DISTINCT rental_date) 
+SELECT
+    'rental_date',
+    COUNT(DISTINCT rental_date)
 FROM rental
 UNION ALL
-SELECT 
-    'inventory_id', 
-    COUNT(DISTINCT inventory_id) 
+SELECT
+    'inventory_id',
+    COUNT(DISTINCT inventory_id)
 FROM rental
 UNION ALL
-SELECT 
-    'customer_id', 
-    COUNT(DISTINCT customer_id) 
+SELECT
+    'customer_id',
+    COUNT(DISTINCT customer_id)
 FROM rental
 UNION ALL
-SELECT 
-    'return_date', 
-    COUNT(DISTINCT return_date) 
+SELECT
+    'return_date',
+    COUNT(DISTINCT return_date)
 FROM rental
 UNION ALL
-SELECT 
-    'staff_id', 
-    COUNT(DISTINCT staff_id) 
+SELECT
+    'staff_id',
+    COUNT(DISTINCT staff_id)
 FROM rental
 UNION ALL
-SELECT 
-    'last_update', 
-    COUNT(DISTINCT last_update) 
+SELECT
+    'last_update',
+    COUNT(DISTINCT last_update)
 FROM rental;
 
 -- TABLE: staff
-SELECT 
-    'staff_id' AS staff_column, 
-    COUNT(DISTINCT staff_id) AS distinct_count 
+SELECT
+    'staff_id' AS staff_column,
+    COUNT(DISTINCT staff_id) AS distinct_count
 FROM staff
 UNION ALL
-SELECT 
-    'first_name', 
-    COUNT(DISTINCT first_name) 
+SELECT
+    'first_name',
+    COUNT(DISTINCT first_name)
 FROM staff
 UNION ALL
-SELECT 
-    'last_name', 
-    COUNT(DISTINCT last_name) 
+SELECT
+    'last_name',
+    COUNT(DISTINCT last_name)
 FROM staff
 UNION ALL
-SELECT 
-    'address_id', 
-    COUNT(DISTINCT address_id) 
+SELECT
+    'address_id',
+    COUNT(DISTINCT address_id)
 FROM staff
 UNION ALL
-SELECT 
-    'email', 
-    COUNT(DISTINCT email) 
+SELECT
+    'email',
+    COUNT(DISTINCT email)
 FROM staff
 UNION ALL
-SELECT 
-    'store_id', 
-    COUNT(DISTINCT store_id) 
+SELECT
+    'store_id',
+    COUNT(DISTINCT store_id)
 FROM staff
 UNION ALL
-SELECT 
-    'active', 
-    COUNT(DISTINCT active) 
+SELECT
+    'active',
+    COUNT(DISTINCT active)
 FROM staff
 UNION ALL
-SELECT 
-    'username', 
-    COUNT(DISTINCT username) 
+SELECT
+    'username',
+    COUNT(DISTINCT username)
 FROM staff
 UNION ALL
-SELECT 
-    'password', 
-    COUNT(DISTINCT password) 
+SELECT
+    'password',
+    COUNT(DISTINCT password)
 FROM staff
 UNION ALL
-SELECT 
-    'last_update', 
-    COUNT(DISTINCT last_update) 
+SELECT
+    'last_update',
+    COUNT(DISTINCT last_update)
 FROM staff
 UNION ALL
-SELECT 
-    'picture', 
-    COUNT(DISTINCT picture) 
+SELECT
+    'picture',
+    COUNT(DISTINCT picture)
 FROM staff;
 
 -- TABLE: store
-SELECT 
-    'store_id' AS store_column, 
-    COUNT(DISTINCT store_id) AS distinct_count 
+SELECT
+    'store_id' AS store_column,
+    COUNT(DISTINCT store_id) AS distinct_count
 FROM store
 UNION ALL
-SELECT 
-    'manager_staff_id', 
-    COUNT(DISTINCT manager_staff_id) 
+SELECT
+    'manager_staff_id',
+    COUNT(DISTINCT manager_staff_id)
 FROM store
 UNION ALL
-SELECT 
-    'address_id', 
-    COUNT(DISTINCT address_id) 
+SELECT
+    'address_id',
+    COUNT(DISTINCT address_id)
 FROM store
 UNION ALL
-SELECT 
-    'last_update', 
-    COUNT(DISTINCT last_update) 
+SELECT
+    'last_update',
+    COUNT(DISTINCT last_update)
 FROM store;
 
 -- INSIGHTS
--- Several columns have extremely low distinct counts relative to total rows 
--- (address.address2 and several columns in the film table).
+-- Several columns have extremely low distinct counts relative to total rows
+-- (address.address2, and several columns in the film table).
+-- There are 600 city id's but only 599 city names suggesting cities sharing a name.
+-- Of the 600 city id's only 599 are linked to addresses suggesting that unless the
+-- other links to a store or staff member, that there may be unusued city id's.
+-- All 599 customers rented at least one film and made at least one payment.
 -- Only 997 of the 1000 film titles are linked to actors (film_actor table).
 -- Only 958 of the 1000 film titles are available for rent (inventory table).
+-- Of the 4,581 titles in inventory, all but one were rented out at least once.
 -- The payment table contains 14,596 payments linked to only 14,592 rentals.
 -- Timestamp columns all show 1 distinct value supporting earlier observations of
 -- uniform update behaviour.
 -- Status columns show either 1 or 2 distinct records supporting binary expectation.
 
 -- RECOMMENDATIONS
--- Remove columns with low or no variance, or redundant status columns that add no
--- value to the analysis (Refer 6.1).
+-- Remove columns with low or no variance that add no value to the analysis
+-- (Refer 6.1).
 -- Flag payment table as likely to contain split payments (Refer 5.3.2.3).
+-- Flag city table as likely to hold unused cities.
+-- Flag inventory item not rented out for physical verification (Reporting).
 
--- --------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
 -- 3.5 - FREQUENCY DISTRIBTIONS (Categorical columns)
--- --------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
 
 -- PURPOSE
 -- Show frequency of values in categorical columns to assess distribution, overly
 -- dominant or repetitive values, or other undetected placeholder values.
 
--- TABLE:  actor
+-- TABLE: actor
 SELECT
     first_name as actor_first_name,
     COUNT(*) AS frequency
@@ -1372,7 +1347,7 @@ GROUP BY film_special_features
 ORDER BY frequency DESC;
 
 -- TABLE: language
-SELECT 
+SELECT
     name AS language_name,
     COUNT(*) AS frequency
 FROM language
@@ -1380,42 +1355,42 @@ GROUP BY language_name
 ORDER BY frequency DESC;
 
 -- TABLE: staff
-SELECT 
+SELECT
     first_name AS staff_first_name,
     COUNT(*) AS frequency
 FROM staff
 GROUP BY staff_first_name
 ORDER BY frequency DESC;
 
-SELECT 
+SELECT
     last_name AS staff_last_name,
     COUNT(*) AS frequency
 FROM staff
 GROUP BY staff_last_name
 ORDER BY frequency DESC;
 
-SELECT 
+SELECT
     email AS staff_email,
     COUNT(*) AS frequency
 FROM staff
 GROUP BY staff_email
 ORDER BY frequency DESC;
 
-SELECT 
+SELECT
     active AS staff_active,
     COUNT(*) AS frequency
 FROM staff
 GROUP BY staff_active
 ORDER BY frequency DESC;
 
-SELECT 
+SELECT
     username AS staff_username,
     COUNT(*) AS frequency
 FROM staff
 GROUP BY staff_username
 ORDER BY frequency DESC;
 
-SELECT 
+SELECT
     password AS staff_password,
     COUNT(*) AS frequency
 FROM staff
@@ -1424,11 +1399,10 @@ ORDER BY frequency DESC;
 
 -- INSIGHTS
 -- The address.address2 contains only null values (4) and empty strings (599).
--- Empty strings detected in address.district (3), address.phone (2),
+-- Empty strings detected in address.district (3), address.phone (2), and
 -- address.postal_code (4), are consistent with earlier observations.
--- London appears twice in city table but but earlier observations confirmed it
--- links to different countries.
--- Duplicates noted in field expected to hold unique values (staff.password), but
+-- London appears twice in city table.
+-- Duplicates noted in one field expected to hold unique values (staff.password), but
 -- others (customer.email, staff.email) all hold unique values.
 -- Boolean status columns (customer.activebool, staff.active) contain only one value
 -- (true) while status column of type integer contain 0 and 1 (customer.active).
@@ -1438,22 +1412,23 @@ ORDER BY frequency DESC;
 -- Impute empty strings in retained columns with placeholder values e.g. 'n/a'
 -- (Refer 6.1).
 -- Remove the redundant status column of type integer. The boolean status column
--- indicates that all customers are active, which is supported by the presence of
--- transactions, which provide a more reliable indicator of customer activity
--- (Refer 6.1).
+-- indicates that all customers are active, and this will be confirmed through the
+-- presence of transactions, which provide a more reliable indicator of customer
+-- activity (Refer 6.1).
+-- Confirm that duplicate city names are valid e.g. relate to different countries.
 -- Communicate duplicate passwords to management as security risk (Reporting).
 
--- --------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
 -- 3.6 - DESCRIPTIVE STATISTICS (Numeric columns)
--- --------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
 
 -- PURPOSE
 -- Summarise numerical columns using descriptive statistics to assess distributions
--- and skew, detect outliers, or other anomalies.
+-- and skew, detect outliers, and other anomalies.
 
-WITH 
+WITH
 stats_rental_duration AS (
-    SELECT 
+    SELECT
         COUNT(*) AS total_records,
         COUNT(DISTINCT rental_duration) AS distinct_count,
         SUM(CASE WHEN rental_duration = 0 THEN 1 ELSE 0 END) AS zero_count,
@@ -1467,7 +1442,7 @@ stats_rental_duration AS (
 ),
 
 stats_rental_rate AS (
-    SELECT 
+    SELECT
         COUNT(*) AS total_records,
         COUNT(DISTINCT rental_rate) AS distinct_count,
         SUM(CASE WHEN rental_rate = 0 THEN 1 ELSE 0 END) AS zero_count,
@@ -1481,7 +1456,7 @@ stats_rental_rate AS (
 ),
 
 stats_length AS (
-    SELECT 
+    SELECT
         COUNT(*) AS total_records,
         COUNT(DISTINCT length) AS distinct_count,
         SUM(CASE WHEN length = 0 THEN 1 ELSE 0 END) AS zero_count,
@@ -1495,7 +1470,7 @@ stats_length AS (
 ),
 
 stats_replacement_cost AS (
-    SELECT 
+    SELECT
         COUNT(*) AS total_records,
         COUNT(DISTINCT replacement_cost) AS distinct_count,
         SUM(CASE WHEN replacement_cost = 0 THEN 1 ELSE 0 END) AS zero_count,
@@ -1509,7 +1484,7 @@ stats_replacement_cost AS (
 ),
 
 stats_amount AS (
-    SELECT 
+    SELECT
         COUNT(*) AS total_records,
         COUNT(DISTINCT amount) AS distinct_count,
         SUM(CASE WHEN amount = 0 THEN 1 ELSE 0 END) AS zero_count,
@@ -1523,75 +1498,76 @@ stats_amount AS (
 ),
 
 outliers_rental_duration AS (
-    SELECT 
+    SELECT
         COUNT(*) FILTER (WHERE rental_duration < (mean_value - 3 * stddev_value)) AS lower_outlier_count,
         COUNT(*) FILTER (WHERE rental_duration > (mean_value + 3 * stddev_value)) AS upper_outlier_count
     FROM film, stats_rental_duration
 ),
 
 outliers_rental_rate AS (
-    SELECT 
+    SELECT
         COUNT(*) FILTER (WHERE rental_rate < (mean_value - 3 * stddev_value)) AS lower_outlier_count,
         COUNT(*) FILTER (WHERE rental_rate > (mean_value + 3 * stddev_value)) AS upper_outlier_count
     FROM film, stats_rental_rate
 ),
 
 outliers_length AS (
-    SELECT 
+    SELECT
         COUNT(*) FILTER (WHERE length < (mean_value - 3 * stddev_value)) AS lower_outlier_count,
         COUNT(*) FILTER (WHERE length > (mean_value + 3 * stddev_value)) AS upper_outlier_count
     FROM film, stats_length
 ),
+
 outliers_replacement_cost AS (
-    SELECT 
+    SELECT
         COUNT(*) FILTER (WHERE replacement_cost < (mean_value - 3 * stddev_value)) AS lower_outlier_count,
         COUNT(*) FILTER (WHERE replacement_cost > (mean_value + 3 * stddev_value)) AS upper_outlier_count
     FROM film, stats_replacement_cost
 ),
 
 outliers_amount AS (
-    SELECT 
+    SELECT
         COUNT(*) FILTER (WHERE amount < (mean_value - 3 * stddev_value)) AS lower_outlier_count,
         COUNT(*) FILTER (WHERE amount > (mean_value + 3 * stddev_value)) AS upper_outlier_count
     FROM payment, stats_amount
 )
 
-SELECT 
+SELECT
     'film' AS table_name,
     'rental_duration' AS column_name,
-    * 
+    *
 FROM stats_rental_duration CROSS JOIN outliers_rental_duration
 
 UNION ALL
 
-SELECT 
+SELECT
     'film',
     'rental_rate',
-    * 
+    *
 FROM stats_rental_rate CROSS JOIN outliers_rental_rate
 
 UNION ALL
 
-SELECT 
+SELECT
     'film',
     'length',
-    * 
+    *
 FROM stats_length CROSS JOIN outliers_length
 
 UNION ALL
 
-SELECT 
+SELECT
     'film',
     'replacement_cost',
-    * 
+    *
 FROM stats_replacement_cost CROSS JOIN outliers_replacement_cost
 
 UNION ALL
 
-SELECT 
+SELECT
     'payment',
     'amount',
-    * 
+    *
 FROM stats_amount CROSS JOIN outliers_amount;
 
 -- INSIGHTS
@@ -1602,181 +1578,183 @@ FROM stats_amount CROSS JOIN outliers_amount;
 -- exceeding three standard deviations above the mean.
 
 -- RECOMMENDATIONS
--- Validate the zero values and outliers in the payment.amount column (Refer 5.2).
+-- Validate zero values in the payment.amount column.
+-- Validate outliers in the payment.amount column (Refer 5.3.2).
 
--- --------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
 -- 3.7 - TEMPORAL COLUMNS
--- --------------------------------------------------------------------------------
--- --------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
 -- 3.7.1 - COUNT DISTINCT VALUES (System update columns)
--- --------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
 
 -- PURPOSE
 -- Assess the number of distinct values in timestamp columns across all base tables
 -- that track system updates to evaluate whether they track real activity or
 -- indicate static metadata.
 
-SELECT 
-    'actor' AS table_name, 
-    'last_update' AS column_name, 
-    COUNT(DISTINCT last_update) AS distinct_dates, 
-    MIN(last_update) AS min_date, 
-    MAX(last_update) AS max_date 
+SELECT
+    'actor' AS table_name,
+    'last_update' AS column_name,
+    COUNT(DISTINCT last_update) AS distinct_dates,
+    MIN(last_update) AS min_date,
+    MAX(last_update) AS max_date
 FROM actor
 
 UNION ALL
 
-SELECT 
-    'address' AS table_name, 
-    'last_update' AS column_name, 
-    COUNT(DISTINCT last_update), 
-    MIN(last_update), 
-    MAX(last_update) 
+SELECT
+    'address' AS table_name,
+    'last_update' AS column_name,
+    COUNT(DISTINCT last_update),
+    MIN(last_update),
+    MAX(last_update)
 FROM address
 
 UNION ALL
 
-SELECT 
-    'category' AS table_name, 
-    'last_update' AS column_name, 
-    COUNT(DISTINCT last_update), 
-    MIN(last_update), 
-    MAX(last_update) 
+SELECT
+    'category' AS table_name,
+    'last_update' AS column_name,
+    COUNT(DISTINCT last_update),
+    MIN(last_update),
+    MAX(last_update)
 FROM category
 
 UNION ALL
 
-SELECT 
-    'city' AS table_name, 
-    'last_update' AS column_name, 
-    COUNT(DISTINCT last_update), 
-    MIN(last_update), 
-    MAX(last_update) 
+SELECT
+    'city' AS table_name,
+    'last_update' AS column_name,
+    COUNT(DISTINCT last_update),
+    MIN(last_update),
+    MAX(last_update)
 FROM city
 
 UNION ALL
 
-SELECT 
-    'country' AS table_name, 
-    'last_update' AS column_name, 
-    COUNT(DISTINCT last_update), 
-    MIN(last_update), 
-    MAX(last_update) 
+SELECT
+    'country' AS table_name,
+    'last_update' AS column_name,
+    COUNT(DISTINCT last_update),
+    MIN(last_update),
+    MAX(last_update)
 FROM country
 
 UNION ALL
 
-SELECT 
-    'customer' AS table_name, 
-    'last_update' AS column_name, 
-    COUNT(DISTINCT last_update), 
-    MIN(last_update), 
-    MAX(last_update) 
+SELECT
+    'customer' AS table_name,
+    'last_update' AS column_name,
+    COUNT(DISTINCT last_update),
+    MIN(last_update),
+    MAX(last_update)
 FROM customer
 
 UNION ALL
 
-SELECT 
-    'customer' AS table_name, 
-    'create_date' AS column_name, 
-    COUNT(DISTINCT create_date), 
-    MIN(create_date), 
-    MAX(create_date) 
+SELECT
+    'customer' AS table_name,
+    'create_date' AS column_name,
+    COUNT(DISTINCT create_date),
+    MIN(create_date),
+    MAX(create_date)
 FROM customer
 
 UNION ALL
 
-SELECT 
-    'film' AS table_name, 
-    'last_update' AS column_name, 
-    COUNT(DISTINCT last_update), 
-    MIN(last_update), 
-    MAX(last_update) 
+SELECT
+    'film' AS table_name,
+    'last_update' AS column_name,
+    COUNT(DISTINCT last_update),
+    MIN(last_update),
+    MAX(last_update)
 FROM film
 
 UNION ALL
 
-SELECT 
-    'film_actor' AS table_name, 
-    'last_update' AS column_name, 
-    COUNT(DISTINCT last_update), 
-    MIN(last_update), 
-    MAX(last_update) 
+SELECT
+    'film_actor' AS table_name,
+    'last_update' AS column_name,
+    COUNT(DISTINCT last_update),
+    MIN(last_update),
+    MAX(last_update)
 FROM film_actor
 
 UNION ALL
 
-SELECT 
-    'film_category' AS table_name, 
-    'last_update' AS column_name, 
-    COUNT(DISTINCT last_update), 
-    MIN(last_update), 
-    MAX(last_update) 
+SELECT
+    'film_category' AS table_name,
+    'last_update' AS column_name,
+    COUNT(DISTINCT last_update),
+    MIN(last_update),
+    MAX(last_update)
 FROM film_category
 
 UNION ALL
 
-SELECT 
-    'inventory' AS table_name, 
-    'last_update' AS column_name, 
-    COUNT(DISTINCT last_update), 
-    MIN(last_update), 
-    MAX(last_update) 
+SELECT
+    'inventory' AS table_name,
+    'last_update' AS column_name,
+    COUNT(DISTINCT last_update),
+    MIN(last_update),
+    MAX(last_update)
 FROM inventory
 
 UNION ALL
 
-SELECT 
-    'language' AS table_name, 
-    'last_update' AS column_name, 
-    COUNT(DISTINCT last_update), 
-    MIN(last_update), 
-    MAX(last_update) 
+SELECT
+    'language' AS table_name,
+    'last_update' AS column_name,
+    COUNT(DISTINCT last_update),
+    MIN(last_update),
+    MAX(last_update)
 FROM language
 
 UNION ALL
 
-SELECT 
-    'rental' AS table_name, 
-    'last_update' AS column_name, 
-    COUNT(DISTINCT last_update), 
-    MIN(last_update), 
-    MAX(last_update) 
+SELECT
+    'rental' AS table_name,
+    'last_update' AS column_name,
+    COUNT(DISTINCT last_update),
+    MIN(last_update),
+    MAX(last_update)
 FROM rental
 
 UNION ALL
 
-SELECT 
-    'staff' AS table_name, 
-    'last_update' AS column_name, 
-    COUNT(DISTINCT last_update), 
-    MIN(last_update), 
-    MAX(last_update) 
+SELECT
+    'staff' AS table_name,
+    'last_update' AS column_name,
+    COUNT(DISTINCT last_update),
+    MIN(last_update),
+    MAX(last_update)
 FROM staff
 
 UNION ALL
 
-SELECT 
-    'store' AS table_name, 
-    'last_update' AS column_name, 
-    COUNT(DISTINCT last_update), 
-    MIN(last_update), 
-    MAX(last_update) 
+SELECT
+    'store' AS table_name,
+    'last_update' AS column_name,
+    COUNT(DISTINCT last_update),
+    MIN(last_update),
+    MAX(last_update)
 FROM store
 
-ORDER BY 
+ORDER BY
     table_name;
 
 -- INSIGHTS
--- All but one last_update columns contain a single distinct timestamp which 
--- suggests singular creation rather than true update tracking.
+-- All but one last_update columns contain a single distinct timestamp which
+-- suggests singular creation rather than true update tracking. The other column
+-- contains 3 distinct dates.
 
 -- RECOMMENDATIONS
 -- Remove last_update and create_date columns for analysis (Refer 6.1).
 
--- --------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
 -- 3.7.2 - COUNT DISTINCT VALUES (Transaction date columns)
--- --------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
 
 -- PURPOSE
 -- Assess the number of distinct values in timestamp columns that track transactions
@@ -1784,27 +1762,27 @@ ORDER BY
 -- entries.
 
 SELECT
-    'payment' AS table_name, 
-    'payment_date' AS column_name, 
+    'payment' AS table_name,
+    'payment_date' AS column_name,
     COUNT(DISTINCT payment_date) AS distinct_dates,
     MIN(payment_date) AS min_date,
-    MAX(payment_date) AS max_date 
+    MAX(payment_date) AS max_date
 FROM payment
 UNION ALL
 SELECT
-    'rental' AS table_name, 
-    'rental_date' AS column_name, 
+    'rental' AS table_name,
+    'rental_date' AS column_name,
     COUNT(DISTINCT rental_date) AS distinct_dates,
     MIN(rental_date) AS min_date,
-    MAX(rental_date) AS max_date 
+    MAX(rental_date) AS max_date
 FROM rental
 UNION ALL
 SELECT
-    'rental' AS table_name, 
-    'return_date' AS column_name, 
+    'rental' AS table_name,
+    'return_date' AS column_name,
     COUNT(DISTINCT return_date) AS distinct_dates,
     MIN(return_date) AS min_date,
-    MAX(return_date) AS max_date 
+    MAX(return_date) AS max_date
 FROM rental;
 
 -- INSIGHTS
@@ -1812,23 +1790,23 @@ FROM rental;
 -- temporal variation in transaction activity, including time components.
 
 -- RECOMMENDATIONS
--- Cast retained timestamp columns tracking operational activity to date as
+-- Cast retained timestamp columns tracking operational activity to date if
 -- time-level detail is not required in the analysis (Refer 6.1).
 
--- --------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
 -- 3.7.3 - COUNT DISTINCT VALUES (Numeric date columns)
--- --------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
 
 -- PURPOSE
 -- Verify that the numeric date column holds plausible values for time-based
--- interpretation. 
+-- interpretation.
 
 SELECT
-    'film' AS table_name, 
-    'release_year' AS column_name, 
+    'film' AS table_name,
+    'release_year' AS column_name,
     COUNT(DISTINCT release_year) AS distinct_dates,
     MIN(release_year) AS min_date,
-    MAX(release_year) AS max_date 
+    MAX(release_year) AS max_date
 FROM film;
 
 -- INSIGHTS
@@ -1839,15 +1817,15 @@ FROM film;
 -- Flag film.release_year as a fixed attribute for contextual reference, not as a
 -- timeline for temporal analysis.
     
--- --------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
 -- 3.7.4 - FREQUENCY DISTRIBUTIONS (Transaction date columns)
--- --------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
 
 -- PURPOSE
--- Assess the daily distribution of transaction events to identify irregular 
+-- Assess the daily distribution of transaction events to identify irregular
 -- patterns, gaps, or system-generated activity. All timestamps are cast to date.
 
-SELECT 
+SELECT
     'rental' AS table_name,
     rental_date::date AS rental_date,
     COUNT(*) AS frequency_count
@@ -1855,7 +1833,7 @@ FROM rental
 GROUP BY rental_date::date
 ORDER BY rental_date::date;
 
-SELECT 
+SELECT
     'rental' AS table_name,
     return_date::date AS return_date,
     COUNT(*) AS frequency_count
@@ -1863,7 +1841,7 @@ FROM rental
 GROUP BY return_date::date
 ORDER BY return_date::date;
 
-SELECT 
+SELECT
     'payment' AS table_name,
     payment_date::date AS payment_date,
     COUNT(*) AS frequency_count
@@ -1876,7 +1854,8 @@ ORDER BY payment_date::date;
 -- The transactional date columns (rental_date, return_date, and payment_date) show
 -- five distinct periods of activity, each followed by a period of inactivity.
 -- Both rental_date and payment_date conclude with a single isolated entry.
--- The return_date column includes 184 null values.
+-- The return_date column includes 184 null values which agrees with earlier
+-- observations.
 -- The activity patterns do not reflect typical weekly, monthly, or seasonal trends.
 -- Return activity typically begins one day after the first rentals which start in
 -- late May 2005, but return cycles span nearly twice the duration of rental

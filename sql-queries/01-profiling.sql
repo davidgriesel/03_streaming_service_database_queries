@@ -1,6 +1,6 @@
--- ================================================================================
+-- ==================================================================================
 -- 1 - PROFILING
--- ================================================================================
+-- ==================================================================================
 
 -- TABLE OF CONTENTS
 
@@ -8,15 +8,15 @@
 -- 1.2 - ROW COUNTS
 -- 1.3 - SAMPLE ROWS
 
--- --------------------------------------------------------------------------------
+-- ------------------------------------------------------------------------------------
 -- 1.1 - OVERVIEW OF TABLES
--- --------------------------------------------------------------------------------
+-- ------------------------------------------------------------------------------------
 
 -- PURPOSE
 -- Retrieve all tables in the public schema to profile the database and validate
 -- the entity relationship diagram, which suggests a star-like structure with
--- transactional tables linking to descriptive dimension tables, and in some cases
--- via join tables.
+-- transactional tables linking to descriptive dimension tables, sometimes via
+-- join tables.
 
 SELECT table_schema, table_type, table_name
 FROM information_schema.tables
@@ -26,15 +26,15 @@ ORDER BY table_type;
 -- INSIGHTS
 -- Structure matched ERD expectations (transactional + dimension + join tables)
 -- with 15 base tables.
--- Seven view tables were also revealed.
+-- Seven views were also identified.
 
--- --------------------------------------------------------------------------------
+-- ------------------------------------------------------------------------------------
 -- 1.2 - ROW COUNTS
--- --------------------------------------------------------------------------------
+-- ------------------------------------------------------------------------------------
 
 -- PURPOSE
--- Count the number of records in each table to identify any unexpectedly empty or
--- undersized tables.
+-- Count the number of records in each table to identify any empty or undersized
+-- tables.
 
 -- BASE Tables
 SELECT
@@ -174,12 +174,12 @@ FROM
 -- No empty tables found.
 -- Transactional tables (payment, rental) are the largest as expected.
 -- Join and dimension tables range from small to mid size.
--- Five view tables appear to represent enriched entity listings.
+-- Five views tables appear to represent enriched listings.
 -- Two view tables suggest summarised sales data by store and category.
 
--- --------------------------------------------------------------------------------
+-- ------------------------------------------------------------------------------------
 -- 1.3 - SAMPLE ROWS
--- --------------------------------------------------------------------------------
+-- ------------------------------------------------------------------------------------
 
 -- PURPOSE
 -- Review a sample of 5 records from each base table to understand typical content,
@@ -225,8 +225,8 @@ SELECT * FROM sales_by_store LIMIT 5;
 -- expected.
 -- The payment and rental tables contain transaction records linked to information
 -- in dimension tables via foreign keys.
--- The staff table contains two staff records with a visible null in picture
--- (type bytea) and duplicate values in password.
+-- The staff table contains two staff records with a visible null in the picture
+-- column (type bytea) and duplicate values in the password column.
 -- The last_update columns across all tables seemingly have a static timestamp.
 -- Some inconsistencies (active vs activebool) and ambiguity (category.name vs.
 -- city.city) in column names.
@@ -234,8 +234,9 @@ SELECT * FROM sales_by_store LIMIT 5;
 -- values, and aggregated sales data per category and store.
 
 -- RECOMMENDATIONS
--- Remove any unnecessary columns containing NULLs, optional information, duplicate
--- functions, dense or specialised metadata, duplicate values (Refer 6.1).
+-- Remove any columns containing NULLs, optional information, duplicate functions,
+-- dense or specialised metadata, and duplicate values not needed in the analysis
+-- (Refer 6.1).
 -- Impute empty strings in retained columns with placeholder values e.g. 'n/a'
 -- (Refer 6.1).
 -- Confirm the actual user-defined data type of mpaa_rating columns (Refer 2.3).

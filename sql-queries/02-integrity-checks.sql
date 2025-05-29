@@ -1,6 +1,6 @@
--- ================================================================================
+-- ==================================================================================
 -- 2 - INTEGRITY CHECKS
--- ================================================================================
+-- ==================================================================================
 
 -- TABLE OF CONTENTS
 
@@ -18,9 +18,9 @@
 -- 2.3.1 - CLASSIFY USER-DEFINED TYPES
 -- 2.3.2 - RETRIEVE ENUMERATED VALUE SETS
 
--- --------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
 -- 2.1 - DATA TYPES
--- --------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
 
 -- PURPOSE
 -- Validate data types across all columns of all base tables to ensure consistency
@@ -51,27 +51,27 @@ ORDER BY
 -- rest.
 -- One column normally associated with boolean (customer.active) uses integer while
 -- there is already a boolean column in the table.
--- Columns with less common or unusual data types include ARRAY 
+-- Columns with less common or unusual data types include ARRAY
 -- (film.special_features), bytea (staff.picture), and tsvector (film.full_text).
--- One column (film.rating) with USER-DEFINED data type.
+-- One column (film.rating) of USER-DEFINED data type.
 
 -- RECOMMENDATIONS
--- Cast retained timestamp columns to date where time-level precision is not
+-- Cast retained timestamp columns to date if time-level precision is not
 -- required (Refer 6.1).
 -- Cast columns of type character to varchar to prevent padding and standardise
--- formats for analysis(Refer 6.1).
+-- formats for analysis (Refer 6.1).
 -- Review column normally associated with boolean for binary logic, compare to
--- boolean column, and remove if having similar functions (Refer 3.4 | 3.5).
+-- boolean column, and remove if sharing functions (Refer 3.4 | 3.5).
 -- Remove columns with unusual or complex data types not needed in the analysis
 -- (Refer 6.1).
 -- Confirm the actual data type of the user-defined column (Refer 2.3).
 
--- --------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
 -- 2.2 - CONSTRAINTS
--- --------------------------------------------------------------------------------
--- --------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
 -- 2.2.1 - PRIMARY KEY CONSTRAINTS
--- --------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
     
 -- PURPOSE
 -- Identify all primary key constraints (including composite keys) across base
@@ -101,11 +101,11 @@ ORDER BY
     tc.table_name;
 
 -- INSIGHTS
--- All tables have a defined primary key with two being composite keys.
+-- All tables have a defined primary key with two having composite keys.
 
--- --------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
 -- 2.2.2 - FOREIGN KEY CONSTRAINTS
--- --------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
 
 -- PURPOSE
 -- Identify foreign key relationships in all base tables to confirm whether
@@ -148,9 +148,9 @@ ORDER BY
 -- Manually validate integrity for store_id columns where constraints are absent
 -- (Refer 5.1.1).
 
--- --------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
 -- 2.2.3 - NOT NULL CONSTRAINTS
--- --------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
 
 -- PURPOSE
 -- Identify columns that allow NULLs across al base tables to isolate columns for
@@ -179,9 +179,9 @@ ORDER BY
 -- RECOMMENDATIONS
 -- Perform targeted null profiling for columns that are nullable (Refer 3.1).
 
--- --------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
 -- 2.2.4 - UNIQUE CONSTRAINTS
--- --------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
 
 -- PURPOSE
 -- Check for columns explicitly constrained to hold only unique values, beyond
@@ -218,9 +218,9 @@ ORDER BY
 -- Review frequency tables for duplicates where columns are expected to hold
 -- unique values (Refer 3.5 | 3.7.4).
 
--- --------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
 -- 2.2.5 - CHECK CONSTRAINTS
--- --------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
 
 -- PURPOSE
 -- Identify all CHECK constraints to understand business rules enforced beyond
@@ -254,11 +254,11 @@ ORDER BY
 
 -- RECOMMENDATIONS
 -- Perform manual checks to confirm whether expected business rules are applied
--- (Refer 5.3 | 5.4).
+-- (Refer Section 5)
 
--- --------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
  -- 2.2.6 - DEFAULT VALUES
--- --------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
 
 -- PURPOSE
 -- Identify columns with default values to understand where the database
@@ -286,21 +286,21 @@ ORDER BY
 -- All last_update columns default to the current time to track database changes.
 -- Column of type date captures changes but truncates the current timestamp to
 -- retain only the date.
--- Business-related columns include some predefined defaults.
+-- Columns holding business information include some predefined defaults.
 -- Boolean values default to true.
 -- Column with USER-DEFINED data type 'mpaa_rating' defaults to 'G', suggesting
 -- that the type is likely ENUMERATED with constrained categorical values.
 
 -- RECOMMENDATIONS
 -- Confirm whether user-defined columns use ENUMERATED types by classifying the
--- mpaa_rating type in the database (Refer 2.3).
+-- mpaa_rating type (Refer 2.3).
 
--- --------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
 -- 2.3 - USER_DEFINED TYPES
--- --------------------------------------------------------------------------------
--- --------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
 -- 2.3.1 - CLASSIFY USER-DEFINED TYPES
--- --------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
 
 -- PURPOSE
 -- Classify USER-DEFINED data types for columns using the mpaa_rating type to
@@ -331,12 +331,12 @@ WHERE
 -- RECOMMENDATION
 -- Retrieve the ENUM values for further analysis (Refer 2.3.2).
 
--- --------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
 -- 2.3.2 - RETRIEVE ENUMERATED VALUE SETS
--- --------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
 
 -- PURPOSE
--- Retrieve the set of values defined for the ENUM type 'mpaa_rating'. 
+-- Retrieve the set of values defined for the ENUM type 'mpaa_rating'.
 
 SELECT 
     t.typname AS enum_type,

@@ -1,14 +1,14 @@
--- ================================================================================
+-- ==================================================================================
 -- 6 - CLEANING
--- ================================================================================
+-- ==================================================================================
 
 -- TABLE OF CONTENTS
 
 -- 6.1 - CREATING CLEAN VIEWS
 
--- --------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
 -- 6.1 - CREATING CLEAN VIEWS
--- --------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
 
 -- PURPOSE
 -- Consolidate earlier cleaning efforst by creating streamlined, query-ready views
@@ -22,6 +22,7 @@ SELECT
     last_name
 FROM actor;
 
+-- Check
 SELECT *
 FROM actor_clean
 LIMIT 10;
@@ -36,9 +37,13 @@ SELECT
     COALESCE(NULLIF(TRIM(phone), ''), 'n/a') AS phone
 FROM address;
 
+-- Check
 SELECT *
 FROM address_clean
-LIMIT 10;
+WHERE
+    district = 'n/a'
+    OR postal_code = 'n/a'
+    OR phone = 'n/a';
 
 CREATE OR REPLACE VIEW category_clean AS
 SELECT 
@@ -46,6 +51,7 @@ SELECT
     name AS category
 FROM category;
 
+-- Check
 SELECT *
 FROM category_clean
 LIMIT 10;
@@ -57,6 +63,7 @@ SELECT
     country_id
 FROM city;
 
+-- Check
 SELECT *
 FROM city_clean
 LIMIT 10;
@@ -67,6 +74,7 @@ SELECT
     country
 FROM country;
 
+-- Check
 SELECT *
 FROM country_clean
 LIMIT 10;
@@ -81,6 +89,7 @@ SELECT
     activebool
 FROM customer;
 
+-- Check
 SELECT *
 FROM customer_clean
 LIMIT 10;
@@ -98,6 +107,7 @@ SELECT
     rating::varchar
 FROM film;
 
+-- Check
 SELECT *
 FROM film_clean
 LIMIT 10;
@@ -108,6 +118,7 @@ SELECT
     film_id
 FROM film_actor;
 
+-- Check
 SELECT *
 FROM film_actor_clean
 LIMIT 10;
@@ -118,6 +129,7 @@ SELECT
     category_id
 FROM film_category;
 
+-- Check
 SELECT *
 FROM film_category_clean
 LIMIT 10;
@@ -129,6 +141,7 @@ SELECT
     store_id
 FROM inventory;
 
+-- Check
 SELECT *
 FROM inventory_clean
 LIMIT 10;
@@ -139,6 +152,7 @@ SELECT
     name::varchar AS language
 FROM language;
 
+-- Check
 SELECT *
 FROM language_clean
 LIMIT 10;
@@ -151,11 +165,17 @@ SELECT
     rental_id,
     amount,
     payment_date::date
-FROM payment;
+FROM payment
+WHERE payment_id NOT IN (19518, 25162, 29163, 31834); 
 
+-- Check
 SELECT *
 FROM payment_clean
 LIMIT 10;
+
+SELECT *
+FROM payment_clean
+WHERE payment_id IN (19518, 25162, 29163, 31834); 
 
 CREATE OR REPLACE VIEW rental_clean AS
 SELECT
@@ -167,6 +187,7 @@ SELECT
     staff_id
 FROM rental;
 
+-- Check
 SELECT *
 FROM rental_clean
 LIMIT 10;
@@ -181,6 +202,7 @@ SELECT
     active AS activebool
 FROM staff;
 
+-- Check
 SELECT *
 FROM staff_clean
 LIMIT 10;
@@ -192,6 +214,7 @@ SELECT
     address_id
 FROM store;
 
+-- Check
 SELECT *
 FROM store_clean
 LIMIT 10;
