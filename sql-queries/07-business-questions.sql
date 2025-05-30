@@ -321,9 +321,9 @@ WITH combined_revenue AS (
             END
         ) AS revenue
     FROM rental_clean r
-    JOIN inventory_clean i ON r.inventory_id = i.inventory_id
-    JOIN film_clean f ON i.film_id = f.film_id
-    JOIN customer_clean cu ON r.customer_id = cu.customer_id
+        JOIN inventory_clean i ON r.inventory_id = i.inventory_id
+        JOIN film_clean f ON i.film_id = f.film_id
+        JOIN customer_clean cu ON r.customer_id = cu.customer_id
     WHERE r.rental_id NOT IN (SELECT rental_id FROM payment_clean)
     GROUP BY cu.customer_id
 ),
@@ -334,10 +334,10 @@ country_revenue AS (
         COUNT(DISTINCT cr.customer_id) AS customer_count,
         SUM(cr.revenue) AS total_revenue
     FROM combined_revenue cr
-    JOIN customer_clean cu ON cr.customer_id = cu.customer_id
-    JOIN address_clean a ON cu.address_id = a.address_id
-    JOIN city_clean ci ON a.city_id = ci.city_id
-    JOIN country_clean co ON ci.country_id = co.country_id
+        JOIN customer_clean cu ON cr.customer_id = cu.customer_id
+        JOIN address_clean a ON cu.address_id = a.address_id
+        JOIN city_clean ci ON a.city_id = ci.city_id
+        JOIN country_clean co ON ci.country_id = co.country_id
     GROUP BY co.country
 )
 
@@ -372,7 +372,7 @@ LIMIT 5;
             cu.customer_id,
             SUM(p.amount) AS revenue
         FROM payment_clean p
-        JOIN customer_clean cu ON p.customer_id = cu.customer_id
+            JOIN customer_clean cu ON p.customer_id = cu.customer_id
         WHERE p.amount <> 0
         GROUP BY cu.customer_id
 
