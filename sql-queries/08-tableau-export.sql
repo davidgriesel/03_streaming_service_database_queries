@@ -57,6 +57,16 @@ SELECT
     ci.city AS customer_city,
     co.country AS customer_country,
 
+    -- Add continent allocation here
+CASE
+    WHEN co.country IN ('Canada', 'Mexico', 'United States', 'Puerto Rico', 'Virgin Islands, U.S.', 'Saint Vincent and the Grenadines', 'Anguilla') THEN 'North America'
+    WHEN co.country IN ('Argentina', 'Bolivia', 'Brazil', 'Chile', 'Colombia', 'Dominican Republic', 'Ecuador', 'Paraguay', 'Peru', 'Venezuela', 'French Guiana') THEN 'Latin America'
+    WHEN co.country IN ('Austria', 'Belarus', 'Bulgaria', 'Czech Republic', 'Estonia', 'Faroe Islands', 'Finland', 'France', 'Germany', 'Greece', 'Hungary', 'Italy', 'Latvia', 'Liechtenstein', 'Lithuania', 'Moldova', 'Netherlands', 'Poland', 'Portugal', 'Romania', 'Russian Federation', 'Slovakia', 'Spain', 'Sweden', 'Switzerland', 'Ukraine', 'United Kingdom', 'Vatican City', 'Holy See (Vatican City State)', 'Greenland', 'Serbia') THEN 'Europe'
+    WHEN co.country IN ('Afghanistan', 'Bahrain', 'Iran', 'Iraq', 'Israel', 'Kuwait', 'Oman', 'Saudi Arabia', 'Syria', 'Turkey', 'United Arab Emirates', 'Yemen', 'Algeria', 'Angola', 'Cameroon', 'Chad', 'Congo, The Democratic Republic of the', 'Egypt', 'Ethiopia', 'Gambia', 'Kenya', 'Madagascar', 'Malawi', 'Morocco', 'Mozambique', 'Nigeria', 'Senegal', 'South Africa', 'Sudan', 'Tanzania', 'Tunisia', 'Zambia', 'Réunion') THEN 'Middle East and Africa'
+    WHEN co.country IN ('Armenia', 'Azerbaijan', 'Bangladesh', 'Brunei', 'Cambodia', 'China', 'Hong Kong', 'India', 'Indonesia', 'Japan', 'Kazakhstan', 'Malaysia', 'Myanmar', 'Nepal', 'North Korea', 'Pakistan', 'Philippines', 'South Korea', 'Sri Lanka', 'Taiwan', 'Thailand', 'Turkmenistan', 'Vietnam', 'American Samoa', 'French Polynesia', 'Nauru', 'New Zealand', 'Tonga', 'Tuvalu', 'Australia') THEN 'Asia-Pacific'
+    ELSE 'Other'
+END AS region,
+
     -- Film details
     f.film_id,
     f.title,

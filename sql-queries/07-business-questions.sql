@@ -280,7 +280,7 @@
     FROM customer_country
     GROUP BY country
     ORDER BY customer_count DESC
-    LIMIT 5;
+    LIMIT 10;
 
 -- INSIGHTS
 -- Customers are located across 108 countries.
@@ -348,7 +348,7 @@ SELECT
     ROUND(total_revenue / customer_count, 2) AS avg_lifetime_value
 FROM country_revenue
 ORDER BY avg_lifetime_value DESC
-LIMIT 5;
+LIMIT 10;
 
 -- INSIGHTS
 -- The top-ranking countries by average customer lifetime value were:
@@ -419,14 +419,14 @@ LIMIT 5;
         SELECT
             cr.customer_id,
             SUM(cr.revenue) AS revenue,
-        CASE
-            WHEN co.country IN ('Algeria', 'Angola', 'Cameroon', 'Chad', 'Congo, The Democratic Republic of the', 'Egypt', 'Ethiopia', 'Gambia', 'Kenya', 'Madagascar', 'Malawi', 'Morocco', 'Mozambique', 'Nigeria', 'Senegal', 'South Africa', 'Sudan', 'Tanzania', 'Tunisia', 'Zambia', 'Runion') THEN 'Africa'
-            WHEN co.country IN ('Afghanistan', 'Armenia', 'Azerbaijan', 'Bahrain', 'Bangladesh', 'Brunei', 'Cambodia', 'China', 'Hong Kong', 'India', 'Indonesia', 'Iran', 'Iraq', 'Israel', 'Japan', 'Kazakstan', 'Kuwait', 'Malaysia', 'Myanmar', 'Nepal', 'North Korea', 'Oman', 'Pakistan', 'Philippines', 'Saudi Arabia', 'South Korea', 'Sri Lanka', 'Syria', 'Taiwan', 'Thailand', 'Turkey', 'Turkmenistan', 'United Arab Emirates', 'Vietnam', 'Yemen') THEN 'Asia'
-            WHEN co.country IN ('Austria', 'Belarus', 'Bulgaria', 'Czech Republic', 'Estonia', 'Faroe Islands', 'Finland', 'France', 'Germany', 'Greece', 'Hungary', 'Italy', 'Latvia', 'Liechtenstein', 'Lithuania', 'Moldova', 'Netherlands', 'Poland', 'Portugal', 'Romania', 'Russian Federation', 'Slovakia', 'Spain', 'Sweden', 'Switzerland', 'Ukraine', 'United Kingdom', 'Vatican City', 'Yugoslavia', 'Holy See (Vatican City State)', 'Greenland') THEN 'Europe'
-            WHEN co.country IN ('Canada', 'Mexico', 'Puerto Rico', 'United States', 'Virgin Islands, U.S.', 'Saint Vincent and the Grenadines', 'Anguilla') THEN 'North America'
-            WHEN co.country IN ('Argentina', 'Bolivia', 'Brazil', 'Chile', 'Colombia', 'Dominican Republic', 'Ecuador', 'Paraguay', 'Peru', 'Venezuela', 'French Guiana') THEN 'South America'
-            WHEN co.country IN ('Australia', 'American Samoa', 'French Polynesia', 'Nauru', 'New Zealand', 'Tonga', 'Tuvalu') THEN 'Oceania'
-            ELSE 'Other'
+    CASE
+        WHEN co.country IN ('Canada', 'Mexico', 'United States', 'Puerto Rico', 'Virgin Islands, U.S.', 'Saint Vincent and the Grenadines', 'Anguilla') THEN 'North America'
+        WHEN co.country IN ('Argentina', 'Bolivia', 'Brazil', 'Chile', 'Colombia', 'Dominican Republic', 'Ecuador', 'Paraguay', 'Peru', 'Venezuela', 'French Guiana') THEN 'Latin America'
+        WHEN co.country IN ('Austria', 'Belarus', 'Bulgaria', 'Czech Republic', 'Estonia', 'Faroe Islands', 'Finland', 'France', 'Germany', 'Greece', 'Hungary', 'Italy', 'Latvia', 'Liechtenstein', 'Lithuania', 'Moldova', 'Netherlands', 'Poland', 'Portugal', 'Romania', 'Russian Federation', 'Slovakia', 'Spain', 'Sweden', 'Switzerland', 'Ukraine', 'United Kingdom', 'Vatican City', 'Holy See (Vatican City State)', 'Greenland', 'Serbia') THEN 'Europe'
+        WHEN co.country IN ('Afghanistan', 'Bahrain', 'Iran', 'Iraq', 'Israel', 'Kuwait', 'Oman', 'Saudi Arabia', 'Syria', 'Turkey', 'United Arab Emirates', 'Yemen', 'Algeria', 'Angola', 'Cameroon', 'Chad', 'Congo, The Democratic Republic of the', 'Egypt', 'Ethiopia', 'Gambia', 'Kenya', 'Madagascar', 'Malawi', 'Morocco', 'Mozambique', 'Nigeria', 'Senegal', 'South Africa', 'Sudan', 'Tanzania', 'Tunisia', 'Zambia', 'Réunion') THEN 'Middle East and Africa'
+        WHEN co.country IN ('Armenia', 'Azerbaijan', 'Bangladesh', 'Brunei', 'Cambodia', 'China', 'Hong Kong', 'India', 'Indonesia', 'Japan', 'Kazakhstan', 'Malaysia', 'Myanmar', 'Nepal', 'North Korea', 'Pakistan', 'Philippines', 'South Korea', 'Sri Lanka', 'Taiwan', 'Thailand', 'Turkmenistan', 'Vietnam', 'American Samoa', 'French Polynesia', 'Nauru', 'New Zealand', 'Tonga', 'Tuvalu', 'Australia') THEN 'Asia-Pacific'
+        ELSE 'Other'
+    END AS region
         END AS continent
         FROM combined_revenue cr
             JOIN customer_clean cu ON cr.customer_id = cu.customer_id

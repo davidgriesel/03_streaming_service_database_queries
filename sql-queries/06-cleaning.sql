@@ -71,13 +71,18 @@ LIMIT 10;
 CREATE OR REPLACE VIEW country_clean AS
 SELECT
     country_id,
-    country
+    CASE
+        WHEN country = 'Runion' THEN 'Réunion'
+        WHEN country = 'Kazakstan' THEN 'Kazakhstan'
+        WHEN country = 'Yugoslavia' THEN 'Serbia'
+        ELSE country
+    END AS country
 FROM country;
 
 -- Check
 SELECT *
 FROM country_clean
-LIMIT 10;
+WHERE country IN ('Réunion', 'Kazakhstan', 'Serbia');
 
 CREATE OR REPLACE VIEW customer_clean AS
 SELECT

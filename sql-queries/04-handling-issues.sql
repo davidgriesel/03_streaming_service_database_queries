@@ -14,6 +14,9 @@
 -- 4.3 - MISSING AND PLACEHOLDER VALUES
 -- 4.3.1 - VIEW MISSING AND PLACEHOLDER VALUES
 
+-- 4.4 - CITIES LINKED TO YUGOSLAVIA
+-- 4.4.1 - VIEW CITIES LINKED TO FORMER YUGOSLAVIA
+
 -- ----------------------------------------------------------------------------------
 -- 4.1 - DUPLICATE RECORDS
 -- ----------------------------------------------------------------------------------
@@ -169,3 +172,34 @@ WHERE TRIM(COALESCE(phone, '')) = '';
 -- Impute empty string values in the postal_code, district, and phone columns with
 -- a consistent placeholder (e.g. 'n/a') to ensure clarity and enable reliable
 -- grouping and comparison (Refer 6.1).
+
+-- ----------------------------------------------------------------------------------
+-- 4.4 - CITIES LINKED TO YUGOSLAVIA
+-- ----------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
+-- 4.4.1 - VIEW CITIES LINKED TO FORMER YUGOSLAVIA
+-- ----------------------------------------------------------------------------------
+
+-- PURPOSE
+-- Identify all cities currently linked to the deprecated country name 'Yugoslavia'
+-- to assess whether the country value can be reassigned or corrected prior to
+-- updating the cleaned views.
+
+SELECT
+    city.city_id,
+    city.city,
+    city.country_id,
+    country.country_id,
+    country.country
+FROM city
+JOIN country ON city.country_id = country.country_id
+WHERE country.country = 'Yugoslavia';
+
+-- INSIGHTS
+-- The cities Kragujevac and Novi Sad, linked to the deprecated country name
+-- 'Yugoslavia' are located in present-day Serbia.
+
+-- RECOMMENDATIONS
+-- Update the country name from 'Yugoslavia' to 'Serbia' in the cleaned views to
+-- reflect current geopolitical boundaries and improve data accuracy for regional
+-- analysis (Refer 6.1).

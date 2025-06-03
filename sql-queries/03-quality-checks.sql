@@ -1406,6 +1406,9 @@ ORDER BY frequency DESC;
 -- others (customer.email, staff.email) all hold unique values.
 -- Boolean status columns (customer.activebool, staff.active) contain only one value
 -- (true) while status column of type integer contain 0 and 1 (customer.active).
+-- Two spelling errors in country.country - Runion and Kazakstan should be Réunion
+-- and Kazakhstan.
+-- The country Yugoslavia does not exist anymore.
 
 -- RECOMMENDATIONS
 -- Remove empty columns (Refer 6.1).
@@ -1417,6 +1420,9 @@ ORDER BY frequency DESC;
 -- activity (Refer 6.1).
 -- Confirm that duplicate city names are valid e.g. relate to different countries.
 -- Communicate duplicate passwords to management as security risk (Reporting).
+-- Correct spelling mistakes in the country.country column.
+-- Check which cities link to Yugoslavia to determine if the country name can be
+-- updated (Refer 6.1).
 
 -- ----------------------------------------------------------------------------------
 -- 3.6 - DESCRIPTIVE STATISTICS (Numeric columns)
