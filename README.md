@@ -26,7 +26,7 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
 ## Links
 - [**Entity Relationship Diagram**](https://github.com/davidgriesel/03-streaming-service-database-queries/blob/main/deliverables/erd-dbvisualiser.png)
 - [**Data Dictionary**](https://github.com/davidgriesel/03-streaming-service-database-queries/blob/main/deliverables/data-dictionary.pdf)
-- [**Tableau Visualisations**](https://public.tableau.com/views/RockbusterStealth_17337132300590/Story1?:language=en-GB&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
+- [**Tableau Visualisations**](https://public.tableau.com/views/StreamingService_17486375379040/Dashboard1?:language=en-GB&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
 - [**Presentation**](https://github.com/davidgriesel/03-streaming-service-database-queries/blob/main/deliverables/presentation.pdf)
 <!-- - **Query Output** *(link to be added)*
 
