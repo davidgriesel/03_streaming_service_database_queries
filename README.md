@@ -35,7 +35,6 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
 <br><br>
 
 ## Key Insights
-
 1. The top 5 revenue-generating films earned between ¤205 and ¤232, while 7 films shared the bottom five positions, generating between ¤6 and ¤8.
 <table>
 <tr>
@@ -61,6 +60,7 @@ Rental Duration|Number of transactions|Min Actual Duration|Max Actual Duration|A
 6|3 352|0|10|5
 7|2 798|0|10|5
 All|15 861|0|10|5
+<br>
 
 5. Total revenue by country varied from ¤68 to ¤6,628, with customer counts between 1 and 60. India led in both customer numbers and total revenue, followed closely by China, and the United States.
 <table>
