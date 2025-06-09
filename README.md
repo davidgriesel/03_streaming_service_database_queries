@@ -118,17 +118,6 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
 </table>
 <br>
 
-4. Average customer lifetime value (CLV) varied between ¤68 to ¤217, with Réunion having the highest CLV, followed by Vatican City and Nauru.
-<table>
-<tr>
-<td align="center" valign="top" width="100%">
-    <img src="visualisations/clv_customers.png" ><br>
-    <em>...</em>
-</td>
-</tr>
-</table>
-<br>
-
 <table style="width:100%; border-collapse: collapse;">
   <thead>
     <tr>
@@ -152,6 +141,44 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
   </tbody>
 </table>
 
+
+4. Average customer lifetime value (CLV) varied between ¤68 to ¤217, with Réunion having the highest CLV, followed by Vatican City and Nauru.
+<table>
+<tr>
+<td align="center" valign="top" width="100%">
+    <img src="visualisations/clv_customers.png" ><br>
+    <em>...</em>
+</td>
+</tr>
+</table>
+<br>
+
+
+
+
+<table style="width:100%; border-collapse: collapse;">
+  <thead>
+    <tr>
+      <th style="text-align: center; padding: 8px; border: 1px solid #ddd;">#</th>
+      <th style="text-align: center; padding: 8px; border: 1px solid #ddd;">Country</th>
+      <th style="text-align: center; padding: 8px; border: 1px solid #ddd;">Customer Count</th>
+      <th style="text-align: center; padding: 8px; border: 1px solid #ddd;">Total Revenue</th>
+      <th style="text-align: center; padding: 8px; border: 1px solid #ddd;">Avg Lifetime Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">1</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">Réunion</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">1</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">216.54</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">216.54</td></tr>
+    <tr><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">2</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">Holy See (Vatican City State)</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">1</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">152.66</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">152.66</td></tr>
+    <tr><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">3</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">Nauru</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">1</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">148.69</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">148.69</td></tr>
+    <tr><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">4</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">Sweden</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">1</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">144.66</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">144.66</td></tr>
+    <tr><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">5</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">Hong Kong</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">1</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">142.70</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">142.70</td></tr>
+    <tr><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">6</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">Thailand</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">3</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">419.04</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">139.68</td></tr>
+    <tr><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">7</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">Belarus</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">2</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">277.34</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">138.67</td></tr>
+    <tr><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">8</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">Greenland</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">1</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">137.66</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">137.66</td></tr>
+    <tr><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">9</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">Turkmenistan</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">1</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">136.73</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">136.73</td></tr>
+    <tr><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">10</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">Chad</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">1</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">135.68</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">135.68</td></tr>
+  </tbody>
+</table>
 
 
 5. The Asia-Pacific region emerged as the clear leader ¤26 468 in sales and 235 customers, while Latin America performed the worst selling ¤8 096 from 73 customers.
