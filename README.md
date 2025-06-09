@@ -54,11 +54,11 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
 <table style="width:100%; border-collapse: collapse;">
   <thead>
     <tr>
-      <th style="text-align: center; padding: 8px; border: 1px solid #ddd;">Rental Duration (Days)</th>
-      <th style="text-align: center; padding: 8px; border: 1px solid #ddd;">Number of Transactions</th>
-      <th style="text-align: center; padding: 8px; border: 1px solid #ddd;">Minimum Actual Duration</th>
-      <th style="text-align: center; padding: 8px; border: 1px solid #ddd;">Maximum Actual Duration</th>
-      <th style="text-align: center; padding: 8px; border: 1px solid #ddd;">Average Actual Duration</th>
+      <th style="text-align: right; padding: 8px; border: 1px solid #ddd;">Rental Duration (Days)</th>
+      <th style="text-align: right; padding: 8px; border: 1px solid #ddd;">Number of Transactions</th>
+      <th style="text-align: right; padding: 8px; border: 1px solid #ddd;">Minimum Actual Duration</th>
+      <th style="text-align: right; padding: 8px; border: 1px solid #ddd;">Maximum Actual Duration</th>
+      <th style="text-align: right; padding: 8px; border: 1px solid #ddd;">Average Actual Duration</th>
     </tr>
   </thead>
   <tbody>
