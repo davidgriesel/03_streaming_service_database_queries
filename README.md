@@ -32,7 +32,8 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
 ## Key Insights
 
 1. The top 5 revenue-generating films earned between ¤205 and ¤232, while 7 films shared the bottom five positions, generating between ¤6 and ¤8.
-2. <table width="100%">
+
+<table width="100%">
 <tr>
 <td align="center" valign="top" width="50%">
     <img src="visualisations/top_films.png""><br>
