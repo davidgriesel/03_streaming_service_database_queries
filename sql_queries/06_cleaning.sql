@@ -190,12 +190,17 @@ SELECT
     customer_id,
     return_date::date,
     staff_id
-FROM rental;
+FROM rental
+WHERE return_date IS NOT NULL;
 
 -- Check
 SELECT *
 FROM rental_clean
 LIMIT 10;
+
+SELECT *
+FROM rental_clean
+WHERE return_date IS NULL;
 
 CREATE OR REPLACE VIEW staff_clean AS
 SELECT

@@ -358,8 +358,8 @@ ORDER BY r.rental_id, p.payment_date;
 -- manual intervention, system errors, or incorrect adjustmenting journals.
 
 -- RECOMMENDATIONS
--- With accruals raised for any unpaid rentals, misallocated payments can be excluded
--- from downstream analysis.
+-- 4 payments account for 0,02 % of all payments and can be removed without impacting
+-- the analysis.
 -- Report misallocated payments to management for further investigation (Reporting).
 -- Confirm whether customer id's match between remaining linked rentals and payments.
 
@@ -457,10 +457,9 @@ WHERE r.return_date IS NULL;
 -- waived fees.
 
 -- RECOMMENDATIONS
--- Exclude these records from downstream analysis sensitive to return dates.
--- Exclude zero-payment rentals from payment-related analysis.
--- Include fully paid and overpaid rentals in payment-related analyses.
--- Report zero-payment rentals to management to confirm validity (Reporting).
+-- 183 transactions account for 1,14% of all rentals and can be removed without
+-- impacting the analysis.
+-- Report these transactions to management for further investigation (Reporting).
 
 -- ----------------------------------------------------------------------------------
 -- 5.3.5 – UNPAID RENTALS: CALCULATE TOTAL ACCRUED REVENUE

@@ -195,17 +195,42 @@
 -- Calculate the minimum, maximum, and average actual rental durations for all
 -- rentals with recorded return dates.
 
+SELECT *
+FROM (
+    -- Summary by rental_duration
     SELECT
-        'Total' AS rental_duration,
+        f.rental_duration::text AS rental_duration,
         COUNT(*) AS rental_count,
         MIN(r.return_date - r.rental_date) AS min_duration,
         MAX(r.return_date - r.rental_date) AS max_duration,
-        ROUND(AVG(r.return_date - r.rental_date), 2) AS avg_duration
+        ROUND(AVG(r.return_date - r.rental_date), 0) AS avg_duration
     FROM film_clean f
         JOIN inventory_clean i ON f.film_id = i.film_id
         JOIN rental_clean r ON i.inventory_id = r.inventory_id
-    WHERE
-        r.return_date IS NOT NULL; -- exclude 183 rentals with NULL return dates
+    WHERE r.return_date IS NOT NULL
+    GROUP BY f.rental_duration
+
+    UNION ALL
+
+    -- Total summary
+    SELECT
+        'All' AS rental_duration,
+        COUNT(*) AS rental_count,
+        MIN(r.return_date - r.rental_date) AS min_duration,
+        MAX(r.return_date - r.rental_date) AS max_duration,
+        ROUND(AVG(r.return_date - r.rental_date), 0) AS avg_duration
+    FROM film_clean f
+        JOIN inventory_clean i ON f.film_id = i.film_id
+        JOIN rental_clean r ON i.inventory_id = r.inventory_id
+    WHERE r.return_date IS NOT NULL
+) AS summary
+
+ORDER BY 
+    CASE WHEN rental_duration = 'All' THEN 1 ELSE 0 END,
+    CASE 
+        WHEN rental_duration = 'All' THEN NULL
+        ELSE rental_duration::int
+    END;
 
 -- INSIGHTS
 -- Among the 15,861 rentals with recorded return dates, the actual rental duration ranged
@@ -411,7 +436,7 @@ LIMIT 10;
     )
 
     SELECT
-        continent,
+        region,
         ROUND(SUM(revenue), 0) AS total_revenue,
         COUNT(*) AS customer_count,
         ROUND(AVG(revenue), 0) AS avg_lifetime_value
@@ -427,7 +452,6 @@ LIMIT 10;
         WHEN co.country IN ('Armenia', 'Azerbaijan', 'Bangladesh', 'Brunei', 'Cambodia', 'China', 'Hong Kong', 'India', 'Indonesia', 'Japan', 'Kazakhstan', 'Malaysia', 'Myanmar', 'Nepal', 'North Korea', 'Pakistan', 'Philippines', 'South Korea', 'Sri Lanka', 'Taiwan', 'Thailand', 'Turkmenistan', 'Vietnam', 'American Samoa', 'French Polynesia', 'Nauru', 'New Zealand', 'Tonga', 'Tuvalu', 'Australia') THEN 'Asia-Pacific'
         ELSE 'Other'
     END AS region
-        END AS continent
         FROM combined_revenue cr
             JOIN customer_clean cu ON cr.customer_id = cu.customer_id
             JOIN address_clean a ON cu.address_id = a.address_id
@@ -435,7 +459,7 @@ LIMIT 10;
             JOIN country_clean co ON ci.country_id = co.country_id
         GROUP BY cr.customer_id, co.country
     ) regional
-    GROUP BY continent
+    GROUP BY region
     ORDER BY total_revenue DESC;
 
 -- INSIGHTS
