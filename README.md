@@ -13,9 +13,9 @@ A legacy movie rental company is planning to re-enter the market with a new onli
 - **PowerPoint** - Presentation
 
 ## Process
-- **Data Preparation** - Database Setup | Import | Structure Interperation
-- **Data Modelling & Documentation** - ERD Creation | Data Dictionary Documentation
-- **Querying** - Filtering | Sorting | Joining | Aggregating | Subqueries | CTEs
+- **Understanding** - ERD Creation | Data Dictionary Documentation
+- **Data Preparation** - Profiling | Integrity Checks | Quality Checks | Cleaning | Integration
+- **Analysis** - Business Rule Validation | Metric Derivation | Ad Hoc Querying
 - **Communication** - Visualisation | Presentation
 
 ## Data
