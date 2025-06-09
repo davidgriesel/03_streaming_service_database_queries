@@ -119,7 +119,7 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
 </table>
 <br>
 
-<table style="width:100%; border-collapse: collapse;">
+<table style="width: 100%; table-layout: fixed; border-collapse: collapse;">
   <thead>
     <tr>
       <th style="text-align: center; padding: 8px; border: 1px solid #ddd; min-width: 120px;">#</th>
