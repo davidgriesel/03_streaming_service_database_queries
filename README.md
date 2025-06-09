@@ -119,7 +119,7 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
 </table>
 <br>
 
-<table style="width: 100%; table-layout: fixed; border-collapse: collapse;">
+<table style="width:100%; border-collapse: collapse;">
   <thead>
     <tr>
       <th style="text-align: center; padding: 8px; border: 1px solid #ddd; min-width: 120px;">#</th>
@@ -157,11 +157,11 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
 <table style="width:100%; border-collapse: collapse;">
   <thead>
     <tr>
-      <th style="text-align: center; padding: 16px; border: 1px solid #ddd; min-width: 120px;">#</th>
-      <th style="text-align: center; padding: 16px; border: 1px solid #ddd; min-width: 200px;">Country</th>
-      <th style="text-align: center; padding: 16px; border: 1px solid #ddd; min-width: 200px;">Customer Count</th>
-      <th style="text-align: center; padding: 16px; border: 1px solid #ddd; min-width: 200px;">Total Revenue</th>
-      <th style="text-align: center; padding: 16px; border: 1px solid #ddd; min-width: 200px;">Avg Lifetime Value</th>
+      <th style="text-align: center; padding: 8px; border: 1px solid #ddd; min-width: 120px;">#</th>
+      <th style="text-align: center; padding: 8px; border: 1px solid #ddd; min-width: 200px;">Country</th>
+      <th style="text-align: center; padding: 8px; border: 1px solid #ddd; min-width: 200px;">Customer Count</th>
+      <th style="text-align: center; padding: 8px; border: 1px solid #ddd; min-width: 200px;">Total Revenue</th>
+      <th style="text-align: center; padding: 8px; border: 1px solid #ddd; min-width: 200px;">Avg Lifetime Value</th>
     </tr>
   </thead>
   <tbody>
