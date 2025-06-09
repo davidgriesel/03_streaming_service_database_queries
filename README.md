@@ -24,9 +24,9 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
 - [**Dataset**](http://www.postgresqltutorial.com/wp-content/uploads/2019/05/dvdrental.zip) – Film, inventory, customer, payment, and rental records
 
 ## Links
-- [**Entity Relationship Diagram**](https://github.com/davidgriesel/03-streaming-service-database-queries/blob/main/deliverables/erd-dbvisualiser.png)
-- [**Data Dictionary**](https://github.com/davidgriesel/03-streaming-service-database-queries/blob/main/deliverables/data-dictionary.pdf)
-- [**Tableau Visualisations**](https://public.tableau.com/views/StreamingService_17486375379040/Dashboard1?:language=en-GB&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
+- [**Entity Relationship Diagram**](https://github.com/davidgriesel/03-streaming-service-database-queries/blob/main/deliverables/erd_dbvisualiser.png)
+- [**Data Dictionary**](https://github.com/davidgriesel/03-streaming-service-database-queries/blob/main/deliverables/data_dictionary.pdf)
+- [**Interactive Tableau Dashboard**](https://public.tableau.com/views/StreamingService_17486375379040/Dashboard1?:language=en-GB&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
 - [**Presentation**](https://github.com/davidgriesel/03-streaming-service-database-queries/blob/main/deliverables/presentation.pdf)
 
 ## Key Insights
