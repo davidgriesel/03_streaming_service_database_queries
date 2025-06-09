@@ -74,6 +74,66 @@ All|15 861|0|10|5
     <td>3</td><td>3 366</td><td>0</td><td>10</td><td>5</td>
   </tr>
 
+
+
+  <h3>2. Rental durations across all terms ranged from same-day returns to a maximum of 10, with an average duration of 5 days.</h3>
+
+<table style="width:100%; border-collapse: collapse;">
+  <thead>
+    <tr style="background-color: #f2f2f2;">
+      <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Rental Duration (Days)</th>
+      <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Number of Transactions</th>
+      <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Minimum Actual Duration</th>
+      <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Maximum Actual Duration</th>
+      <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Average Actual Duration</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="padding: 8px; border: 1px solid #ddd;">3</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">3 366</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">0</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">10</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">5</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; border: 1px solid #ddd;">4</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">3 213</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">0</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">10</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">5</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; border: 1px solid #ddd;">5</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">3 132</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">0</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">10</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">5</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; border: 1px solid #ddd;">6</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">3 352</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">0</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">10</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">5</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; border: 1px solid #ddd;">7</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">2 798</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">0</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">10</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">5</td>
+    </tr>
+    <tr style="font-weight: bold; background-color: #f9f9f9;">
+      <td style="padding: 8px; border: 1px solid #ddd;">All</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">15 861</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">0</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">10</td>
+      <td style="padding: 8px; border: 1px solid #ddd;">5</td>
+    </tr>
+  </tbody>
+</table>
+
 3. Total revenue by country varied from ¤68 to ¤6,628, with customer counts between 1 and 60. India led in both customer numbers and total revenue, followed closely by China, and the United States.
 <table>
 <tr>
