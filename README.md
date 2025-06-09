@@ -53,9 +53,14 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
 
 3. Rental durations across all terms ranged from same-day returns to a maximum of 10, with an average duration of 5 days.
 
-Rental Duration | Number of transactions | Min Actual Duration | Max Actual Duration | Avg Actual Duration
+Rental Duration|Number of transactions|Min Actual Duration|Max Actual Duration|Avg Actual Duration
 :---:|:---:|:---:|:---:|:---:
-3| 3 366|0|10|5
+3|3 366|0|10|5
+4|3 213|0|10|5
+5|3 132|0|10|5
+6|3 352|0|10|5
+7|2 798|0|10|5
+All|15 861|0|10|5
 
 5. Total revenue by country varied from ¤68 to ¤6,628, with customer counts between 1 and 60. India led in both customer numbers and total revenue, followed closely by China, and the United States.
 <table>
