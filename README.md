@@ -51,41 +51,14 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
 <br>
 
 2. Rental durations across all terms ranged from same-day returns to a maximum of 10, with an average duration of 5 days.
-
-Rental Duration|Number of transactions|Min Actual Duration|Max Actual Duration|Avg Actual Duration
-:---|:---|:---|:---|:---
-3|3 366|0|10|5
-4|3 213|0|10|5
-5|3 132|0|10|5
-6|3 352|0|10|5
-7|2 798|0|10|5
-All|15 861|0|10|5
-<br>
-
-<table width="100%">
-  <tr>
-    <th>Rental Duration (Days)</th>
-    <th>Number of Transactions</th>
-    <th>Minimum Actual Duration</th>
-    <th>Maximum Actual Duration</th>
-    <th>Average Actual Duration</th>
-  </tr>
-  <tr>
-    <td>3</td><td>3 366</td><td>0</td><td>10</td><td>5</td>
-  </tr>
-
-
-
-  <h3>2. Rental durations across all terms ranged from same-day returns to a maximum of 10, with an average duration of 5 days.</h3>
-
 <table style="width:100%; border-collapse: collapse;">
   <thead>
-    <tr style="background-color: #f2f2f2;">
-      <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Rental Duration (Days)</th>
-      <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Number of Transactions</th>
-      <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Minimum Actual Duration</th>
-      <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Maximum Actual Duration</th>
-      <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Average Actual Duration</th>
+    <tr>
+      <th style="text-align: center; padding: 8px; border: 1px solid #ddd;">Rental Duration (Days)</th>
+      <th style="text-align: center; padding: 8px; border: 1px solid #ddd;">Number of Transactions</th>
+      <th style="text-align: center; padding: 8px; border: 1px solid #ddd;">Minimum Actual Duration</th>
+      <th style="text-align: center; padding: 8px; border: 1px solid #ddd;">Maximum Actual Duration</th>
+      <th style="text-align: center; padding: 8px; border: 1px solid #ddd;">Average Actual Duration</th>
     </tr>
   </thead>
   <tbody>
@@ -156,18 +129,29 @@ All|15 861|0|10|5
 </table>
 <br>
 
-Rank|Top 10 Countries|Number of Customers|Total Revenue
-:---|:---|:---|:---
-1|India|60|6 628
-2|Chine|53|5 799
-3|United States|36|4 110
-4|Japan|31|3 471
-5|Mexico|30|3 307
-6|Brazil|28|3 201
-7|Russion Federation|28|3 046
-8|Philippines|20|2 381
-9|Turkey|15|1 662
-10|Indonesia|14|1 510
+<table style="width:100%; border-collapse: collapse;">
+  <thead>
+    <tr>
+      <th style="text-align: center; padding: 8px; border: 1px solid #ddd;">#</th>
+      <th style="text-align: center; padding: 8px; border: 1px solid #ddd;">Country</th>
+      <th style="text-align: center; padding: 8px; border: 1px solid #ddd;">Customer Count</th>
+      <th style="text-align: center; padding: 8px; border: 1px solid #ddd;">Total Revenue</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">1</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">India</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">60</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">6,628.28</td></tr>
+    <tr><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">2</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">China</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">53</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">5,798.74</td></tr>
+    <tr><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">3</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">United States</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">36</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">4,110.32</td></tr>
+    <tr><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">4</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">Japan</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">31</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">3,470.75</td></tr>
+    <tr><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">5</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">Mexico</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">30</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">3,307.04</td></tr>
+    <tr><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">6</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">Brazil</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">28</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">3,200.52</td></tr>
+    <tr><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">7</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">Russian Federation</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">28</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">3,045.87</td></tr>
+    <tr><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">8</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">Philippines</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">20</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">2,381.32</td></tr>
+    <tr><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">9</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">Turkey</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">15</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">1,662.12</td></tr>
+    <tr><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">10</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">Indonesia</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">14</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">1,510.33</td></tr>
+  </tbody>
+</table>
+
 
 
 5. The Asia-Pacific region emerged as the clear leader ¤26 468 in sales and 235 customers, while Latin America performed the worst selling ¤8 096 from 73 customers.
@@ -181,17 +165,6 @@ Rank|Top 10 Countries|Number of Customers|Total Revenue
 </table>
 <br>
 
-
-1	Réunion	1	216.54	216.54
-2	Holy See (Vatican City State)	1	152.66	152.66
-3	Nauru	1	148.69	148.69
-4	Sweden	1	144.66	144.66
-5	Hong Kong	1	142.70	142.70
-6	Thailand	3	419.04	139.68
-7	Belarus	2	277.34	138.67
-8	Greenland	1	137.66	137.66
-9	Turkmenistan	1	136.73	136.73
-10	Chad	1	135.68	135.68
 
 
 
