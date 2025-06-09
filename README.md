@@ -28,18 +28,8 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
 - [**Data Dictionary**](https://github.com/davidgriesel/03-streaming-service-database-queries/blob/main/deliverables/data-dictionary.pdf)
 - [**Tableau Visualisations**](https://public.tableau.com/views/StreamingService_17486375379040/Dashboard1?:language=en-GB&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
 - [**Presentation**](https://github.com/davidgriesel/03-streaming-service-database-queries/blob/main/deliverables/presentation.pdf)
-<!-- - **Query Output** *(link to be added)*
-
-## Key Questions
-1. Which movies contributed the most/least to revenue gain?
-2. What was the average rental duration for all videos?
-3. Which countries are Rockbuster customers based in?
-4. Where are customers with a high lifetime value based?
-5. Do sales figures vary between geographic regions?
 
 ## Key Insights
-
-## Key Recommendations
 
 ## Takeaways
 ### Successes
