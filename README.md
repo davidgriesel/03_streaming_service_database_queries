@@ -13,9 +13,9 @@ A legacy movie rental company is planning to re-enter the market with a new onli
 - **PowerPoint** - Presentation
 
 ## Process
-- **Data Preparation** - Database Setup | Import | Structure Interperation
-- **Data Modelling & Documentation** - ERD Creation | Data Dictionary Documentation
-- **Querying** - Filtering | Sorting | Joining | Aggregating | Subqueries | CTEs
+- **Understanding** - ERD Creation | Data Dictionary Documentation
+- **Data Preparation** - Profiling | Integrity Checks | Quality Checks | Cleaning | Integration
+- **Analysis** - Business Rule Validation | Metric Derivation | Ad Hoc Querying
 - **Communication** - Visualisation | Presentation
 
 ## Data
@@ -24,12 +24,32 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
 - [**Dataset**](http://www.postgresqltutorial.com/wp-content/uploads/2019/05/dvdrental.zip) – Film, inventory, customer, payment, and rental records
 
 ## Links
-- [**Entity Relationship Diagram**](https://github.com/davidgriesel/03-streaming-service-database-queries/blob/main/deliverables/erd-dbvisualiser.png)
-- [**Data Dictionary**](https://github.com/davidgriesel/03-streaming-service-database-queries/blob/main/deliverables/data-dictionary.pdf)
-- [**Tableau Visualisations**](https://public.tableau.com/views/StreamingService_17486375379040/Dashboard1?:language=en-GB&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
+- [**Entity Relationship Diagram**](deliverables/erd_dbvisualiser.png)
+- [**Entity Relationship Diagram**](https://github.com/davidgriesel/03-streaming-service-database-queries/blob/main/deliverables/erd_dbvisualiser.png)
+- [**Data Dictionary**](https://github.com/davidgriesel/03-streaming-service-database-queries/blob/main/deliverables/data_dictionary.pdf)
+- [**Interactive Tableau Dashboard**](https://public.tableau.com/views/StreamingService_17486375379040/Dashboard1?:language=en-GB&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
 - [**Presentation**](https://github.com/davidgriesel/03-streaming-service-database-queries/blob/main/deliverables/presentation.pdf)
 
 ## Key Insights
+
+1. The top 5 revenue-generating films earned between ¤205 and ¤232, while 7 films shared the bottom five positions, generating between ¤6 and ¤8.
+2. <table width="100%">
+<tr>
+<td align="center" valign="top" width="50%">
+    <img src="visualisations/top_films.png""><br>
+</td>
+<td align="center" valign="top" width="50%">
+    <img src="visualisations/bottom_films.png"><br>
+</td>
+</tr>
+
+3. Rental durations across all terms ranged from same-day returns to a maximum of 10, with an average duration of 5 days.
+4. Total revenue by country varied from ¤68 to ¤6,628, with customer counts between 1 and 60. India led in both customer numbers and total revenue, followed closely by China, and the United States.
+5. Average customer lifetime value (CLV) varied between ¤68 to ¤217, with Réunion having the highest CLV, followed by Vatican City and Nauru.
+6. The Asia-Pacific region emerged as the clear leader ¤26 468 in sales and 235 customers, while Latin America performed the worst selling ¤8 096 from 73 customers.
+
+
+
 
 ## Takeaways
 ### Successes
