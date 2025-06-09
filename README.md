@@ -50,7 +50,7 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
 </table>
 <br>
 
-3. Rental durations across all terms ranged from same-day returns to a maximum of 10, with an average duration of 5 days.
+2. Rental durations across all terms ranged from same-day returns to a maximum of 10, with an average duration of 5 days.
 
 Rental Duration|Number of transactions|Min Actual Duration|Max Actual Duration|Avg Actual Duration
 :---:|:---:|:---:|:---:|:---:
@@ -62,7 +62,7 @@ Rental Duration|Number of transactions|Min Actual Duration|Max Actual Duration|A
 All|15 861|0|10|5
 <br>
 
-5. Total revenue by country varied from ¤68 to ¤6,628, with customer counts between 1 and 60. India led in both customer numbers and total revenue, followed closely by China, and the United States.
+3. Total revenue by country varied from ¤68 to ¤6,628, with customer counts between 1 and 60. India led in both customer numbers and total revenue, followed closely by China, and the United States.
 <table>
 <tr>
 <td align="center" valign="top" width="100%">
@@ -73,7 +73,7 @@ All|15 861|0|10|5
 </table>
 <br>
 
-5. Average customer lifetime value (CLV) varied between ¤68 to ¤217, with Réunion having the highest CLV, followed by Vatican City and Nauru.
+4. Average customer lifetime value (CLV) varied between ¤68 to ¤217, with Réunion having the highest CLV, followed by Vatican City and Nauru.
 <table>
 <tr>
 <td align="center" valign="top" width="100%">
@@ -84,7 +84,21 @@ All|15 861|0|10|5
 </table>
 <br>
 
-6. The Asia-Pacific region emerged as the clear leader ¤26 468 in sales and 235 customers, while Latin America performed the worst selling ¤8 096 from 73 customers.
+Rank|Top 10 Countries|Number of Customers|Total Revenue
+:---:|:---:|:---:|:---:
+1|India|60|6 628
+2|Chine|53|5 799
+3|United States|36|4 110
+4|Japan|31|3 471
+5|Mexico|30|3 307
+6|Brazil|28|3 201
+7|Russion Federation|28|3 046
+8|Philippines|20|2 381
+9|Turkey|15|1 662
+10|Indonesia|14|1 510
+
+
+5. The Asia-Pacific region emerged as the clear leader ¤26 468 in sales and 235 customers, while Latin America performed the worst selling ¤8 096 from 73 customers.
 <table>
 <tr>
 <td align="center" valign="top" width="100%">
@@ -95,6 +109,17 @@ All|15 861|0|10|5
 </table>
 <br>
 
+
+1	Réunion	1	216.54	216.54
+2	Holy See (Vatican City State)	1	152.66	152.66
+3	Nauru	1	148.69	148.69
+4	Sweden	1	144.66	144.66
+5	Hong Kong	1	142.70	142.70
+6	Thailand	3	419.04	139.68
+7	Belarus	2	277.34	138.67
+8	Greenland	1	137.66	137.66
+9	Turkmenistan	1	136.73	136.73
+10	Chad	1	135.68	135.68
 
 
 
