@@ -106,6 +106,7 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
     </tr>
   </tbody>
 </table>
+<br>
 
 3. Total revenue by country varied from ¤68 to ¤6,628, with customer counts between 1 and 60. India led in both customer numbers and total revenue, followed closely by China, and the United States.
 <table>
@@ -140,7 +141,7 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
     <tr><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">10</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">Indonesia</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">14</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">1,510.33</td></tr>
   </tbody>
 </table>
-
+<br>
 
 4. Average customer lifetime value (CLV) varied between ¤68 to ¤217, with Réunion having the highest CLV, followed by Vatican City and Nauru.
 <table>
@@ -152,9 +153,6 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
 </tr>
 </table>
 <br>
-
-
-
 
 <table style="width:100%; border-collapse: collapse;">
   <thead>
@@ -179,7 +177,7 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
     <tr><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">10</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">Chad</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">1</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">135.68</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">135.68</td></tr>
   </tbody>
 </table>
-
+<br>
 
 5. The Asia-Pacific region emerged as the clear leader ¤26 468 in sales and 235 customers, while Latin America performed the worst selling ¤8 096 from 73 customers.
 <table>
@@ -191,9 +189,6 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
 </tr>
 </table>
 <br>
-
-
-
 
 ## Takeaways
 ### Successes
