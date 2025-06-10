@@ -75,78 +75,19 @@ Customer activity is concentrated in a small number of countries, with India, Ch
 </table>
 <br>
 
-<table style="width:100%; border-collapse: collapse;">
-  <thead>
-    <tr>
-      <th style="text-align:center">#</th>
-      <th style="text-align:center">Country</th>
-      <th style="text-align:center">Customer Count</th>
-      <th style="text-align:center">Total Revenue</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-        <td style="text-align:center">1</td>
-        <td style="text-align:center">India</td>
-        <td style="text-align:center">60</td>
-        <td style="text-align:center">6,628.28</td>
-    </tr>
-    <tr>
-        <td style="text-align:center">2</td>
-        <td style="text-align:center">China</td>
-        <td style="text-align:center">53</td>
-        <td style="text-align:center">5,798.74</td>
-    </tr>
-    <tr>
-        <td style="text-align:center">3</td>
-        <td style="text-align:center">United States</td>
-        <td style="text-align:center">36</td>
-        <td style="text-align:center">4,110.32</td>
-    </tr>
-    <tr>
-        <td style="text-align:center">4</td>
-        <td style="text-align:center">Japan</td>
-        <td style="text-align:center">31</td>
-        <td style="text-align:center">3,470.75</td>
-    </tr>
-    <tr>
-        <td style="text-align:center">5</td>
-        <td style="text-align:center">Mexico</td>
-        <td style="text-align:center">30</td>
-        <td style="text-align:center">3,307.04</td>
-    </tr>
-    <tr>
-        <td style="text-align:center">6</td>
-        <td style="text-align:center">Brazil</td>
-        <td style="text-align:center">28</td>
-        <td style="text-align:center">3,200.52</td>
-    </tr>
-    <tr>
-        <td style="text-align:center">7</td>
-        <td style="text-align:center">Russian Federation</td>
-        <td style="text-align:center">28</td>
-        <td style="text-align:center">3,045.87</td>
-    </tr>
-    <tr>
-        <td style="text-align:center">8</td>
-        <td style="text-align:center">Philippines</td>
-        <td style="text-align:center">20</td>
-        <td style="text-align:center">2,381.32</td>
-    </tr>
-    <tr>
-        <td style="text-align:center">9</td>
-        <td style="text-align:center">Turkey</td>
-        <td style="text-align:center">15</td>
-        <td style="text-align:center">1,662.12</td>
-    </tr>
-    <tr>
-        <td style="text-align:center">10</td>
-        <td style="text-align:center">Indonesia</td>
-        <td style="text-align:center">14</td>
-        <td style="text-align:center">1,510.33</td>
-    </tr>
-  </tbody>
-</table>
+| # | Country | Customer Count | Total Revenue |
+|:-----------------------:|:-----------------------:|:------------------------:|:------------------------:|
+| 1 | India | 60 | 6,628.28 |
+| 2 | China | 53 | 5,798.74 |
+| 3 | United States | 36 | 4,110.32 |
+| 4 | Japan | 31 | 3,470.75 |
+| 5 | Mexico | 30 | 3,307.04 |
+| 6 | Brazil | 28 | 3,200.52 |
+| 7 | Russian Federation | 28 | 3,045.87 |
+| 8 | Philippines | 20 | 2,381.32 |
+| 9 | Turkey | 15 | 1,662.12 |
+| 10 | Indonesia | 14 | 1,510.33 |
+
 <br>
 
 ### 4. Customer Lifetime Value by Country
@@ -162,7 +103,7 @@ The highest average customer lifetime values were recorded in countries with one
 <br>
 
 | # | Country | Customer Count | Total Revenue | Avg Lifetime Value |
-|:-:|:-------:|:--------------:|:-------------:|:------------------:|
+|:-----------------------:|:-----------------------:|:------------------------:|:------------------------:|:------------------------:|
 | 1 | Réunion | 1 | 216.54 | 216.54 |
 | 2 | Vatican City | 1 | 152.66 | 152.66 |
 | 3 | Nauru | 1 | 148.69 | 148.69 |
