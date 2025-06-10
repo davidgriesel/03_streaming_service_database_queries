@@ -125,23 +125,73 @@ Customer activity is concentrated in a small number of countries, with India, Ch
 <table style="width:100%; border-collapse: collapse;">
   <thead>
     <tr>
-      <th style="text-align: center; padding: 8px; border: 1px solid #ddd; min-width: 120px;">#</th>
-      <th style="text-align: center; padding: 8px; border: 1px solid #ddd; min-width: 200px;">Country</th>
-      <th style="text-align: center; padding: 8px; border: 1px solid #ddd; min-width: 200px;">Customer Count</th>
-      <th style="text-align: center; padding: 8px; border: 1px solid #ddd; min-width: 200px;">Total Revenue</th>
+      <th>#</th>
+      <th>Country</th>
+      <th>Customer Count</th>
+      <th>Total Revenue</th>
     </tr>
   </thead>
   <tbody>
-    <tr><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">1</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">India</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">60</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">6,628.28</td></tr>
-    <tr><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">2</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">China</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">53</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">5,798.74</td></tr>
-    <tr><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">3</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">United States</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">36</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">4,110.32</td></tr>
-    <tr><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">4</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">Japan</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">31</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">3,470.75</td></tr>
-    <tr><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">5</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">Mexico</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">30</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">3,307.04</td></tr>
-    <tr><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">6</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">Brazil</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">28</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">3,200.52</td></tr>
-    <tr><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">7</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">Russian Federation</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">28</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">3,045.87</td></tr>
-    <tr><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">8</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">Philippines</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">20</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">2,381.32</td></tr>
-    <tr><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">9</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">Turkey</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">15</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">1,662.12</td></tr>
-    <tr><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">10</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">Indonesia</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">14</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">1,510.33</td></tr>
+    <tr>
+        <td>1</td>
+        <td>India</td>
+        <td>60</td>
+        <td>6,628.28</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>China</td>
+        <td>53</td>
+        <td>5,798.74</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>United States</td>
+        <td>36</td>
+        <td>4,110.32</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>Japan</td>
+        <td>31</td>
+        <td>3,470.75</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>Mexico</td>
+        <td>30</td>
+        <td>3,307.04</td>
+    </tr>
+    <tr>
+        <td>6</td>
+        <td>Brazil</td>
+        <td>28</td>
+        <td>3,200.52</td>
+    </tr>
+    <tr>
+        <td>7</td>
+        <td>Russian Federation</td>
+        <td>28</td>
+        <td>3,045.87</td>
+    </tr>
+    <tr>
+        <td>8</td>
+        <td>Philippines</td>
+        <td>20</td>
+        <td>2,381.32</td>
+    </tr>
+    <tr>
+        <td>9</td>
+        <td>Turkey</td>
+        <td>15</td>
+        <td>1,662.12</td>
+    </tr>
+    <tr>
+        <td>10</td>
+        <td>Indonesia</td>
+        <td>14</td>
+        <td>1,510.33</td>
+    </tr>
   </tbody>
 </table>
 <br>
@@ -161,24 +211,57 @@ The highest average customer lifetime values were recorded in countries with one
 <table style="width:100%; border-collapse: collapse;">
   <thead>
     <tr>
-      <th style="text-align: center; padding: 8px; border: 1px solid #ddd; min-width: 120px;">#</th>
-      <th style="text-align: center; padding: 8px; border: 1px solid #ddd; min-width: 200px;">Country</th>
-      <th style="text-align: center; padding: 8px; border: 1px solid #ddd; min-width: 200px;">Customer Count</th>
-      <th style="text-align: center; padding: 8px; border: 1px solid #ddd; min-width: 200px;">Total Revenue</th>
-      <th style="text-align: center; padding: 8px; border: 1px solid #ddd; min-width: 200px;">Avg Lifetime Value</th>
+      <th>#</th>
+      <th>Country</th>
+      <th>Customer Count</th>
+      <th>Total Revenue</th>
+      <th>Avg Lifetime Value</th>
     </tr>
   </thead>
   <tbody>
-    <tr><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">1</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">Réunion</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">1</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">216.54</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">216.54</td></tr>
-    <tr><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">2</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">Holy See (Vatican City State)</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">1</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">152.66</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">152.66</td></tr>
-    <tr><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">3</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">Nauru</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">1</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">148.69</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">148.69</td></tr>
-    <tr><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">4</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">Sweden</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">1</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">144.66</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">144.66</td></tr>
-    <tr><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">5</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">Hong Kong</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">1</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">142.70</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">142.70</td></tr>
-    <tr><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">6</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">Thailand</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">3</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">419.04</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">139.68</td></tr>
-    <tr><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">7</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">Belarus</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">2</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">277.34</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">138.67</td></tr>
-    <tr><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">8</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">Greenland</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">1</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">137.66</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">137.66</td></tr>
-    <tr><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">9</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">Turkmenistan</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">1</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">136.73</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">136.73</td></tr>
-    <tr><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">10</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">Chad</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">1</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">135.68</td><td style="text-align: center; padding: 8px; border: 1px solid #ddd;">135.68</td></tr>
+    <tr>
+        <td>1</td>
+        <td>Réunion</td>
+        <td>1</td>
+        <td>216.54</td>
+        <td>216.54</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>Holy See (Vatican City State)</td><td>1</td><td>152.66</td><td>152.66</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>Nauru</td><td>1</td><td>148.69</td><td>148.69</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>Sweden</td><td>1</td><td>144.66</td><td>144.66</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>Hong Kong</td><td>1</td><td>142.70</td><td>142.70</td>
+    </tr>
+    <tr>
+        <td>6</td>
+        <td>Thailand</td><td>3</td><td>419.04</td><td>139.68</td>
+    </tr>
+    <tr>
+        <td>7</td>
+        <td>Belarus</td><td>2</td><td>277.34</td><td>138.67</td>
+    </tr>
+    <tr>
+        <td>8</td>
+        <td>Greenland</td><td>1</td><td>137.66</td><td>137.66</td>
+    </tr>
+    <tr>
+        <td>9</td>
+        <td>Turkmenistan</td><td>1</td><td>136.73</td><td>136.73</td>
+    </tr>
+    <tr>
+        <td>10</td>
+        <td>Chad</td><td>1</td><td>135.68</td><td>135.68</td>
+    </tr>
   </tbody>
 </table>
 <br>
