@@ -111,7 +111,7 @@ Regardles of selected rental term, actual rental durations ranged from same-day 
 <br>
 
 ### 3. Revenue and Customer Distribution by Country
-Customer activity is concentrated in a small number of countries, with India, China, and the United States leading in both the number of customers and total revenue. These three markets alone account for 149 of the 599 global customers and more than one-third of overall revenue. 
+Customer activity is concentrated in a small number of countries, with India, China, and the United States leading in both the number of customers and total revenue. These three markets alone account for 149 of the 599 global customers and a quarter of overall revenue. 
 <table>
 <tr>
 <td align="center" valign="top" width="100%">
