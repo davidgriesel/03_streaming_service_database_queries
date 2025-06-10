@@ -54,7 +54,7 @@ The top five highest-grossing films each brought in over ¤200, while the lowest
 ### 2. Actual Rental Duration
 Regardles of selected rental term, actual rental durations ranged from same-day returns to a maximum of 10 days, with an average duration of 5 days.
 | Rental Duration (Days) | Number of Transactions | Minimum Actual Duration | Maximum Actual Duration | Average Actual Duration |
-|-----------------------|-----------------------|------------------------|------------------------|------------------------|
+|:-----------------------:|:-----------------------:|:------------------------:|:------------------------:|:------------------------:|
 | 3 | 3,366 | 0 | 10 | 5 |
 | 4 | 3,213 | 0 | 10 | 5 |
 | 5 | 3,132 | 0 | 10 | 5 |
