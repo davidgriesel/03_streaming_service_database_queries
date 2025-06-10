@@ -75,7 +75,7 @@ Customer activity is concentrated in a small number of countries, with India, Ch
 </table>
 <br>
 
-| #          | Country | Customer Count | Total Revenue |
+| # | Country | Customer Count | Total Revenue |
 |:-:|:-------:|:--------------:|:-------------:|
 | 1 | India | 60 | 6,628.28 |
 | 2 | China | 53 | 5,798.74 |
@@ -90,18 +90,18 @@ Customer activity is concentrated in a small number of countries, with India, Ch
 <br>
 
 ### 4. Customer Lifetime Value by Country
-The highest average customer lifetime values were recorded in countries with one or two customers that contributed disproportionately high revenue over time.
+Réunion, Vatican City, and Nauru had the highest average CLVs, each exceeding ¤140.
 <table>
 <tr>
 <td align="center" valign="top" width="100%">
     <img src="visualisations/clv_customers.png" ><br>
-    <em>Réunion, Vatican City, and Nauru had the highest average CLVs, each exceeding ¤140.</em>
+    <em>Countries with larger customer bases showed less variation in average CLV, while those with only one or two customers recorded the highest CLVs.</em>
 </td>
 </tr>
 </table>
 <br>
 
-| #| Country | Customer Count | Total Revenue | Avg Lifetime Value |
+| # | Country | Customer Count | Total Revenue | Avg Lifetime Value |
 |:-:|:-------:|:--------------:|:-------------:|:------------------:|
 | 1 | Réunion | 1 | 216.54 | 216.54 |
 | 2 | Vatican City | 1 | 152.66 | 152.66 |
