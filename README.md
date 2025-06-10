@@ -69,7 +69,7 @@ Customer activity is concentrated in a small number of countries, with India, Ch
 <tr>
 <td align="center" valign="top" width="100%">
     <img src="visualisations/revenue_customers.png" ><br>
-    <em>...</em>
+    <em>India (¤6,628; 60), China (¤5,799; 53), and the United States (¤4,110; 36) accounted for the highest revenue and number of customers globally.</em>
 </td>
 </tr>
 </table>
@@ -95,13 +95,13 @@ The highest average customer lifetime values were recorded in countries with one
 <tr>
 <td align="center" valign="top" width="100%">
     <img src="visualisations/clv_customers.png" ><br>
-    <em>...</em>
+    <em>Réunion, Vatican City, and Nauru had the highest average CLVs, each exceeding ¤140.</em>
 </td>
 </tr>
 </table>
 <br>
 
-| # | Country | Customer Count | Total Revenue | Avg Lifetime Value |
+| #       | Country | Customer Count | Total Revenue | Avg Lifetime Value |
 |:-:|:-------:|:--------------:|:-------------:|:------------------:|
 | 1 | Réunion | 1 | 216.54 | 216.54 |
 | 2 | Vatican City | 1 | 152.66 | 152.66 |
