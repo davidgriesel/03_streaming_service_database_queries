@@ -37,18 +37,19 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
 ## Key Insights
 ### 1. Revenue Contribution by Title
 The top five highest-grossing films each brought in over ¤200, while the lowest performers generated under ¤8.
-<!--<table>-->
+
 <tr>
 <td align="center" valign="top" width="50%">
     <img src="visualisations/top_films.png"" ><br>
     <em>The top five titles earned between ¤204.72 and ¤231.73.</em>
 </td>
+</tr>
+<tr>
 <td align="center" valign="top" width="50%">
     <img src="visualisations/bottom_films.png" ><br>
     <em>Seven films shared the bottom five revenue positions, each earning between ¤5.94 and ¤7.93 over the period.</em>
 </td>
 </tr>
-<!--</table>__>
 <br>
 
 ### 2. Actual Rental Duration
