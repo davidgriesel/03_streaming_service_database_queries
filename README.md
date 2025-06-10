@@ -54,7 +54,7 @@ The top five highest-grossing films each brought in over ¤200, while the lowest
 ### 2. Actual Rental Duration
 Regardles of selected rental term, actual rental durations ranged from same-day returns to a maximum of 10 days, with an average duration of 5 days.
 | Rental Duration (Days) | Number of Transactions | Minimum Actual Duration | Maximum Actual Duration | Average Actual Duration |
-|:-----------------------:|:-----------------------:|:------------------------:|:------------------------:|:------------------------:|
+|:----------------------:|:----------------------:|:-----------------------:|:-----------------------:|:-----------------------:|
 | 3 | 3,366 | 0 | 10 | 5 |
 | 4 | 3,213 | 0 | 10 | 5 |
 | 5 | 3,132 | 0 | 10 | 5 |
@@ -75,7 +75,7 @@ Customer activity is concentrated in a small number of countries, with India, Ch
 </table>
 <br>
 
-| # | Country | Customer Count | Total Revenue |
+| #          | Country | Customer Count | Total Revenue |
 |:-:|:-------:|:--------------:|:-------------:|
 | 1 | India | 60 | 6,628.28 |
 | 2 | China | 53 | 5,798.74 |
@@ -101,7 +101,7 @@ The highest average customer lifetime values were recorded in countries with one
 </table>
 <br>
 
-| #       | Country | Customer Count | Total Revenue | Avg Lifetime Value |
+| #| Country | Customer Count | Total Revenue | Avg Lifetime Value |
 |:-:|:-------:|:--------------:|:-------------:|:------------------:|
 | 1 | Réunion | 1 | 216.54 | 216.54 |
 | 2 | Vatican City | 1 | 152.66 | 152.66 |
