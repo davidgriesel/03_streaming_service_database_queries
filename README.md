@@ -53,61 +53,14 @@ The top five highest-grossing films each brought in over ¤200, while the lowest
 
 ### 2. Actual Rental Duration
 Regardles of selected rental term, actual rental durations ranged from same-day returns to a maximum of 10 days, with an average duration of 5 days.
-<table style="width:100%; border-collapse: collapse;">
-  <thead>
-    <tr>
-      <th>Rental Duration (Days)</th>
-      <th>Number of Transactions</th>
-      <th>Minimum Actual Duration</th>
-      <th>Maximum Actual Duration</th>
-      <th>Average Actual Duration</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>3</td>
-      <td>3 366</td>
-      <td>0</td>
-      <td>10</td>
-      <td>5</td>
-    </tr>
-    <tr>
-      <td>4</td>
-      <td>3 213</td>
-      <td>0</td>
-      <td>10</td>
-      <td>5</td>
-    </tr>
-    <tr>
-      <td>5</td>
-      <td>3 132</td>
-      <td>0</td>
-      <td>10</td>
-      <td>5</td>
-    </tr>
-    <tr>
-      <td>6</td>
-      <td>3 352</td>
-      <td>0</td>
-      <td>10</td>
-      <td>5</td>
-    </tr>
-    <tr>
-      <td>7</td>
-      <td>2 798</td>
-      <td>0</td>
-      <td>10</td>
-      <td>5</td>
-    </tr>
-    <tr>
-      <td>All</td>
-      <td>15 861</td>
-      <td>0</td>
-      <td>10</td>
-      <td>5</td>
-    </tr>
-  </tbody>
-</table>
+| Rental Duration (Days) | Number of Transactions | Minimum Actual Duration | Maximum Actual Duration | Average Actual Duration |
+|-----------------------|-----------------------|------------------------|------------------------|------------------------|
+| 3 | 3,366 | 0 | 10 | 5 |
+| 4 | 3,213 | 0 | 10 | 5 |
+| 5 | 3,132 | 0 | 10 | 5 |
+| 6 | 3,352 | 0 | 10 | 5 |
+| 7 | 2,798 | 0 | 10 | 5 |
+| All | 15,861 | 0 | 10 | 5 |
 <br>
 
 ### 3. Revenue and Customer Distribution by Country
