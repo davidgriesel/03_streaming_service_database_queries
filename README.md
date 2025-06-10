@@ -89,6 +89,40 @@ Customer activity is concentrated in a small number of countries, with India, Ch
 | 10 | Indonesia | 14 | 1,510.33 |
 <br>
 
+<table>
+<tr>
+  <td align="center" valign="top" width="50%">
+    <img src="visualisations/revenue_customers.png" width="100%"><br>
+    <em>Customer count and revenue by country</em>
+  </td>
+  <td valign="top" width="50%">
+    
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Country</th>
+          <th>Customer Count</th>
+          <th>Total Revenue</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>India</td><td>60</td><td>6,628.28</td></tr>
+        <tr><td>2</td><td>China</td><td>53</td><td>5,798.74</td></tr>
+        <tr><td>3</td><td>United States</td><td>36</td><td>4,110.32</td></tr>
+        <tr><td>4</td><td>Japan</td><td>31</td><td>3,470.75</td></tr>
+        <tr><td>5</td><td>Mexico</td><td>30</td><td>3,307.04</td></tr>
+        <tr><td>6</td><td>Brazil</td><td>28</td><td>3,200.52</td></tr>
+        <tr><td>7</td><td>Russian Federation</td><td>28</td><td>3,045.87</td></tr>
+        <tr><td>8</td><td>Philippines</td><td>20</td><td>2,381.32</td></tr>
+        <tr><td>9</td><td>Turkey</td><td>15</td><td>1,662.12</td></tr>
+        <tr><td>10</td><td>Indonesia</td><td>14</td><td>1,510.33</td></tr>
+      </tbody>
+    </table>
+
+  </td>
+</tr>
+</table>
 ### 4. Customer Lifetime Value by Country
 The highest average customer lifetime values were recorded in countries with one or two customers that contributed disproportionately high revenue over time.
 <table>
