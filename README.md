@@ -56,11 +56,11 @@ Regardles of selected rental term, actual rental durations ranged from same-day 
 <table style="width:100%; border-collapse: collapse;">
   <thead>
     <tr>
-      <th style="text-align: center;">Rental Duration (Days)</th>
-      <th style="text-align: center;">Number of Transactions</th>
-      <th style="text-align: center;">Minimum Actual Duration</th>
-      <th style="text-align: center;">Maximum Actual Duration</th>
-      <th style="text-align: center;">Average Actual Duration</th>
+      <th style="text-align: right;">Rental Duration (Days)</th>
+      <th style="text-align: right;">Number of Transactions</th>
+      <th style="text-align: right;">Minimum Actual Duration</th>
+      <th style="text-align: right;">Maximum Actual Duration</th>
+      <th style="text-align: right;">Average Actual Duration</th>
     </tr>
   </thead>
   <tbody>
@@ -99,7 +99,7 @@ Regardles of selected rental term, actual rental durations ranged from same-day 
       <td>10</td>
       <td>5</td>
     </tr>
-    <tr style="font-weight: bold; background-color: #f9f9f9;">
+    <tr>
       <td>All</td>
       <td>15 861</td>
       <td>0</td>
