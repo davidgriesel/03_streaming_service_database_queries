@@ -56,55 +56,55 @@ Regardles of selected rental term, actual rental durations ranged from same-day 
 <table style="width:100%; border-collapse: collapse;">
   <thead>
     <tr>
-      <th style="text-align: right; padding: 8px; border: 1px solid #ddd;">Rental Duration (Days)</th>
-      <th style="text-align: right; padding: 8px; border: 1px solid #ddd;">Number of Transactions</th>
-      <th style="text-align: right; padding: 8px; border: 1px solid #ddd;">Minimum Actual Duration</th>
-      <th style="text-align: right; padding: 8px; border: 1px solid #ddd;">Maximum Actual Duration</th>
-      <th style="text-align: right; padding: 8px; border: 1px solid #ddd;">Average Actual Duration</th>
+      <th style="text-align: center;">Rental Duration (Days)</th>
+      <th style="text-align: center;">Number of Transactions</th>
+      <th style="text-align: center;">Minimum Actual Duration</th>
+      <th style="text-align: center;">Maximum Actual Duration</th>
+      <th style="text-align: center;">Average Actual Duration</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td style="padding: 8px; border: 1px solid #ddd;">3</td>
-      <td style="padding: 8px; border: 1px solid #ddd;">3 366</td>
-      <td style="padding: 8px; border: 1px solid #ddd;">0</td>
-      <td style="padding: 8px; border: 1px solid #ddd;">10</td>
-      <td style="padding: 8px; border: 1px solid #ddd;">5</td>
+      <td>3</td>
+      <td>3 366</td>
+      <td>0</td>
+      <td>10</td>
+      <td>5</td>
     </tr>
     <tr>
-      <td style="padding: 8px; border: 1px solid #ddd;">4</td>
-      <td style="padding: 8px; border: 1px solid #ddd;">3 213</td>
-      <td style="padding: 8px; border: 1px solid #ddd;">0</td>
-      <td style="padding: 8px; border: 1px solid #ddd;">10</td>
-      <td style="padding: 8px; border: 1px solid #ddd;">5</td>
+      <td>4</td>
+      <td>3 213</td>
+      <td>0</td>
+      <td>10</td>
+      <td>5</td>
     </tr>
     <tr>
-      <td style="padding: 8px; border: 1px solid #ddd;">5</td>
-      <td style="padding: 8px; border: 1px solid #ddd;">3 132</td>
-      <td style="padding: 8px; border: 1px solid #ddd;">0</td>
-      <td style="padding: 8px; border: 1px solid #ddd;">10</td>
-      <td style="padding: 8px; border: 1px solid #ddd;">5</td>
+      <td>5</td>
+      <td>3 132</td>
+      <td>0</td>
+      <td>10</td>
+      <td>5</td>
     </tr>
     <tr>
-      <td style="padding: 8px; border: 1px solid #ddd;">6</td>
-      <td style="padding: 8px; border: 1px solid #ddd;">3 352</td>
-      <td style="padding: 8px; border: 1px solid #ddd;">0</td>
-      <td style="padding: 8px; border: 1px solid #ddd;">10</td>
-      <td style="padding: 8px; border: 1px solid #ddd;">5</td>
+      <td>6</td>
+      <td>3 352</td>
+      <td>0</td>
+      <td>10</td>
+      <td>5</td>
     </tr>
     <tr>
-      <td style="padding: 8px; border: 1px solid #ddd;">7</td>
-      <td style="padding: 8px; border: 1px solid #ddd;">2 798</td>
-      <td style="padding: 8px; border: 1px solid #ddd;">0</td>
-      <td style="padding: 8px; border: 1px solid #ddd;">10</td>
-      <td style="padding: 8px; border: 1px solid #ddd;">5</td>
+      <td>7</td>
+      <td>2 798</td>
+      <td>0</td>
+      <td>10</td>
+      <td>5</td>
     </tr>
     <tr style="font-weight: bold; background-color: #f9f9f9;">
-      <td style="padding: 8px; border: 1px solid #ddd;">All</td>
-      <td style="padding: 8px; border: 1px solid #ddd;">15 861</td>
-      <td style="padding: 8px; border: 1px solid #ddd;">0</td>
-      <td style="padding: 8px; border: 1px solid #ddd;">10</td>
-      <td style="padding: 8px; border: 1px solid #ddd;">5</td>
+      <td>All</td>
+      <td>15 861</td>
+      <td>0</td>
+      <td>10</td>
+      <td>5</td>
     </tr>
   </tbody>
 </table>
