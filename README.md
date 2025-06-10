@@ -209,6 +209,11 @@ The highest average customer lifetime values were recorded in countries with one
 <br>
 
 <table style="width:100%; border-collapse: collapse;">
+  <style>
+    th, td {
+      text-align: center;
+    }
+  </style>
   <thead>
     <tr>
       <th>#</th>
@@ -228,39 +233,66 @@ The highest average customer lifetime values were recorded in countries with one
     </tr>
     <tr>
         <td>2</td>
-        <td>Holy See (Vatican City State)</td><td>1</td><td>152.66</td><td>152.66</td>
+        <td>Vatican City</td>
+        <td>1</td>
+        <td>152.66</td>
+        <td>152.66</td>
     </tr>
     <tr>
         <td>3</td>
-        <td>Nauru</td><td>1</td><td>148.69</td><td>148.69</td>
+        <td>Nauru</td>
+        <td>1</td>
+        <td>148.69</td>
+        <td>148.69</td>
     </tr>
     <tr>
         <td>4</td>
-        <td>Sweden</td><td>1</td><td>144.66</td><td>144.66</td>
+        <td>Sweden</td>
+        <td>1</td>
+        <td>144.66</td>
+        <td>144.66</td>
     </tr>
     <tr>
         <td>5</td>
-        <td>Hong Kong</td><td>1</td><td>142.70</td><td>142.70</td>
+        <td>Hong Kong</td>
+        <td>1</td>
+        <td>142.70</td>
+        <td>142.70</td>
     </tr>
     <tr>
         <td>6</td>
-        <td>Thailand</td><td>3</td><td>419.04</td><td>139.68</td>
+        <td>Thailand</td>
+        <td>3</td>
+        <td>419.04</td>
+        <td>139.68</td>
     </tr>
     <tr>
         <td>7</td>
-        <td>Belarus</td><td>2</td><td>277.34</td><td>138.67</td>
+        <td>Belarus</td>
+        <td>2</td>
+        <td>277.34</td>
+        <td>138.67</td>
     </tr>
     <tr>
         <td>8</td>
-        <td>Greenland</td><td>1</td><td>137.66</td><td>137.66</td>
+        <td>Greenland</td>
+        <td>1</td>
+        <td>137.66</td>
+        <td>137.66</td>
     </tr>
     <tr>
         <td>9</td>
-        <td>Turkmenistan</td><td>1</td><td>136.73</td><td>136.73</td>
+        <td>Turkmenistan</td>
+        <td>1</td>
+        <td>136.73</td>
+        <td>136.73</td>
     </tr>
     <tr>
         <td>10</td>
-        <td>Chad</td><td>1</td><td>135.68</td><td>135.68</td>
+        <td>Chad</td>
+        <td>1</td>
+        <td>135.68</td>
+        <td>135.68</td>
     </tr>
   </tbody>
 </table>
