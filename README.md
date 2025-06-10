@@ -35,24 +35,24 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
 <br><br>
 
 ## Key Insights
-### 1. Revenue Extremes Among Films
-The top 5 revenue-generating films earned between ¤205 and ¤232, while 7 films shared the bottom five positions, generating between ¤6 and ¤8.
+### 1. Revenue Contribution by Title
+The top five highest-grossing films each brought in over ¤200, while the lowest performers generated under ¤8.
 <table>
 <tr>
 <td align="center" valign="top" width="50%">
     <img src="visualisations/top_films.png"" ><br>
-    <em>...</em>
+    <em>The top five titles earned between ¤204.72 and ¤231.73..</em>
 </td>
 <td align="center" valign="top" width="50%">
     <img src="visualisations/bottom_films.png" ><br>
-    <em>...</em>
+    <em>Seven films shared the bottom five revenue positions, each earning between ¤5.94 and ¤7.93 over the period.</em>
 </td>
 </tr>
 </table>
 <br>
 
-### 2. Rental Duration Patterns
-Rental durations across all terms ranged from same-day returns to a maximum of 10, with an average duration of 5 days.
+### 2. Actual Rental Duration
+Regardles of selected rental term, actual rental durations ranged from same-day returns to a maximum of 10 days, with an average duration of 5 days.
 <table style="width:100%; border-collapse: collapse;">
   <thead>
     <tr>
@@ -111,7 +111,7 @@ Rental durations across all terms ranged from same-day returns to a maximum of 1
 <br>
 
 ### 3. Revenue and Customer Distribution by Country
-Total revenue by country varied from ¤68 to ¤6,628, with customer counts between 1 and 60. India led in both customer numbers and total revenue, followed closely by China, and the United States.
+Customer activity is concentrated in a small number of countries, with India, China, and the United States leading in both the number of customers and total revenue. These three markets alone account for 149 of the 599 global customers and more than one-third of overall revenue. 
 <table>
 <tr>
 <td align="center" valign="top" width="100%">
@@ -146,8 +146,8 @@ Total revenue by country varied from ¤68 to ¤6,628, with customer counts betwe
 </table>
 <br>
 
-### 4. High-Value Customers by Location
-Average customer lifetime value (CLV) varied between ¤68 to ¤217, with Réunion having the highest CLV, followed by Vatican City and Nauru.
+### 4. Customer Lifetime Value by Country
+The highest average customer lifetime values were recorded in countries with one or two customers that contributed disproportionately high revenue over time.
 <table>
 <tr>
 <td align="center" valign="top" width="100%">
@@ -184,7 +184,7 @@ Average customer lifetime value (CLV) varied between ¤68 to ¤217, with Réunio
 <br>
 
 ### 5. Regional Sales Performance and Customer Numbers
-The Asia-Pacific region emerged as the clear leader ¤26 468 in sales and 235 customers, while Latin America performed the worst selling ¤8 096 from 73 customers.
+Sales figures vary considerably across geographic regions, with the Asia-Pacific market emerging as the clear leader. This region accounted for the highest number of customers (235) and the greatest total revenue (¤26,468), more than double that of any other region.
 <table>
 <tr>
 <td align="center" valign="top" width="100%">
@@ -200,7 +200,7 @@ The Asia-Pacific region emerged as the clear leader ¤26 468 in sales and 235 cu
 The project successfully used SQL to query a relational database and extract relevant information in response to specific business questions.
 
 ### Challenges
-The static and hypothetical nature of the sample data limited opportunities for deeper engagement with real-time stakeholder needs. In the absence of direct business interaction, interpreting findings into practical decisions remained largely hypothetical. Presenting results without feedback loops also limited iteration and refinement of analysis.
+The hypothetical nature of the dataset made it difficult to interpret patterns and anomalies. Without real-world context or business input, it was challenging to judge whether observations reflected meaningful or artificial behaviour which highlights the importance of stakeholder interaction when making analytical assumptions.
 
 ### Way Forward
-Future projects could benefit from working with more interactive stakeholder contexts or simulated business scenarios to mirror the iterative nature of real-world decision-making. Expanding the reporting output to include automated dashboards or integrations with business intelligence platforms could also support more dynamic data consumption.
+For future projects, using more realistic datasets that better simulate real-world conditions would strengthen the reliability of insights and reduce ambiguity during analysis.
