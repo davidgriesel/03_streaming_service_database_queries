@@ -208,19 +208,19 @@ The highest average customer lifetime values were recorded in countries with one
 </table>
 <br>
 
-  # | Country | Customer Count | Total Revenue | Avg Lifetime Value |
- |:-:|:------:|:--------------:|:-------------:|:------------------:|
- | 1 | Réunion | 1 | 216.54 | 216.54 |
- | 2 | Vatican City | 1 | 152.66 | 152.66 |
- | 3 | Nauru | 1 | 148.69 | 148.69 |
- | 4 | Sweden | 1 | 144.66 | 144.66 |
- | 5 | Hong Kong | 1 | 142.70 | 142.70 |
- | 6 | Thailand | 3 | 419.04 | 139.68 |
- | 7 | Belarus | 2 | 277.34 | 138.67 |
- | 8 | Greenland | 1 | 137.66 | 137.66 |
- | 9 | Turkmenistan | 1 | 136.73 | 136.73 |
- | 10 | Chad | 1 | 135.68 | 135.68 |
- 
+| # | Country | Customer Count | Total Revenue | Avg Lifetime Value |
+|:-:|:-------:|:--------------:|:-------------:|:------------------:|
+| 1 | Réunion | 1 | 216.54 | 216.54 |
+| 2 | Vatican City | 1 | 152.66 | 152.66 |
+| 3 | Nauru | 1 | 148.69 | 148.69 |
+| 4 | Sweden | 1 | 144.66 | 144.66 |
+| 5 | Hong Kong | 1 | 142.70 | 142.70 |
+| 6 | Thailand | 3 | 419.04 | 139.68 |
+| 7 | Belarus | 2 | 277.34 | 138.67 |
+| 8 | Greenland | 1 | 137.66 | 137.66 |
+| 9 | Turkmenistan | 1 | 136.73 | 136.73 |
+| 10 | Chad | 1 | 135.68 | 135.68 |
+
 <table style="width:100%; border-collapse: collapse;">
   <style>
     th, td {
