@@ -76,7 +76,7 @@ Customer activity is concentrated in a small number of countries, with India, Ch
 <br>
 
 | # | Country | Customer Count | Total Revenue |
-|:-----------------------:|:-----------------------:|:------------------------:|:------------------------:|
+|:-:|:-------:|:--------------:|:-------------:|
 | 1 | India | 60 | 6,628.28 |
 | 2 | China | 53 | 5,798.74 |
 | 3 | United States | 36 | 4,110.32 |
@@ -87,7 +87,6 @@ Customer activity is concentrated in a small number of countries, with India, Ch
 | 8 | Philippines | 20 | 2,381.32 |
 | 9 | Turkey | 15 | 1,662.12 |
 | 10 | Indonesia | 14 | 1,510.33 |
-
 <br>
 
 ### 4. Customer Lifetime Value by Country
@@ -103,7 +102,7 @@ The highest average customer lifetime values were recorded in countries with one
 <br>
 
 | # | Country | Customer Count | Total Revenue | Avg Lifetime Value |
-|:-----------------------:|:-----------------------:|:------------------------:|:------------------------:|:------------------------:|
+|:-:|:-------:|:--------------:|:-------------:|:------------------:|
 | 1 | Réunion | 1 | 216.54 | 216.54 |
 | 2 | Vatican City | 1 | 152.66 | 152.66 |
 | 3 | Nauru | 1 | 148.69 | 148.69 |
