@@ -6,18 +6,18 @@ A legacy movie rental company is planning to re-enter the market with a new onli
 <br><br>
 
 ## Tools
-- **PostgreSQL** - Relational Database
-- **DbVisualizer** - Entity Relationship Diagram
-- **Tableau** - Visualisation
-- **Excel** - Output
 - **Word** - Documentation
+- **Excel** - Output
+- **PostgreSQL** - Relational Database
+- **Excel** - Output
+- **Tableau** - Visualisation
 - **PowerPoint** - Presentation
 <br><br>
 
 ## Process
 - **Understanding** - ERD Creation | Data Dictionary Documentation
 - **Data Preparation** - Profiling | Integrity Checks | Quality Checks | Cleaning | Integration
-- **Analysis** - Business Rule Validation | Metric Derivation | Ad Hoc Querying
+- **Analysis** - Business Rule Validation | Ad Hoc Querying
 - **Communication** - Visualisation | Presentation
 <br><br>
 
@@ -35,7 +35,8 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
 <br><br>
 
 ## Key Insights
-1. The top 5 revenue-generating films earned between ¤205 and ¤232, while 7 films shared the bottom five positions, generating between ¤6 and ¤8.
+### 1. Revenue Extremes Among Films
+The top 5 revenue-generating films earned between ¤205 and ¤232, while 7 films shared the bottom five positions, generating between ¤6 and ¤8.
 <table>
 <tr>
 <td align="center" valign="top" width="50%">
@@ -50,7 +51,8 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
 </table>
 <br>
 
-2. Rental durations across all terms ranged from same-day returns to a maximum of 10, with an average duration of 5 days.
+### 2. Rental Duration Patterns
+Rental durations across all terms ranged from same-day returns to a maximum of 10, with an average duration of 5 days.
 <table style="width:100%; border-collapse: collapse;">
   <thead>
     <tr>
@@ -108,7 +110,8 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
 </table>
 <br>
 
-3. Total revenue by country varied from ¤68 to ¤6,628, with customer counts between 1 and 60. India led in both customer numbers and total revenue, followed closely by China, and the United States.
+### 3. Revenue and Customer Distribution by Country
+Total revenue by country varied from ¤68 to ¤6,628, with customer counts between 1 and 60. India led in both customer numbers and total revenue, followed closely by China, and the United States.
 <table>
 <tr>
 <td align="center" valign="top" width="100%">
@@ -143,7 +146,8 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
 </table>
 <br>
 
-4. Average customer lifetime value (CLV) varied between ¤68 to ¤217, with Réunion having the highest CLV, followed by Vatican City and Nauru.
+### 4. High-Value Customers by Location
+Average customer lifetime value (CLV) varied between ¤68 to ¤217, with Réunion having the highest CLV, followed by Vatican City and Nauru.
 <table>
 <tr>
 <td align="center" valign="top" width="100%">
@@ -179,7 +183,8 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
 </table>
 <br>
 
-5. The Asia-Pacific region emerged as the clear leader ¤26 468 in sales and 235 customers, while Latin America performed the worst selling ¤8 096 from 73 customers.
+### 5. Regional Sales Performance and Customer Numbers
+The Asia-Pacific region emerged as the clear leader ¤26 468 in sales and 235 customers, while Latin America performed the worst selling ¤8 096 from 73 customers.
 <table>
 <tr>
 <td align="center" valign="top" width="100%">
