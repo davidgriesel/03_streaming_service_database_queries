@@ -41,7 +41,7 @@ There is a wide disparity in total revenue earned. The top five highest-grossing
 <table>
 <tr>
 <td align="center" valign="top" width="100%">
-    <img src="visualisations/top_films.png"" ><br>
+    <img src="visualisations/bar_top_films.png"" ><br>
     <em>The top five titles earned between ¤204.72 and ¤231.73, led by “Telegraph Voyage”, “Wife Turn”, and “Zorro Ark” as the strongest revenue drivers in the catalogue..</em>
 </td>
 </tr>
@@ -51,7 +51,7 @@ There is a wide disparity in total revenue earned. The top five highest-grossing
 <table>
 <tr>
 <td align="center" valign="top" width="100%">
-    <img src="visualisations/bottom_films.png" ><br>
+    <img src="visualisations/bar_bottom_films.png" ><br>
     <em>Seven films shared the bottom five revenue positions, each earning between ¤5.94 and ¤7.93 over the period. “Texas Watch” and “Oklahoma Jumanji” recorded the lowest earnings at ¤5.94.</em>
 </td>
 </tr>
@@ -75,7 +75,7 @@ Customer activity is concentrated in a small number of countries, with India, Ch
 <table>
 <tr>
 <td align="center" valign="top" width="100%">
-    <img src="visualisations/revenue_customers.png" ><br>
+    <img src="visualisations/map_revenue_customers.png" ><br>
     <em>India (¤6,628; 60), China (¤5,799; 53), and the United States (¤4,110; 36) accounted for the highest revenue and number of customers globally.</em>
 </td>
 </tr>
@@ -101,7 +101,7 @@ Réunion, Vatican City, and Nauru had the highest average CLVs, each exceeding �
 <table>
 <tr>
 <td align="center" valign="top" width="100%">
-    <img src="visualisations/clv_customers.png" ><br>
+    <img src="visualisations/map_avg_clv_customers.png" ><br>
     <em>Countries with larger customer bases showed less variation in average CLV, while those with only one or two customers recorded the highest CLVs.</em>
 </td>
 </tr>
@@ -127,7 +127,7 @@ Sales figures vary considerably across geographic regions, with the Asia-Pacific
 <table>
 <tr>
 <td align="center" valign="top" width="100%">
-    <img src="visualisations/regional.png" ><br>
+    <img src="visualisations/bar_regional_performance.png" ><br>
     <em>...</em>
 </td>
 </tr>
