@@ -1,0 +1,5 @@
+table_name,column_name,empty_count,na_count,unknown_count,none_count,blank_count
+address,address2,603,0,0,0,0
+address,district,3,0,0,0,0
+address,phone,2,0,0,0,0
+address,postal_code,4,0,0,0,0

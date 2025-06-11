@@ -125,9 +125,9 @@ SELECT
     'store' AS table_name,
     COUNT(*) AS row_count
 FROM
-    store;
-
- -- VIEWS
+    store
+UNION ALL
+-- VIEWS
 SELECT
     'actor_info' AS table_name,
     COUNT(*) AS row_count

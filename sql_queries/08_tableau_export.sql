@@ -20,7 +20,7 @@ SELECT
     p.amount AS payment_amount,
     p.payment_date,
     
-    -- Flag and accrual logic
+    -- Accrual logic
     CASE
         WHEN p.payment_id IS NOT NULL THEN 'paid'
         ELSE 'accrual'
@@ -57,7 +57,7 @@ SELECT
     ci.city AS customer_city,
     co.country AS customer_country,
 
-    -- Add continent allocation here
+    -- Region allocation
 CASE
     WHEN co.country IN ('Canada', 'Mexico', 'United States', 'Puerto Rico', 'Virgin Islands, U.S.', 'Saint Vincent and the Grenadines', 'Anguilla') THEN 'North America'
     WHEN co.country IN ('Argentina', 'Bolivia', 'Brazil', 'Chile', 'Colombia', 'Dominican Republic', 'Ecuador', 'Paraguay', 'Peru', 'Venezuela', 'French Guiana') THEN 'Latin America'
@@ -76,7 +76,7 @@ END AS region,
     f.rating,
     l.language,
 
-    -- Category (via film_category)
+    -- Category
     cat.category,
 
     -- Store and staff
@@ -101,6 +101,20 @@ FROM rental_clean r
     LEFT JOIN store_clean s ON i.store_id = s.store_id
     LEFT JOIN staff_clean st ON r.staff_id = st.staff_id;
 
+-- ----------------------------------------------------------------------------------
+
+-- Check
+SELECT COUNT(*),
+    SUM(payment_amount) AS paid_revenue,
+    SUM(accrual_amount) AS accrued_revenue
+FROM enriched_transactional_dataset;
+
+-- INSIGHTS 
+-- The number of transactions (15 861), paid revenue (60 784,91) and accrued revenue
+-- (6 103,48) agrees to expected values.
+
+-- ----------------------------------------------------------------------------------
+
+-- Export to Tableau
 SELECT *
-FROM enriched_transactional_dataset
-LIMIT 10;
+FROM enriched_transactional_dataset;

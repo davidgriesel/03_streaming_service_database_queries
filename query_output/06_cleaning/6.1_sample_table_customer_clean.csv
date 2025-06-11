@@ -1,0 +1,11 @@
+customer_id,store_id,first_name,last_name,address_id,activebool
+524,1,Jared,Ely,530,true
+1,1,Mary,Smith,5,true
+2,1,Patricia,Johnson,6,true
+3,1,Linda,Williams,7,true
+4,2,Barbara,Jones,8,true
+5,1,Elizabeth,Brown,9,true
+6,2,Jennifer,Davis,10,true
+7,1,Maria,Miller,11,true
+8,2,Susan,Wilson,12,true
+9,2,Margaret,Moore,13,true

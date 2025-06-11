@@ -1,0 +1,5 @@
+return_status,paid_rentals,unpaid_rentals,total_amount_paid
+Returned On Time,7012,728,20747.88
+Returned Late,7397,724,40045.99
+No Return Date,183,0,518.17
+Total,14592,1452,61312.04

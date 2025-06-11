@@ -34,7 +34,7 @@
 
 -- PURPOSE
 -- Manually verify whether all store_id values in related tables have a matching
--- entry in the store table.
+-- entry in the store table. 
 
 SELECT
     'customer' AS table_name,
@@ -358,8 +358,8 @@ ORDER BY r.rental_id, p.payment_date;
 -- manual intervention, system errors, or incorrect adjustmenting journals.
 
 -- RECOMMENDATIONS
--- 4 payments account for 0,02 % of all payments and can be removed without impacting
--- the analysis.
+-- These 4 payments account for 0,02 % of all payments and can be removed from the
+-- analysis without having a significant impact.
 -- Report misallocated payments to management for further investigation (Reporting).
 -- Confirm whether customer id's match between remaining linked rentals and payments.
 
@@ -429,36 +429,53 @@ ORDER BY amount_difference DESC;
 -- to guide downstream analyses.
 
 SELECT
+    'total' AS category,
     COUNT(DISTINCT r.rental_id) AS total_unreturned_rentals,
-
     COUNT(*) FILTER (
         WHERE p.amount = 0
     ) AS zero_payment_count,
-
     COUNT(*) FILTER (
         WHERE ROUND(p.amount, 2) = ROUND(f.rental_rate, 2)
     ) AS full_payment_count,
-
     COUNT(*) FILTER (
         WHERE ROUND(p.amount, 2) > ROUND(f.rental_rate, 2)
     ) AS overpayment_count
-
 FROM film f
     JOIN inventory i ON f.film_id = i.film_id
     JOIN rental r ON i.inventory_id = r.inventory_id
     JOIN payment p ON r.rental_id = p.rental_id
-    
+WHERE r.return_date IS NULL
+
+UNION ALL
+
+SELECT
+    'total' AS category,
+    SUM(p.amount) AS total_unreturned_rentals,
+    SUM(p.amount) FILTER (
+        WHERE p.amount = 0
+    ) AS zero_payment_count,
+    SUM(p.amount) FILTER (
+        WHERE ROUND(p.amount, 2) = ROUND(f.rental_rate, 2)
+    ) AS full_payment_count,
+    SUM(p.amount) FILTER (
+        WHERE ROUND(p.amount, 2) > ROUND(f.rental_rate, 2)
+    ) AS overpayment_count
+FROM film f
+    JOIN inventory i ON f.film_id = i.film_id
+    JOIN rental r ON i.inventory_id = r.inventory_id
+    JOIN payment p ON r.rental_id = p.rental_id
 WHERE r.return_date IS NULL;
 
 -- INSIGHTS
--- Of the 183 rental transactions with missing return dates: 135 were fully paid and
--- likely returned on time despite missing return records, 24 reflect overpayments
--- consistent with late fees, and 24 show zero value payments, suggesting possible
--- waived fees.
+-- Of the 183 rental transactions with missing return dates:
+-- • 135 were fully paid, totalling ¤379.65, and likely returned on time despite missing return records.
+-- • 24 reflect overpayments amounting to ¤138.52, consistent with late fees.
+-- The total collected for these unreturned rentals was ¤518.17.
 
 -- RECOMMENDATIONS
--- 183 transactions account for 1,14% of all rentals and can be removed without
--- impacting the analysis.
+-- These transactions account for 1,14% of all rentals (183 / 16 044) and relate to
+-- 1,25% of all payments (183 / 14 596) and can be removed from the analysis without
+-- having a significant impact.
 -- Report these transactions to management for further investigation (Reporting).
 
 -- ----------------------------------------------------------------------------------
@@ -481,11 +498,11 @@ SELECT
             ELSE 0
         END
     ) AS total_accrual
-FROM rental_clean r
-    JOIN inventory_clean i ON r.inventory_id = i.inventory_id
-    JOIN film_clean f ON i.film_id = f.film_id
+FROM rental r
+    JOIN inventory i ON r.inventory_id = i.inventory_id
+    JOIN film f ON i.film_id = f.film_id
 WHERE
-    r.rental_id NOT IN (SELECT rental_id FROM payment_clean);
+    r.rental_id NOT IN (SELECT rental_id FROM payment);
 
 -- INSIGHTS
 -- The total expected accrual from unpaid rentals is ¤6,103.48.
@@ -567,8 +584,7 @@ WHERE
         SELECT AVG(amount) + 3 * STDDEV_POP(amount)
         FROM payment
     )
-ORDER BY total_payment_amount DESC
-LIMIT 10;
+ORDER BY total_payment_amount DESC;
 
 -- INSIGHTS
 -- The amount paid in each case equals the rental rate plus ¤1.00 for
@@ -582,7 +598,6 @@ LIMIT 10;
 -- Identify rental transactions where the customer recorded on the rental differs
 -- from the customer recorded on the related payment, indicating possible
 -- misallocation or manual processing errors.
-
 
 SELECT
     r.rental_id,

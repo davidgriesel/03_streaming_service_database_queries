@@ -1,0 +1,87 @@
+table_name,column_name,data_type
+film,special_features,ARRAY
+film,rating,USER-DEFINED
+staff,active,boolean
+customer,activebool,boolean
+staff,picture,bytea
+language,name,character
+staff,first_name,character varying
+staff,last_name,character varying
+address,address,character varying
+address,phone,character varying
+staff,email,character varying
+address,district,character varying
+staff,password,character varying
+category,name,character varying
+address,address2,character varying
+city,city,character varying
+staff,username,character varying
+address,postal_code,character varying
+country,country,character varying
+film,title,character varying
+actor,first_name,character varying
+customer,first_name,character varying
+customer,last_name,character varying
+customer,email,character varying
+actor,last_name,character varying
+customer,create_date,date
+payment,payment_id,integer
+rental,rental_id,integer
+rental,inventory_id,integer
+staff,staff_id,integer
+category,category_id,integer
+city,city_id,integer
+store,store_id,integer
+film,release_year,integer
+country,country_id,integer
+customer,customer_id,integer
+film,film_id,integer
+customer,active,integer
+address,address_id,integer
+inventory,inventory_id,integer
+actor,actor_id,integer
+language,language_id,integer
+payment,rental_id,integer
+payment,amount,numeric
+film,rental_rate,numeric
+film,replacement_cost,numeric
+inventory,film_id,smallint
+store,manager_staff_id,smallint
+store,address_id,smallint
+address,city_id,smallint
+city,country_id,smallint
+customer,store_id,smallint
+customer,address_id,smallint
+film_actor,actor_id,smallint
+film_actor,film_id,smallint
+film_category,film_id,smallint
+film_category,category_id,smallint
+inventory,store_id,smallint
+rental,customer_id,smallint
+rental,staff_id,smallint
+staff,address_id,smallint
+staff,store_id,smallint
+payment,customer_id,smallint
+payment,staff_id,smallint
+film,language_id,smallint
+film,rental_duration,smallint
+film,length,smallint
+film,description,text
+address,last_update,timestamp without time zone
+store,last_update,timestamp without time zone
+film_category,last_update,timestamp without time zone
+film_actor,last_update,timestamp without time zone
+payment,payment_date,timestamp without time zone
+customer,last_update,timestamp without time zone
+country,last_update,timestamp without time zone
+city,last_update,timestamp without time zone
+film,last_update,timestamp without time zone
+actor,last_update,timestamp without time zone
+category,last_update,timestamp without time zone
+language,last_update,timestamp without time zone
+inventory,last_update,timestamp without time zone
+rental,last_update,timestamp without time zone
+rental,return_date,timestamp without time zone
+rental,rental_date,timestamp without time zone
+staff,last_update,timestamp without time zone
+film,fulltext,tsvector

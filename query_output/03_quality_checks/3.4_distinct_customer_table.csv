@@ -1,0 +1,11 @@
+customer_column,distinct_count
+customer_id,599
+store_id,2
+first_name,591
+last_name,599
+email,599
+address_id,599
+activebool,1
+create_date,1
+last_update,1
+active,2

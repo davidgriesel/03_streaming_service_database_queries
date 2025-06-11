@@ -22,47 +22,45 @@
 -- Generate a complete list of all films with total revenue calculated on an accrual
 -- basis, sorted from highest to lowest performing titles.
 
-    -- Paid revenue
-    WITH paid_revenue AS (
-        SELECT
-            f.film_id,
-            f.title,
-            p.amount AS revenue
-        FROM film_clean f
-            JOIN inventory_clean i ON f.film_id = i.film_id
-            JOIN rental_clean r ON i.inventory_id = r.inventory_id
-            JOIN payment_clean p ON r.rental_id = p.rental_id
-        WHERE
-            p.amount <> 0 -- exclude 24 records with null return_date that have zero value payments
-    ),
-
-    accrued_revenue AS (
-        SELECT
-            f.film_id,
-            f.title,
-            f.rental_rate +
-                CASE WHEN r.return_date > (r.rental_date + f.rental_duration * INTERVAL '1 day')
-                    THEN (r.return_date::date - (r.rental_date::date + f.rental_duration))
-                    ELSE 0
-                END AS revenue
-        FROM film_clean f
-            JOIN inventory_clean i ON f.film_id = i.film_id
-            JOIN rental_clean r ON i.inventory_id = r.inventory_id
-        WHERE
-            r.rental_id NOT IN (SELECT rental_id FROM payment_clean)
-    )
-
+WITH paid_revenue AS (
     SELECT
-        film_id,
-        title,
-        ROUND(SUM(revenue), 2) AS total_revenue
-    FROM (
-        SELECT * FROM paid_revenue
-        UNION ALL
-        SELECT * FROM accrued_revenue
-    ) combined
-    GROUP BY film_id, title
-    ORDER BY total_revenue DESC;
+        f.film_id,
+        f.title,
+        p.amount AS revenue
+    FROM film_clean f
+        JOIN inventory_clean i ON f.film_id = i.film_id
+        JOIN rental_clean r ON i.inventory_id = r.inventory_id
+        JOIN payment_clean p ON r.rental_id = p.rental_id
+),
+
+accrued_revenue AS (
+    SELECT
+        f.film_id,
+        f.title,
+        f.rental_rate +
+            CASE WHEN r.return_date > (r.rental_date + f.rental_duration * INTERVAL '1 day')
+                THEN (r.return_date::date - (r.rental_date::date + f.rental_duration))
+                ELSE 0
+            END AS revenue
+    FROM film_clean f
+        JOIN inventory_clean i ON f.film_id = i.film_id
+        JOIN rental_clean r ON i.inventory_id = r.inventory_id
+    WHERE
+        r.rental_id NOT IN (SELECT rental_id FROM payment_clean)
+)
+
+SELECT
+    film_id,
+    title,
+    COUNT(*),
+    ROUND(SUM(revenue), 2) AS total_revenue
+FROM (
+    SELECT * FROM paid_revenue
+    UNION ALL
+    SELECT * FROM accrued_revenue
+) combined
+GROUP BY film_id, title
+ORDER BY total_revenue DESC;
 
 -- INSIGHTS
 -- All 958 titles in inventory contributed to revenue (Refer 3.4).
@@ -76,48 +74,45 @@
 -- PURPOSE
 -- Identify the 5 most profitable films by total revenue contribution.
 
-    -- Paid revenue
-    WITH paid_revenue AS (
-        SELECT
-            f.film_id,
-            f.title,
-            p.amount AS revenue
-        FROM film_clean f
-            JOIN inventory_clean i ON f.film_id = i.film_id
-            JOIN rental_clean r ON i.inventory_id = r.inventory_id
-            JOIN payment_clean p ON r.rental_id = p.rental_id
-        WHERE
-            p.amount <> 0 -- exclude 24 records with null return_date that have zero value payments
-    ),
-
-    accrued_revenue AS (
-        SELECT
-            f.film_id,
-            f.title,
-            f.rental_rate +
-                CASE WHEN r.return_date > (r.rental_date + f.rental_duration * INTERVAL '1 day')
-                    THEN (r.return_date::date - (r.rental_date::date + f.rental_duration))
-                    ELSE 0
-                END AS revenue
-        FROM film_clean f
-            JOIN inventory_clean i ON f.film_id = i.film_id
-            JOIN rental_clean r ON i.inventory_id = r.inventory_id
-        WHERE
-            r.rental_id NOT IN (SELECT rental_id FROM payment_clean)
-    )
-
+WITH paid_revenue AS (
     SELECT
-        film_id,
-        title,
-        ROUND(SUM(revenue), 2) AS total_revenue
-    FROM (
-        SELECT * FROM paid_revenue
-        UNION ALL
-        SELECT * FROM accrued_revenue
-    ) combined
-    GROUP BY film_id, title
-    ORDER BY total_revenue DESC
-    LIMIT 5;
+        f.film_id,
+        f.title,
+        p.amount AS revenue
+    FROM film_clean f
+        JOIN inventory_clean i ON f.film_id = i.film_id
+        JOIN rental_clean r ON i.inventory_id = r.inventory_id
+        JOIN payment_clean p ON r.rental_id = p.rental_id
+),
+
+accrued_revenue AS (
+    SELECT
+        f.film_id,
+        f.title,
+        f.rental_rate +
+            CASE WHEN r.return_date > (r.rental_date + f.rental_duration * INTERVAL '1 day')
+                THEN (r.return_date::date - (r.rental_date::date + f.rental_duration))
+                ELSE 0
+            END AS revenue
+    FROM film_clean f
+        JOIN inventory_clean i ON f.film_id = i.film_id
+        JOIN rental_clean r ON i.inventory_id = r.inventory_id
+    WHERE
+        r.rental_id NOT IN (SELECT rental_id FROM payment_clean)
+)
+
+SELECT
+    film_id,
+    title,
+    ROUND(SUM(revenue), 2) AS total_revenue
+FROM (
+    SELECT * FROM paid_revenue
+    UNION ALL
+    SELECT * FROM accrued_revenue
+) combined
+GROUP BY film_id, title
+ORDER BY total_revenue DESC
+LIMIT 5;
 
 -- INSIGHTS
 -- The top 5 revenue-generating films were:
@@ -135,49 +130,45 @@
 -- Identify the 7 least profitable films by total rental revenue contribution that
 -- share the bottom 5 positions.
 
-    -- Paid revenue
-    WITH paid_revenue AS (
-        SELECT
-            f.film_id,
-            f.title,
-            p.amount AS revenue
-        FROM film_clean f
-            JOIN inventory_clean i ON f.film_id = i.film_id
-            JOIN rental_clean r ON i.inventory_id = r.inventory_id
-            JOIN payment_clean p ON r.rental_id = p.rental_id
-        WHERE
-            p.amount <> 0 -- exclude 24 records with null return_date that have zero value payments
-    ),
-
-    -- Accrued revenue
-    accrued_revenue AS (
-        SELECT
-            f.film_id,
-            f.title,
-            f.rental_rate +
-                CASE WHEN r.return_date > (r.rental_date + f.rental_duration * INTERVAL '1 day')
-                    THEN (r.return_date - (r.rental_date + f.rental_duration))
-                    ELSE 0
-                END AS revenue
-        FROM film_clean f
-            JOIN inventory_clean i ON f.film_id = i.film_id
-            JOIN rental_clean r ON i.inventory_id = r.inventory_id
-        WHERE
-            r.rental_id NOT IN (SELECT rental_id FROM payment_clean)
-    )
-
+WITH paid_revenue AS (
     SELECT
-        film_id,
-        title,
-        ROUND(SUM(revenue), 2) AS total_revenue
-    FROM (
-        SELECT * FROM paid_revenue
-        UNION ALL
-        SELECT * FROM accrued_revenue
-    ) combined
-    GROUP BY film_id, title
-    ORDER BY total_revenue ASC
-    LIMIT 7;
+        f.film_id,
+        f.title,
+        p.amount AS revenue
+    FROM film_clean f
+        JOIN inventory_clean i ON f.film_id = i.film_id
+        JOIN rental_clean r ON i.inventory_id = r.inventory_id
+        JOIN payment_clean p ON r.rental_id = p.rental_id
+),
+
+accrued_revenue AS (
+    SELECT
+        f.film_id,
+        f.title,
+        f.rental_rate +
+            CASE WHEN r.return_date > (r.rental_date + f.rental_duration * INTERVAL '1 day')
+                THEN (r.return_date::date - (r.rental_date::date + f.rental_duration))
+                ELSE 0
+            END AS revenue
+    FROM film_clean f
+        JOIN inventory_clean i ON f.film_id = i.film_id
+        JOIN rental_clean r ON i.inventory_id = r.inventory_id
+    WHERE
+        r.rental_id NOT IN (SELECT rental_id FROM payment_clean)
+)
+
+SELECT
+    film_id,
+    title,
+    ROUND(SUM(revenue), 2) AS total_revenue
+FROM (
+    SELECT * FROM paid_revenue
+    UNION ALL
+    SELECT * FROM accrued_revenue
+) combined
+GROUP BY film_id, title
+ORDER BY total_revenue ASC
+LIMIT 7;
 
 -- INSIGHTS
 -- The films contributing least to revenue, ordered by revenue bracket, were:
@@ -191,13 +182,14 @@
 -- 7.2 - QUESTION 2: What was the average rental duration for all videos?
 -- ----------------------------------------------------------------------------------
 
+-- STEP 1: Summary Statistics by Rental Term
+
 -- PURPOSE
 -- Calculate the minimum, maximum, and average actual rental durations for all
 -- rentals with recorded return dates.
 
 SELECT *
 FROM (
-    -- Summary by rental_duration
     SELECT
         f.rental_duration::text AS rental_duration,
         COUNT(*) AS rental_count,
@@ -207,12 +199,10 @@ FROM (
     FROM film_clean f
         JOIN inventory_clean i ON f.film_id = i.film_id
         JOIN rental_clean r ON i.inventory_id = r.inventory_id
-    WHERE r.return_date IS NOT NULL
     GROUP BY f.rental_duration
 
     UNION ALL
 
-    -- Total summary
     SELECT
         'All' AS rental_duration,
         COUNT(*) AS rental_count,
@@ -222,7 +212,6 @@ FROM (
     FROM film_clean f
         JOIN inventory_clean i ON f.film_id = i.film_id
         JOIN rental_clean r ON i.inventory_id = r.inventory_id
-    WHERE r.return_date IS NOT NULL
 ) AS summary
 
 ORDER BY 
@@ -234,7 +223,41 @@ ORDER BY
 
 -- INSIGHTS
 -- Among the 15,861 rentals with recorded return dates, the actual rental duration ranged
--- between 0 to 10 days with an overall average of 5.03 days.
+-- between 0 and 10 days across all rental terms, with an overall average of 5 days.
+-- This suggests uniform behaviour regardless of the rental term selected.
+
+-- ----------------------------------------------------------------------------------
+
+-- STEP 2: Frequency Distribution of Actual Durations per Term
+
+-- PURPOSE
+-- Break down the frequency of each actual rental duration (1 to 10 days)
+-- by rental term to better understand behavioural patterns beyond the average.
+
+SELECT
+    f.rental_duration::text AS rental_duration,
+    COUNT(*) FILTER (WHERE (r.return_date - r.rental_date) = 0) AS d0,
+    COUNT(*) FILTER (WHERE (r.return_date - r.rental_date) = 1) AS d1,
+    COUNT(*) FILTER (WHERE (r.return_date - r.rental_date) = 2) AS d2,
+    COUNT(*) FILTER (WHERE (r.return_date - r.rental_date) = 3) AS d3,
+    COUNT(*) FILTER (WHERE (r.return_date - r.rental_date) = 4) AS d4,
+    COUNT(*) FILTER (WHERE (r.return_date - r.rental_date) = 5) AS d5,
+    COUNT(*) FILTER (WHERE (r.return_date - r.rental_date) = 6) AS d6,
+    COUNT(*) FILTER (WHERE (r.return_date - r.rental_date) = 7) AS d7,
+    COUNT(*) FILTER (WHERE (r.return_date - r.rental_date) = 8) AS d8,
+    COUNT(*) FILTER (WHERE (r.return_date - r.rental_date) = 9) AS d9,
+    COUNT(*) FILTER (WHERE (r.return_date - r.rental_date) = 10) AS d10
+FROM film_clean f
+    JOIN inventory_clean i ON f.film_id = i.film_id
+    JOIN rental_clean r ON i.inventory_id = r.inventory_id
+GROUP BY f.rental_duration
+ORDER BY f.rental_duration::int;
+
+-- INSIGHTS
+-- While the average rental duration remained constant at 5 days across all rental terms,
+-- the frequency distribution shows that customer behaviour is evenly spread across durations
+-- from 1 to 9 days, but with a noticeable drop in frequency at 0 and 10 days.
+-- This indicates that rental terms did not meaningfully influence how long customers kept films.
 
 -- ----------------------------------------------------------------------------------
 -- 7.3 - QUESTION 3: Which countries are customers based in?
@@ -245,96 +268,18 @@ ORDER BY
 -- PURPOSE
 -- Generate a list of the number of customers by country, along with total revenue,
 -- sorted from highest to lowest customer count.
- 
-    -- Paid revenue
-    WITH paid_revenue AS (
-        SELECT
-            cu.customer_id,
-            SUM(p.amount) AS revenue
-        FROM payment_clean p
-            JOIN customer_clean cu ON p.customer_id = cu.customer_id
-        WHERE
-            p.amount <> 0 -- 24 rentals with null return dates reflecting zero value payments
-        GROUP BY cu.customer_id
-    ),
 
-    -- Accrued revenue
-    accrued_revenue AS (
-        SELECT
-            cu.customer_id,
-            SUM(
-                f.rental_rate +
-                CASE
-                    WHEN r.return_date > r.rental_date + f.rental_duration * INTERVAL '1 day'
-                    THEN (r.return_date::date - (r.rental_date::date + f.rental_duration))
-                    ELSE 0
-                END
-            ) AS revenue
-        FROM rental_clean r
-            JOIN inventory_clean i ON r.inventory_id = i.inventory_id
-            JOIN film_clean f ON i.film_id = f.film_id
-            JOIN customer_clean cu ON r.customer_id = cu.customer_id
-        WHERE
-            r.rental_id NOT IN (SELECT rental_id FROM payment_clean)
-        GROUP BY cu.customer_id
-    ),
-
-    combined_revenue AS (
-        SELECT customer_id, revenue FROM paid_revenue
-        UNION ALL
-        SELECT customer_id, revenue FROM accrued_revenue
-    ),
-
-    customer_country AS (
-        SELECT
-            cr.customer_id,
-            SUM(cr.revenue) AS revenue,
-            co.country
-        FROM combined_revenue cr
-            JOIN customer_clean cu ON cr.customer_id = cu.customer_id
-            JOIN address_clean a ON cu.address_id = a.address_id
-            JOIN city_clean ci ON a.city_id = ci.city_id
-            JOIN country_clean co ON ci.country_id = co.country_id
-        GROUP BY cr.customer_id, co.country
-    )
-
-    SELECT
-        country,
-        COUNT(*) AS customer_count,
-        ROUND(SUM(revenue), 2) AS total_revenue
-    FROM customer_country
-    GROUP BY country
-    ORDER BY customer_count DESC
-    LIMIT 10;
-
--- INSIGHTS
--- Customers are located across 108 countries.
--- The customer base is concentrated in a small number of countries with most having
--- less than 10 customers.
--- Countries with larger customer bases also tend to generate higher total revenue, 
--- suggesting a correlation between customer count and revenue.
-
--- ----------------------------------------------------------------------------------
--- 7.4 - QUESTION 4: Where are customers with a high lifetime value based?
--- ----------------------------------------------------------------------------------
-
--- PURPOSE
--- Identify the countries associated with the highest average customer lifetime value
--- using the accrual base of accounting.
-
-WITH combined_revenue AS (
-    -- Paid revenue
+WITH paid_revenue AS (
     SELECT
         cu.customer_id,
+        COUNT(*),
         SUM(p.amount) AS revenue
     FROM payment_clean p
-    JOIN customer_clean cu ON p.customer_id = cu.customer_id
-    WHERE p.amount <> 0
+        JOIN customer_clean cu ON p.customer_id = cu.customer_id
     GROUP BY cu.customer_id
+),
 
-    UNION ALL
-
-    -- Accrued Revenue
+accrued_revenue AS (
     SELECT
         cu.customer_id,
         SUM(
@@ -349,31 +294,103 @@ WITH combined_revenue AS (
         JOIN inventory_clean i ON r.inventory_id = i.inventory_id
         JOIN film_clean f ON i.film_id = f.film_id
         JOIN customer_clean cu ON r.customer_id = cu.customer_id
-    WHERE r.rental_id NOT IN (SELECT rental_id FROM payment_clean)
+    WHERE
+        r.rental_id NOT IN (SELECT rental_id FROM payment_clean)
     GROUP BY cu.customer_id
 ),
 
-country_revenue AS (
+combined_revenue AS (
+    SELECT customer_id, revenue FROM paid_revenue
+    UNION ALL
+    SELECT customer_id, revenue FROM accrued_revenue
+),
+
+customer_country AS (
     SELECT
-        co.country,
-        COUNT(DISTINCT cr.customer_id) AS customer_count,
-        SUM(cr.revenue) AS total_revenue
+        cr.customer_id,
+        SUM(cr.revenue) AS revenue,
+        co.country
     FROM combined_revenue cr
         JOIN customer_clean cu ON cr.customer_id = cu.customer_id
         JOIN address_clean a ON cu.address_id = a.address_id
         JOIN city_clean ci ON a.city_id = ci.city_id
         JOIN country_clean co ON ci.country_id = co.country_id
-    GROUP BY co.country
+    GROUP BY cr.customer_id, co.country
 )
 
 SELECT
     country,
-    customer_count,
-    ROUND(total_revenue, 2) AS total_revenue,
-    ROUND(total_revenue / customer_count, 2) AS avg_lifetime_value
-FROM country_revenue
-ORDER BY avg_lifetime_value DESC
-LIMIT 10;
+    COUNT(*) AS customer_count,
+    ROUND(SUM(revenue), 2) AS total_revenue
+FROM customer_country
+    GROUP BY country
+    ORDER BY customer_count DESC;
+
+-- INSIGHTS
+-- Customers are located across 108 countries.
+-- The customer base is concentrated in a small number of countries with most having
+-- less than 10 customers.
+-- Countries with larger customer bases also tend to generate higher total revenue, 
+-- suggesting a correlation between customer count and revenue.
+
+-- ----------------------------------------------------------------------------------
+-- 7.4 - QUESTION 4: Where are customers with a high lifetime value based?
+-- ----------------------------------------------------------------------------------
+
+-- PURPOSE
+-- Identify the customers with the highest lifetime value and where they are based,
+-- using the accrual base of accounting.
+
+WITH combined_revenue AS (
+    SELECT
+        cu.customer_id,
+        SUM(p.amount) AS revenue
+    FROM payment_clean p
+    JOIN customer_clean cu ON p.customer_id = cu.customer_id
+    WHERE p.amount <> 0
+    GROUP BY cu.customer_id
+
+    UNION ALL
+
+    SELECT
+        cu.customer_id,
+        SUM(
+            f.rental_rate +
+            CASE
+                WHEN r.return_date > r.rental_date + f.rental_duration * INTERVAL '1 day'
+                THEN (r.return_date::date - (r.rental_date::date + f.rental_duration))
+                ELSE 0
+            END
+        ) AS revenue
+    FROM rental_clean r
+    JOIN inventory_clean i ON r.inventory_id = i.inventory_id
+    JOIN film_clean f ON i.film_id = f.film_id
+    JOIN customer_clean cu ON r.customer_id = cu.customer_id
+    WHERE
+        r.rental_id NOT IN (SELECT rental_id FROM payment_clean)
+    GROUP BY cu.customer_id
+),
+
+customer_total_revenue AS (
+    SELECT
+        customer_id,
+        SUM(revenue) AS total_revenue
+    FROM combined_revenue
+    GROUP BY customer_id
+)
+
+SELECT
+    cu.first_name,
+    cu.last_name,
+    co.country,
+    ci.city,
+    ROUND(ctr.total_revenue, 2) AS total_revenue
+FROM customer_total_revenue ctr
+JOIN customer_clean cu ON ctr.customer_id = cu.customer_id
+JOIN address_clean a ON cu.address_id = a.address_id
+JOIN city_clean ci ON a.city_id = ci.city_id
+JOIN country_clean co ON ci.country_id = co.country_id
+ORDER BY total_revenue DESC;
 
 -- INSIGHTS
 -- The top-ranking countries by average customer lifetime value were:
@@ -392,7 +409,6 @@ LIMIT 10;
 -- lifetime value per continent using the accrual basis of accounting.
 
     WITH combined_revenue AS (
-        -- Paid revenue
         SELECT
             cu.customer_id,
             SUM(p.amount) AS revenue
@@ -403,7 +419,6 @@ LIMIT 10;
 
         UNION ALL
 
-        -- Accrued Revenue
         SELECT
             cu.customer_id,
             SUM(
@@ -418,8 +433,10 @@ LIMIT 10;
             JOIN inventory_clean i ON r.inventory_id = i.inventory_id
             JOIN film_clean f ON i.film_id = f.film_id
             JOIN customer_clean cu ON r.customer_id = cu.customer_id
-        WHERE r.rental_id NOT IN (SELECT rental_id FROM payment_clean)
-        GROUP BY cu.customer_id
+        WHERE
+            r.rental_id NOT IN (SELECT rental_id FROM payment_clean)
+            AND return_date IS NOT NULL -- exclude records with null return dates
+            GROUP BY cu.customer_id
     ),
 
     country_revenue AS (

@@ -1,0 +1,4 @@
+table_name,column_name,null_count
+address,address2,4
+rental,return_date,183
+staff,picture,1

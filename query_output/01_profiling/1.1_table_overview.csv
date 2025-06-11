@@ -1,0 +1,23 @@
+table_schema,table_type,table_name
+public,BASE TABLE,actor
+public,BASE TABLE,store
+public,BASE TABLE,address
+public,BASE TABLE,category
+public,BASE TABLE,city
+public,BASE TABLE,country
+public,BASE TABLE,customer
+public,BASE TABLE,film_actor
+public,BASE TABLE,film_category
+public,BASE TABLE,inventory
+public,BASE TABLE,language
+public,BASE TABLE,rental
+public,BASE TABLE,staff
+public,BASE TABLE,payment
+public,BASE TABLE,film
+public,VIEW,actor_info
+public,VIEW,customer_list
+public,VIEW,film_list
+public,VIEW,nicer_but_slower_film_list
+public,VIEW,sales_by_film_category
+public,VIEW,sales_by_store
+public,VIEW,staff_list
