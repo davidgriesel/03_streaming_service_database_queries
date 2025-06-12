@@ -58,7 +58,12 @@ The catalogue consisted of 958 films which generated ¤66 888 in total revenue. 
 <br>
 
 ### 2. Rental Return Behaviour
-Regardles of selected rental term, actual rental durations ranged from same-day returns to a maximum of 10 days, with an average duration of 5 days.
+Although each film was assigned a fixed rental term between 3 and 7 days, actual return behaviour showed little variation, ranging from same-day returns to 10 days, with an average of 5. Most returns were evenly distributed between 1 and 9 days regardless of the assigned duration, with notably fewer same-day and 10-day returns, suggesting that the assigned terms had limited influence on actual return behaviour.
+
+<br><br>
+
+Summary Statistics - Actual Rental Duration by Rental Term
+
 | Rental Duration (Days) | Number of Transactions | Minimum Actual Duration | Maximum Actual Duration | Average Actual Duration |
 |:----------------------:|:----------------------:|:-----------------------:|:-----------------------:|:-----------------------:|
 | 3 | 3,366 | 0 | 10 | 5 |
@@ -67,9 +72,39 @@ Regardles of selected rental term, actual rental durations ranged from same-day 
 | 6 | 3,352 | 0 | 10 | 5 |
 | 7 | 2,798 | 0 | 10 | 5 |
 | All | 15,861 | 0 | 10 | 5 |
+
+Returns were relatively evenly spread across terms, with actual durations ranging between 0 and 10 days, with an average of 5 days.
+<br><br>
+
+Transaction Distribution – Actual Rental Duration per Rental Term
+
+<table>
+  <thead>
+    <tr>
+      <th rowspan="2">Rental Term (Days)</th>
+      <th colspan="11">Actual Duration (Days)</th>
+    </tr>
+    <tr>
+      <th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>3</td><td>18</td><td>356</td><td>370</td><td>371</td><td>358</td><td>400</td><td>366</td><td>357</td><td>385</td><td>360</td><td>25</td></tr>
+    <tr><td>4</td><td>22</td><td>309</td><td>361</td><td>369</td><td>339</td><td>337</td><td>401</td><td>358</td><td>363</td><td>335</td><td>19</td></tr>
+    <tr><td>5</td><td>26</td><td>336</td><td>375</td><td>337</td><td>327</td><td>331</td><td>344</td><td>361</td><td>346</td><td>335</td><td>14</td></tr>
+    <tr><td>6</td><td>22</td><td>342</td><td>371</td><td>354</td><td>356</td><td>383</td><td>372</td><td>430</td><td>355</td><td>345</td><td>22</td></tr>
+    <tr><td>7</td><td>17</td><td>301</td><td>318</td><td>283</td><td>301</td><td>310</td><td>300</td><td>315</td><td>313</td><td>316</td><td>24</td></tr>
+  </tbody>
+</table>
+
+Return behaviour followed a broadly uniform distribution between 1 and 9 days for each rental term, with a consistent drop in frequency at 0 and 10 days.
+
+
 <br>
 
 ### 3. Revenue and Customer Distribution by Country
+Although there are 599 customers spread across 597 cities in 108 countries, customer activity is concentrated in a few key markets. India, China, and the United States lead in both customer count and total revenue, together accounting for 149 customers and a quarter of global revenue.
+
 Customer activity is concentrated in a small number of countries, with India, China, and the United States leading in both the number of customers and total revenue. These three markets alone account for 149 of the 599 global customers and a quarter of overall revenue. 
 <table>
 <tr>
