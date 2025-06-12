@@ -59,11 +59,9 @@ The catalogue consisted of 958 films which generated ¤66 888 in total revenue. 
 
 ### 2. Rental Return Behaviour
 Although each film was assigned a fixed rental term between 3 and 7 days, actual return behaviour showed little variation, ranging from same-day returns to 10 days, with an average of 5. Most returns were evenly distributed between 1 and 9 days regardless of the assigned duration, with notably fewer same-day and 10-day returns, suggesting that the assigned terms had limited influence on actual return behaviour.
-
-<br><br>
+<br>
 
 Summary Statistics - Actual Rental Duration by Rental Term
-
 | Rental Duration (Days) | Number of Transactions | Minimum Actual Duration | Maximum Actual Duration | Average Actual Duration |
 |:----------------------:|:----------------------:|:-----------------------:|:-----------------------:|:-----------------------:|
 | 3 | 3,366 | 0 | 10 | 5 |
