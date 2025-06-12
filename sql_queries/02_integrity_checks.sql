@@ -187,26 +187,36 @@ ORDER BY
 -- Check for columns explicitly constrained to hold only unique values, beyond
 -- those already enforced as keys.
 
-SELECT 
-    tc.table_name,
-    kcu.column_name,
-    tc.constraint_name
-FROM 
-    information_schema.table_constraints AS tc
-JOIN 
-    information_schema.key_column_usage AS kcu
-    ON tc.constraint_name = kcu.constraint_name
-    AND tc.table_schema = kcu.table_schema
-JOIN 
-    information_schema.tables AS t
-    ON tc.table_schema = t.table_schema
-    AND tc.table_name = t.table_name
-WHERE 
-    tc.constraint_type = 'UNIQUE'
-    AND tc.table_schema = 'public'
-    AND t.table_type = 'BASE TABLE'
-ORDER BY 
-    tc.table_name, kcu.column_name;
+WITH unique_constraints AS (
+    SELECT 
+        tc.table_name,
+        kcu.column_name,
+        tc.constraint_name
+    FROM 
+        information_schema.table_constraints AS tc
+    JOIN 
+        information_schema.key_column_usage AS kcu
+        ON tc.constraint_name = kcu.constraint_name
+        AND tc.table_schema = kcu.table_schema
+    JOIN 
+        information_schema.tables AS t
+        ON tc.table_schema = t.table_schema
+        AND tc.table_name = t.table_name
+    WHERE 
+        tc.constraint_type = 'UNIQUE'
+        AND tc.table_schema = 'public'
+        AND t.table_type = 'BASE TABLE'
+)
+
+SELECT * FROM unique_constraints
+
+UNION ALL
+
+SELECT
+    '[none found]' AS table_name,
+    '[none found]' AS column_name,
+    '[none found]' AS constraint_name
+WHERE NOT EXISTS (SELECT 1 FROM unique_constraints);
 
 -- INSIGHTS
 -- No explicit UNIQUE constraints were defined beyond those enforced by primary

@@ -174,7 +174,7 @@ FROM
 -- No empty tables found.
 -- Transactional tables (payment, rental) are the largest as expected.
 -- Join and dimension tables range from small to mid size.
--- Five views tables appear to represent enriched listings.
+-- Five view tables appear to represent enriched listings.
 -- Two view tables suggest summarised sales data by store and category.
 
 -- ------------------------------------------------------------------------------------
@@ -216,9 +216,9 @@ SELECT * FROM sales_by_store LIMIT 5;
 -- No structural anomalies were detected.
 -- Visible NULLs (address2) and empty strings (phone, postal_code) in address table.
 -- The customer table contains two columns of different data types with seemingly
--- similar functions (active and activebool).
+-- similar functions (active and activebool.
 -- The film table contains dense categorical columns with non-standard data types
--- (description of type text, fulltext of type tsvector, rating of type mpaa_rating)
+-- (description of type text, fulltext of type tsvector, rating of type mpaa_rating)..
 -- The film_actor and film_category tables contain only composite keys functioning
 -- purely as join tables.
 -- The inventory table records physical stock per store with duplicate titles

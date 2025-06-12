@@ -1,4 +1,2 @@
-table_name,foreign_key,orphaned_keys
-customer,store_id,0
-inventory,store_id,0
-staff,store_id,0
+returns_before_rental
+0
