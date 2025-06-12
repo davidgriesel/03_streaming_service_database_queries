@@ -58,10 +58,9 @@ The catalogue consisted of 958 films which generated ¤66 888 in total revenue. 
 <br>
 
 ### 2. Rental Return Behaviour
-Although each film was assigned a fixed rental term between 3 and 7 days, actual return behaviour showed little variation, ranging from same-day returns to 10 days, with an average of 5. Most returns were evenly distributed between 1 and 9 days regardless of the assigned duration, with notably fewer same-day and 10-day returns, suggesting that the assigned terms had limited influence on actual return behaviour.
-<br>
+Although each film was assigned a fixed rental term between 3 and 7 days, actual return behaviour showed little variation, ranging from same-day returns to 10 days, with an average of 5. Most returns were evenly distributed between 1 and 9 days regardless of the assigned duration, with notably fewer same-day and 10-day returns, suggesting that assigned terms had limited influence on actual return behaviour.
 
-Summary Statistics - Actual Rental Duration by Rental Term
+**Summary Statistics - Actual Rental Duration by Rental Term**
 | Rental Duration (Days) | Number of Transactions | Minimum Actual Duration | Maximum Actual Duration | Average Actual Duration |
 |:----------------------:|:----------------------:|:-----------------------:|:-----------------------:|:-----------------------:|
 | 3 | 3,366 | 0 | 10 | 5 |
@@ -74,8 +73,7 @@ Summary Statistics - Actual Rental Duration by Rental Term
 Returns were relatively evenly spread across terms, with actual durations ranging between 0 and 10 days, with an average of 5 days.
 <br><br>
 
-Transaction Distribution – Actual Rental Duration per Rental Term
-
+**Transaction Distribution – Actual Rental Duration per Rental Term**
 <table>
   <thead>
     <tr>
@@ -96,24 +94,22 @@ Transaction Distribution – Actual Rental Duration per Rental Term
 </table>
 
 Return behaviour followed a broadly uniform distribution between 1 and 9 days for each rental term, with a consistent drop in frequency at 0 and 10 days.
-
-
 <br>
 
 ### 3. Revenue and Customer Distribution by Country
-Although there are 599 customers spread across 597 cities in 108 countries, customer activity is concentrated in a few key markets. India, China, and the United States lead in both customer count and total revenue, together accounting for 149 customers and a quarter of global revenue.
+With 599 customers across 597 cities in 108 countries, activity is concentrated in a few key markets. India, China, and the United States account for nearly a quarter of global customers and total revenue.
 
-Customer activity is concentrated in a small number of countries, with India, China, and the United States leading in both the number of customers and total revenue. These three markets alone account for 149 of the 599 global customers and a quarter of overall revenue. 
 <table>
 <tr>
 <td align="center" valign="top" width="100%">
     <img src="visualisations/map_revenue_customers.png" ><br>
-    <em>India (¤6,628; 60), China (¤5,799; 53), and the United States (¤4,110; 36) accounted for the highest revenue and number of customers globally.</em>
+    <em>India, China, and the United States were the top 3 countries in terms of total revenue and number of customers.</em>
 </td>
 </tr>
 </table>
 <br>
 
+**Top 10 Countries - Total Revenue and Number of Customers**
 | # | Country | Customer Count | Total Revenue |
 |:-:|:-------:|:--------------:|:-------------:|
 | 1 | India | 60 | 6,628.28 |
@@ -126,6 +122,8 @@ Customer activity is concentrated in a small number of countries, with India, Ch
 | 8 | Philippines | 20 | 2,381.32 |
 | 9 | Turkey | 15 | 1,662.12 |
 | 10 | Indonesia | 14 | 1,510.33 |
+
+The top 3 countries together account for 149 of global customers and ¤16,400.82 in total revenue.
 <br>
 
 ### 4. Customer Lifetime Value by Country
