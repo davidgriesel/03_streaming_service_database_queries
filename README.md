@@ -7,7 +7,6 @@ A legacy movie rental company is planning to re-enter the market with a new onli
 
 ## Tools
 - **Word** - Documentation
-- **Excel** - Output
 - **PostgreSQL** - Relational Database
 - **Excel** - Output
 - **Tableau** - Visualisation
@@ -36,13 +35,13 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
 
 ## Key Insights
 ### 1. Revenue Contribution by Title
-There is a wide disparity in total revenue earned. The top five highest-grossing films each brought in over ¤200, while the lowest performers generated less than ¤8.
+The catalogue consisted of 958 films which generated ¤66 888 in total revenue. The distribution of revenue was highly uneven with the top five highest-grossing titles each earning over ¤200, while the lowest performers brought in less than ¤8 each.
 
 <table>
 <tr>
 <td align="center" valign="top" width="100%">
     <img src="visualisations/bar_top_films.png"" ><br>
-    <em>The top five titles earned between ¤204.72 and ¤231.73, led by “Telegraph Voyage”, “Wife Turn”, and “Zorro Ark” as the strongest revenue drivers in the catalogue..</em>
+    <em>The top five titles earned between ¤204.72 and ¤231.73, led by “Telegraph Voyage”, “Wife Turn”, and “Zorro Ark”.</em>
 </td>
 </tr>
 </table>
@@ -58,7 +57,7 @@ There is a wide disparity in total revenue earned. The top five highest-grossing
 </table>
 <br>
 
-### 2. Actual Rental Duration
+### 2. Rental Return Behaviour
 Regardles of selected rental term, actual rental durations ranged from same-day returns to a maximum of 10 days, with an average duration of 5 days.
 | Rental Duration (Days) | Number of Transactions | Minimum Actual Duration | Maximum Actual Duration | Average Actual Duration |
 |:----------------------:|:----------------------:|:-----------------------:|:-----------------------:|:-----------------------:|
