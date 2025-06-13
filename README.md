@@ -127,8 +127,8 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
             <td align="right">6 103,48</td>
           </tr>
           <tr>
-            <td align="left"><strong>Total Revenue</strong></td>
-            <td align="right"><strong>66 888,39</strong></td>
+            <td align="left">Total Revenue</td>
+            <td align="right">66 888,39</td>
           </tr>
         </tbody>
       </table>
@@ -138,8 +138,8 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
     </td>
   </tr>
 </table>
-
 <br>
+
 ### 2. Revenue Contribution by Title
 The distribution of revenue was highly uneven with the top five highest-grossing titles each earning over ¤200, while the lowest performers brought in less than ¤8 each.
 <table>
@@ -167,6 +167,7 @@ The distribution of revenue was highly uneven with the top five highest-grossing
 
 ### 3. Rental Return Behaviour
 Although each film was assigned a fixed rental term between 3 and 7 days, actual return behaviour showed little variation, ranging from same-day returns to 10 days, with an average of 5 days. Most returns were evenly distributed between 1 and 9 days regardless of the assigned duration, with notably fewer same-day and 10-day returns, suggesting that assigned terms had limited influence on actual return behaviour.
+<br><br>
 
 **Summary Statistics - Actual Rental Duration by Rental Term**
 | Rental Duration (Days) | Number of Transactions | Minimum Actual Duration | Maximum Actual Duration | Average Actual Duration |
@@ -180,6 +181,8 @@ Although each film was assigned a fixed rental term between 3 and 7 days, actual
 
 Returns were evenly distributed across rental terms, with actual returns taking between 0 and 10 days, with an average of 5 days.
 <br><br>
+
+<br>
 
 **Transaction Distribution – Actual Rental Duration per Rental Term**
 <table>
