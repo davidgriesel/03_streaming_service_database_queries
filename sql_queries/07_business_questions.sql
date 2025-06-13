@@ -11,6 +11,7 @@
 -- 7.5 - QUESTION 5: Do sales figures vary between geographic regions?
 -- 7.6 - CATALOGUE
 -- 7.7 - CUSTOMER BASE
+-- 7.8 - REVENUE SUMMARY
 
 -- ----------------------------------------------------------------------------------
 -- 7.1 - QUESTION 1: Which movies contributed the most/least to revenue gain?
@@ -223,7 +224,7 @@ ORDER BY
 
 -- INSIGHTS
 -- Among the 15,861 rentals with recorded return dates, the actual rental duration ranged
--- between 0 and 10 days across all rental terms, with an overall average of 5 days.
+-- between 0 and 10 days, with an average of 5 days across all rental terms.
 -- This suggests uniform behaviour regardless of the rental term selected.
 
 -- ----------------------------------------------------------------------------------
@@ -232,7 +233,7 @@ ORDER BY
 
 -- PURPOSE
 -- Break down the frequency of each actual rental duration (1 to 10 days)
--- by rental term to better understand behavioural patterns beyond the average.
+-- by rental term to better understand behavioural patterns.
 
 SELECT
     f.rental_duration::text AS rental_duration,
@@ -254,10 +255,8 @@ GROUP BY f.rental_duration
 ORDER BY f.rental_duration::int;
 
 -- INSIGHTS
--- While the average rental duration remained constant at 5 days across all rental terms,
--- the frequency distribution shows that customer behaviour is evenly spread across durations
--- from 1 to 9 days, but with a noticeable drop in frequency at 0 and 10 days.
--- This indicates that rental terms did not meaningfully influence how long customers kept films.
+-- The frequency distribution shows that customers behaviour is evenly spread across
+-- durations from 1 to 9 days, but drops noticeably in frequency at 0 and 10 days.
 
 -- ----------------------------------------------------------------------------------
 -- 7.3 - QUESTION 3: Which countries are customers based in?
@@ -380,8 +379,7 @@ customer_total_revenue AS (
 )
 
 SELECT
-    cu.first_name,
-    cu.last_name,
+    cu.customer_id,
     co.country,
     ci.city,
     ROUND(ctr.total_revenue, 2) AS total_revenue
@@ -562,3 +560,46 @@ FROM customer_clean cu
 -- INSIGHTS
 -- The customer base consists of 599 customers, across 108 countries, and in 597
 -- different cities.
+
+
+-- ----------------------------------------------------------------------------------
+-- 7.8 - REVENUE SUMMARY
+-- ----------------------------------------------------------------------------------
+
+-- PURPOSE
+-- Summarise total revenue earned by distinguishing between paid and accrued revenue.
+
+WITH paid_revenue AS (
+    SELECT
+        p.amount AS revenue
+    FROM film_clean f
+        JOIN inventory_clean i ON f.film_id = i.film_id
+        JOIN rental_clean r ON i.inventory_id = r.inventory_id
+        JOIN payment_clean p ON r.rental_id = p.rental_id
+),
+
+accrued_revenue AS (
+    SELECT
+        f.rental_rate +
+            CASE 
+                WHEN r.return_date > (r.rental_date + f.rental_duration * INTERVAL '1 day')
+                THEN (r.return_date::date - (r.rental_date::date + f.rental_duration))
+                ELSE 0
+            END AS revenue
+    FROM film_clean f
+        JOIN inventory_clean i ON f.film_id = i.film_id
+        JOIN rental_clean r ON i.inventory_id = r.inventory_id
+    WHERE r.rental_id NOT IN (SELECT rental_id FROM payment_clean)
+)
+
+SELECT 'Paid Revenue' AS metric, ROUND(SUM(revenue), 2) AS amount FROM paid_revenue
+UNION ALL
+SELECT 'Accrued Revenue', ROUND(SUM(revenue), 2) FROM accrued_revenue
+UNION ALL
+SELECT 'Total Revenue', ROUND(
+    (SELECT SUM(revenue) FROM paid_revenue) + 
+    (SELECT SUM(revenue) FROM accrued_revenue), 2
+);
+
+-- INSIGHTS
+-- Total revenue amounted to ¤71,400, comprising ¤66,888 in paid revenue and ¤4,512 in accrued revenue from unreturned or overdue rentals.
