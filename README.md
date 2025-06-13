@@ -226,97 +226,87 @@ While each film was assigned a fixed rental term between 3 and 7 days, actual re
 
 ### 4. Revenue and Customer Distribution by Country
 With 599 customers across 597 cities in 108 countries, activity is concentrated in a few key markets. India, China, and the United States account for nearly a quarter of global customers and total revenue.
-
 <table>
   <thead>
     <tr>
-      <th colspan="4" style="text-align: center; font-weight: bold;">
-        Top 10 Countries – Total Revenue and Number of Customers
-      </th>
+      <th colspan="4" align="center"><strong>Top 10 Countries – Total Revenue and Number of Customers</strong></th>
     </tr>
     <tr>
-      <th style="text-align: center;">#</th>
-      <th style="text-align: left;">Country</th>
-      <th style="text-align: center;">Customer Count</th>
-      <th style="text-align: center;">Total Revenue (¤)</th>
+      <th align="center">#</th>
+      <th align="left">Country</th>
+      <th align="center">Customer Count</th>
+      <th align="center">Total Revenue (¤)</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: center;">1</td>
-      <td style="text-align: left;">India</td>
-      <td style="text-align: center;">60</td>
-      <td style="text-align: center;">6,628.28</td>
+      <td align="center">1</td>
+      <td align="left">India</td>
+      <td align="center">60</td>
+      <td align="center">6,628.28</td>
     </tr>
     <tr>
-      <td style="text-align: center;">2</td>
-      <td style="text-align: left;">China</td>
-      <td style="text-align: center;">53</td>
-      <td style="text-align: center;">5,798.74</td>
+      <td align="center">2</td>
+      <td align="left">China</td>
+      <td align="center">53</td>
+      <td align="center">5,798.74</td>
     </tr>
     <tr>
-      <td style="text-align: center;">3</td>
-      <td style="text-align: left;">United States</td>
-      <td style="text-align: center;">36</td>
-      <td style="text-align: center;">4,110.32</td>
+      <td align="center">3</td>
+      <td align="left">United States</td>
+      <td align="center">36</td>
+      <td align="center">4,110.32</td>
     </tr>
     <tr>
-      <td style="text-align: center;">4</td>
-      <td style="text-align: left;">Japan</td>
-      <td style="text-align: center;">31</td>
-      <td style="text-align: center;">3,470.75</td>
+      <td align="center">4</td>
+      <td align="left">Japan</td>
+      <td align="center">31</td>
+      <td align="center">3,470.75</td>
     </tr>
     <tr>
-      <td style="text-align: center;">5</td>
-      <td style="text-align: left;">Mexico</td>
-      <td style="text-align: center;">30</td>
-      <td style="text-align: center;">3,307.04</td>
+      <td align="center">5</td>
+      <td align="left">Mexico</td>
+      <td align="center">30</td>
+      <td align="center">3,307.04</td>
     </tr>
     <tr>
-      <td style="text-align: center;">6</td>
-      <td style="text-align: left;">Brazil</td>
-      <td style="text-align: center;">28</td>
-      <td style="text-align: center;">3,200.52</td>
+      <td align="center">6</td>
+      <td align="left">Brazil</td>
+      <td align="center">28</td>
+      <td align="center">3,200.52</td>
     </tr>
     <tr>
-      <td style="text-align: center;">7</td>
-      <td style="text-align: left;">Russian Federation</td>
-      <td style="text-align: center;">28</td>
-      <td style="text-align: center;">3,045.87</td>
+      <td align="center">7</td>
+      <td align="left">Russian Federation</td>
+      <td align="center">28</td>
+      <td align="center">3,045.87</td>
     </tr>
     <tr>
-      <td style="text-align: center;">8</td>
-      <td style="text-align: left;">Philippines</td>
-      <td style="text-align: center;">20</td>
-      <td style="text-align: center;">2,381.32</td>
+      <td align="center">8</td>
+      <td align="left">Philippines</td>
+      <td align="center">20</td>
+      <td align="center">2,381.32</td>
     </tr>
     <tr>
-      <td style="text-align: center;">9</td>
-      <td style="text-align: left;">Turkey</td>
-      <td style="text-align: center;">15</td>
-      <td style="text-align: center;">1,662.12</td>
+      <td align="center">9</td>
+      <td align="left">Turkey</td>
+      <td align="center">15</td>
+      <td align="center">1,662.12</td>
     </tr>
     <tr>
-      <td style="text-align: center;">10</td>
-      <td style="text-align: left;">Indonesia</td>
-      <td style="text-align: center;">14</td>
-      <td style="text-align: center;">1,510.33</td>
+      <td align="center">10</td>
+      <td align="left">Indonesia</td>
+      <td align="center">14</td>
+      <td align="center">1,510.33</td>
     </tr>
   </tbody>
   <tfoot>
     <tr>
-      <td colspan="4" style="text-align: center;">
-        <em>The top 3 countries together account for 149 of global customers and ¤16,400.82 in total revenue.</em>
-      </td>
+      <td colspan="4" align="center"><em>The top 3 countries together account for 149 of global customers and ¤16,400.82 in total revenue.</em></td>
     </tr>
   </tfoot>
 </table>
-
 <br>
-
-
-
-
 
 <table>
 <tr>
