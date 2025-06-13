@@ -37,43 +37,67 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
 ### 1. Customer Base, Catalogue, and Revenue Generated
 <table>
   <tr>
-    <td valign="top">
+    <td valign="middle">
       <table>
         <thead>
           <tr>
-            <th>Customer Base</th>
-            <th>Count</th>
+            <th align="left">Customer Base</th>
+            <th align="right">Count</th>
           </tr>
         </thead>
         <tbody>
-          <tr><td>Customers</td><td align="center">599</td></tr>
-          <tr><td>Countries</td><td align="center">108</td></tr>
-          <tr><td>Cities</td><td align="center">597</td></tr>
+          <tr>
+            <td align="left">Customers</td>
+            <td align="right">599</td>
+          </tr>
+          <tr>
+            <td align="left">Countries</td>
+            <td align="right">108</td>
+          </tr>
+          <tr>
+            <td align="left">Cities</td>
+            <td align="right">597</td>
+          </tr>
         </tbody>
       </table>
     </td>
     <td valign="middle" style="padding-left: 20px;">
-      The business served 599 customers across 597 cities in 108 countries.
+      The business served a total of 599 customers, located in 597 cities across 108 countries worldwide.
     </td>
   </tr>
 </table>
 
 <table>
   <tr>
-    <td valign="top">
+    <td valign="middle">
       <table>
         <thead>
           <tr>
-            <th>Catalogue</th>
-            <th>Count</th>
+            <th align="left">Film Catalogue</th>
+            <th align="right">Count</th>
           </tr>
         </thead>
         <tbody>
-          <tr><td>Titles Held</td><td align="center">958</td></tr>
-          <tr><td>Categories</td><td align="center">16</td></tr>
-          <tr><td>Ratings</td><td align="center">5</td></tr>
-          <tr><td>Languages</td><td align="center">1 (English)</td></tr>
-          <tr><td>Release Year</td><td align="center">1 (2006)</td></tr>
+          <tr>
+            <td align="left">Titles in Inventory</td>
+            <td align="right">958</td>
+          </tr>
+          <tr>
+            <td align="left">Categories</td>
+            <td align="right">16</td>
+          </tr>
+          <tr>
+            <td align="left">Ratings</td>
+            <td align="right">5</td>
+          </tr>
+          <tr>
+            <td align="left">Languages</td>
+            <td align="right">1 (English)</td>
+          </tr>
+          <tr>
+            <td>Release Year</td>
+            <td align="right">1 (2006)</td>
+          </tr>
         </tbody>
       </table>
     </td>
@@ -85,18 +109,27 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
 
 <table>
   <tr>
-    <td valign="top">
+    <td valign="middle">
       <table>
         <thead>
           <tr>
-            <th>Revenue</th>
-            <th>Amount (¤)</th>
+            <th align="left">Revenue</th>
+            <th align="right">Amount (¤)</th>
           </tr>
         </thead>
         <tbody>
-          <tr><td>Paid</td><td align="center">60 784,91</td></tr>
-          <tr><td>Accrued</td><td align="center">6 103,48</td></tr>
-          <tr><td>Total Revenue</td><td align="center">66 888,39</td></tr>
+          <tr>
+            <td align="left">Paid</td>
+            <td align="right">60 784,91</td>
+          </tr>
+          <tr>
+            <td align="left">Accrued</td>
+            <td align="right">6 103,48</td>
+          </tr>
+          <tr>
+            <td align="left"><strong>Total Revenue</strong></td>
+            <td align="right"><strong>66 888,39</strong></td>
+          </tr>
         </tbody>
       </table>
     </td>
@@ -106,6 +139,7 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
   </tr>
 </table>
 
+<br>
 ### 2. Revenue Contribution by Title
 The distribution of revenue was highly uneven with the top five highest-grossing titles each earning over ¤200, while the lowest performers brought in less than ¤8 each.
 <table>
@@ -130,34 +164,7 @@ The distribution of revenue was highly uneven with the top five highest-grossing
 
 
 
-The business served 599 customers across 597 cities in 108 countries.
-| Customer Base | Count |
-|:--- |:---:|
-| Customers | 599 |
-| Countries | 108 |
-| Cities | 597 |
 
-<br>
-
-The catalogue included 958 English-language titles, all released in 2006, spanning 16 categories and five ratings.
-| Catalogue | Count |
-|:---|:---:|
-| Titles in Inventory | 958 |
-| Categories | 16 |
-| Ratings | 5 |
-| Langaugues | 1 (English) |
-| Release Year | 1 (2006) |
-
-<br>
-
-Total revenue amounted to ¤66,888, consisting of ¤60,785 in payments received and ¤6,103 in accrued charges from rentals that were returned but not yet paid.
-| Revenue | Amount (¤) |
-|:---|:---:|
-| Paid | 60 784,91 |
-| Accrued | 6 103,48 |
-| Total Revenue | 66 888,39 |
-
-<br>
 ### 3. Rental Return Behaviour
 Although each film was assigned a fixed rental term between 3 and 7 days, actual return behaviour showed little variation, ranging from same-day returns to 10 days, with an average of 5 days. Most returns were evenly distributed between 1 and 9 days regardless of the assigned duration, with notably fewer same-day and 10-day returns, suggesting that assigned terms had limited influence on actual return behaviour.
 
