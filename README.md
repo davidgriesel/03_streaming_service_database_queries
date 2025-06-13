@@ -35,28 +35,76 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
 
 ## Key Insights
 ### 1. Customer Base, Catalogue, and Revenue Generated
-The business served 599 customers across 597 cities in 108 countries.
-| Customer Base | Count |
-|:--- |:---:|
-| Customers | 599 |
-| Countries | 108 |
-| Cities | 597 |
+<table>
+  <tr>
+    <td valign="top">
+      <table>
+        <thead>
+          <tr>
+            <th>Customer Base</th>
+            <th>Count</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Customers</td><td align="center">599</td></tr>
+          <tr><td>Countries</td><td align="center">108</td></tr>
+          <tr><td>Cities</td><td align="center">597</td></tr>
+        </tbody>
+      </table>
+    </td>
+    <td valign="middle" style="padding-left: 20px;">
+      The business served 599 customers across 597 cities in 108 countries.
+    </td>
+  </tr>
+</table>
 
-The catalogue included 958 English-language titles, all released in 2006, spanning 16 categories and five ratings.
-| Catalogue | Count |
-|:---|:---:|
-| Titles in Inventory | 958 |
-| Categories | 16 |
-| Ratings | 5 |
-| Langaugues | 1 (English) |
-| Release Year | 1 (2006) |
+<table>
+  <tr>
+    <td valign="top">
+      <table>
+        <thead>
+          <tr>
+            <th>Catalogue</th>
+            <th>Count</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Titles Held</td><td align="center">958</td></tr>
+          <tr><td>Categories</td><td align="center">16</td></tr>
+          <tr><td>Ratings</td><td align="center">5</td></tr>
+          <tr><td>Languages</td><td align="center">1 (English)</td></tr>
+          <tr><td>Release Year</td><td align="center">1 (2006)</td></tr>
+        </tbody>
+      </table>
+    </td>
+    <td valign="middle" style="padding-left: 20px;">
+      The catalogue included 958 English-language titles, all released in 2006, spanning 16 categories and five ratings.
+    </td>
+  </tr>
+</table>
 
-Total revenue amounted to ¤66,888, consisting of ¤60,785 in payments received and ¤6,103 in accrued charges from rentals that were returned but not paid for yet.
-| Revenue | Amount (¤) |
-|:---|:---:|
-| Paid | 60 784,91 |
-| Accrued | 6 103,48 |
-| Total Revenue | 66 888,39 |
+<table>
+  <tr>
+    <td valign="top">
+      <table>
+        <thead>
+          <tr>
+            <th>Revenue</th>
+            <th>Amount (¤)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Paid</td><td align="center">60 784,91</td></tr>
+          <tr><td>Accrued</td><td align="center">6 103,48</td></tr>
+          <tr><td>Total Revenue</td><td align="center">66 888,39</td></tr>
+        </tbody>
+      </table>
+    </td>
+    <td valign="middle" style="padding-left: 20px;">
+      Total revenue amounted to ¤66,888, consisting of ¤60,785 in payments received and ¤6,103 in accrued charges from rentals that were returned but not yet paid.
+    </td>
+  </tr>
+</table>
 
 ### 2. Revenue Contribution by Title
 The distribution of revenue was highly uneven with the top five highest-grossing titles each earning over ¤200, while the lowest performers brought in less than ¤8 each.
@@ -80,8 +128,38 @@ The distribution of revenue was highly uneven with the top five highest-grossing
 </table>
 <br>
 
-### 2. Rental Return Behaviour
-Although each film was assigned a fixed rental term between 3 and 7 days, actual return behaviour showed little variation, ranging from same-day returns to 10 days, with an average of 5. Most returns were evenly distributed between 1 and 9 days regardless of the assigned duration, with notably fewer same-day and 10-day returns, suggesting that assigned terms had limited influence on actual return behaviour.
+
+
+The business served 599 customers across 597 cities in 108 countries.
+| Customer Base | Count |
+|:--- |:---:|
+| Customers | 599 |
+| Countries | 108 |
+| Cities | 597 |
+
+<br>
+
+The catalogue included 958 English-language titles, all released in 2006, spanning 16 categories and five ratings.
+| Catalogue | Count |
+|:---|:---:|
+| Titles in Inventory | 958 |
+| Categories | 16 |
+| Ratings | 5 |
+| Langaugues | 1 (English) |
+| Release Year | 1 (2006) |
+
+<br>
+
+Total revenue amounted to ¤66,888, consisting of ¤60,785 in payments received and ¤6,103 in accrued charges from rentals that were returned but not yet paid.
+| Revenue | Amount (¤) |
+|:---|:---:|
+| Paid | 60 784,91 |
+| Accrued | 6 103,48 |
+| Total Revenue | 66 888,39 |
+
+<br>
+### 3. Rental Return Behaviour
+Although each film was assigned a fixed rental term between 3 and 7 days, actual return behaviour showed little variation, ranging from same-day returns to 10 days, with an average of 5 days. Most returns were evenly distributed between 1 and 9 days regardless of the assigned duration, with notably fewer same-day and 10-day returns, suggesting that assigned terms had limited influence on actual return behaviour.
 
 **Summary Statistics - Actual Rental Duration by Rental Term**
 | Rental Duration (Days) | Number of Transactions | Minimum Actual Duration | Maximum Actual Duration | Average Actual Duration |
@@ -93,7 +171,7 @@ Although each film was assigned a fixed rental term between 3 and 7 days, actual
 | 7 | 2,798 | 0 | 10 | 5 |
 | All | 15,861 | 0 | 10 | 5 |
 
-Returns were relatively evenly spread across terms, with actual durations ranging between 0 and 10 days, with an average of 5 days.
+Returns were evenly distributed across rental terms, with actual returns taking between 0 and 10 days, with an average of 5 days.
 <br><br>
 
 **Transaction Distribution – Actual Rental Duration per Rental Term**
@@ -116,10 +194,11 @@ Returns were relatively evenly spread across terms, with actual durations rangin
   </tbody>
 </table>
 
-Return behaviour followed a broadly uniform distribution between 1 and 9 days for each rental term, with a consistent drop in frequency at 0 and 10 days.
+Most returns were evenly spread between 1 and 9 days across all rental terms, with a limited number of same-day returns, and returns taking 10 days.
+
 <br>
 
-### 3. Revenue and Customer Distribution by Country
+### 4. Revenue and Customer Distribution by Country
 With 599 customers across 597 cities in 108 countries, activity is concentrated in a few key markets. India, China, and the United States account for nearly a quarter of global customers and total revenue.
 
 <table>
@@ -147,9 +226,9 @@ With 599 customers across 597 cities in 108 countries, activity is concentrated 
 | 10 | Indonesia | 14 | 1,510.33 |
 
 The top 3 countries together account for 149 of global customers and ¤16,400.82 in total revenue.
-<br>
+<br><br>
 
-### 4. Customer Lifetime Value by Country
+### 5. Customer Lifetime Value by Country
 Réunion, Vatican City, and Nauru had the highest average CLVs, each exceeding ¤140.
 <table>
 <tr>
@@ -175,7 +254,7 @@ Réunion, Vatican City, and Nauru had the highest average CLVs, each exceeding �
 | 10 | Chad | 1 | 135.68 | 135.68 |
 <br>
 
-### 5. Regional Sales Performance and Customer Numbers
+### 6. Regional Sales Performance and Customer Numbers
 Sales figures vary considerably across geographic regions, with the Asia-Pacific market emerging as the clear leader. This region accounted for the highest number of customers (235) and the greatest total revenue (¤26,468), more than double that of any other region.
 <table>
 <tr>
