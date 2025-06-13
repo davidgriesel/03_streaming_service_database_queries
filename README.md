@@ -62,7 +62,7 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
       </table>
     </td>
     <td valign="middle" style="padding-left: 20px;">
-      The business served a total of 599 customers, located in 597 cities across 108 countries worldwide.
+      <p><em>The business served a total of 599 customers, located in 597 cities across 108 countries worldwide.</em></p>
     </td>
   </tr>
 </table>
@@ -102,7 +102,7 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
       </table>
     </td>
     <td valign="middle" style="padding-left: 20px;">
-      The catalogue included 958 English-language titles, all released in 2006, spanning 16 categories and five ratings.
+      <p><em>The catalogue included 958 English-language titles, all released in 2006, spanning 16 categories and five ratings.</em></p>
     </td>
   </tr>
 </table>
@@ -134,7 +134,7 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
       </table>
     </td>
     <td valign="middle" style="padding-left: 20px;">
-      Total revenue amounted to ¤66,888, consisting of ¤60,785 in payments received and ¤6,103 in accrued charges from rentals that were returned but not yet paid.
+      <p><em>Total revenue amounted to ¤66,888, consisting of ¤60,785 in payments received and ¤6,103 in accrued charges from rentals that were returned but not yet paid.</em></p>
     </td>
   </tr>
 </table>
@@ -166,12 +166,12 @@ The distribution of revenue was highly uneven with the top five highest-grossing
 
 
 ### 3. Rental Return Behaviour
-Although each film was assigned a fixed rental term between 3 and 7 days, actual return behaviour showed little variation, ranging from same-day returns to 10 days, with an average of 5 days. Most returns were evenly distributed between 1 and 9 days regardless of the assigned duration, with notably fewer same-day and 10-day returns, suggesting that assigned terms had limited influence on actual return behaviour.
+Although each film was assigned a fixed rental term between 3 and 7 days, actual return behaviour showed little variation, ranging from same-day returns to as long as 10 days, with an average of 5 days. Most returns were evenly distributed between 1 and 9 days regardless of the assigned duration, with notably fewer same-day and 10-day returns, suggesting that assigned terms had limited influence on actual return behaviour.
 <br><br>
 
 **Summary Statistics - Actual Rental Duration by Rental Term**
 | Rental Duration (Days) | Number of Transactions | Minimum Actual Duration | Maximum Actual Duration | Average Actual Duration |
-|:----------------------:|:----------------------:|:-----------------------:|:-----------------------:|:-----------------------:|
+|:---:|:---:|:---:|:---:|:---:|
 | 3 | 3,366 | 0 | 10 | 5 |
 | 4 | 3,213 | 0 | 10 | 5 |
 | 5 | 3,132 | 0 | 10 | 5 |
@@ -179,7 +179,7 @@ Although each film was assigned a fixed rental term between 3 and 7 days, actual
 | 7 | 2,798 | 0 | 10 | 5 |
 | All | 15,861 | 0 | 10 | 5 |
 
-Returns were evenly distributed across rental terms, with actual returns taking between 0 and 10 days, with an average of 5 days.
+<p><em>Returns were evenly distributed across rental terms, with actual durations ranging from 0 to 10 days, with an average of 5 days.</em></p>
 <br><br>
 
 <br>
@@ -188,23 +188,33 @@ Returns were evenly distributed across rental terms, with actual returns taking 
 <table>
   <thead>
     <tr>
-      <th rowspan="2">Rental Term (Days)</th>
-      <th colspan="11">Actual Duration (Days)</th>
+      <th rowspan="2" style="text-align: center;">Rental Term (Days)</th>
+      <th colspan="11" style="text-align: center;">Actual Duration (Days)</th>
     </tr>
     <tr>
-      <th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th>
+      <th style="text-align: center;">0 Days</th>
+      <th style="text-align: center;">1 Days</th>
+      <th style="text-align: center;">2 Days</th>
+      <th style="text-align: center;">3 Days</th>
+      <th style="text-align: center;">4 Days</th>
+      <th style="text-align: center;">5 Days</th>
+      <th style="text-align: center;">6 Days</th>
+      <th style="text-align: center;">7 Days</th>
+      <th style="text-align: center;">8 Days</th>
+      <th style="text-align: center;">9 Days</th>
+      <th style="text-align: center;">10 Days</th>
     </tr>
   </thead>
   <tbody>
-    <tr><td>3</td><td>18</td><td>356</td><td>370</td><td>371</td><td>358</td><td>400</td><td>366</td><td>357</td><td>385</td><td>360</td><td>25</td></tr>
-    <tr><td>4</td><td>22</td><td>309</td><td>361</td><td>369</td><td>339</td><td>337</td><td>401</td><td>358</td><td>363</td><td>335</td><td>19</td></tr>
-    <tr><td>5</td><td>26</td><td>336</td><td>375</td><td>337</td><td>327</td><td>331</td><td>344</td><td>361</td><td>346</td><td>335</td><td>14</td></tr>
-    <tr><td>6</td><td>22</td><td>342</td><td>371</td><td>354</td><td>356</td><td>383</td><td>372</td><td>430</td><td>355</td><td>345</td><td>22</td></tr>
-    <tr><td>7</td><td>17</td><td>301</td><td>318</td><td>283</td><td>301</td><td>310</td><td>300</td><td>315</td><td>313</td><td>316</td><td>24</td></tr>
+    <tr><td align="center">3</td><td align="center">18</td><td align="center">356</td><td align="center">370</td><td align="center">371</td><td align="center">358</td><td align="center">400</td><td align="center">366</td><td align="center">357</td><td align="center">385</td><td align="center">360</td><td align="center">25</td></tr>
+    <tr><td align="center">4</td><td align="center">22</td><td align="center">309</td><td align="center">361</td><td align="center">369</td><td align="center">339</td><td align="center">337</td><td align="center">401</td><td align="center">358</td><td align="center">363</td><td align="center">335</td><td align="center">19</td></tr>
+    <tr><td align="center">5</td><td align="center">26</td><td align="center">336</td><td align="center">375</td><td align="center">337</td><td align="center">327</td><td align="center">331</td><td align="center">344</td><td align="center">361</td><td align="center">346</td><td align="center">335</td><td align="center">14</td></tr>
+    <tr><td align="center">6</td><td align="center">22</td><td align="center">342</td><td align="center">371</td><td align="center">354</td><td align="center">356</td><td align="center">383</td><td align="center">372</td><td align="center">430</td><td align="center">355</td><td align="center">345</td><td align="center">22</td></tr>
+    <tr><td align="center">7</td><td align="center">17</td><td align="center">301</td><td align="center">318</td><td align="center">283</td><td align="center">301</td><td align="center">310</td><td align="center">300</td><td align="center">315</td><td align="center">313</td><td align="center">316</td><td align="center">24</td></tr>
   </tbody>
 </table>
 
-Most returns were evenly spread between 1 and 9 days across all rental terms, with a limited number of same-day returns, and returns taking 10 days.
+<p><em>Most returns were evenly spread between 1 and 9 days across all rental terms, with relatively few same-day or 10-day returns.</em></p>
 
 <br>
 
