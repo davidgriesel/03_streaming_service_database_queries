@@ -37,104 +37,50 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
 ### 1. Customer Base, Catalogue, and Revenue Generated
 <table>
   <tr>
-    <td valign="middle">
+    <th align="center" width="33%">Customer Base</th>
+    <th align="center" width="33%">Film Catalogue</th>
+    <th align="center" width="33%">Revenue</th>
+  </tr>
+  <tr>
+    <td align="center" valign="middle" width="33%">
       <table>
-        <thead>
-          <tr>
-            <th align="left">Customer Base</th>
-            <th align="right">Count</th>
-          </tr>
-        </thead>
         <tbody>
-          <tr>
-            <td align="left">Customers</td>
-            <td align="right">599</td>
-          </tr>
-          <tr>
-            <td align="left">Countries</td>
-            <td align="right">108</td>
-          </tr>
-          <tr>
-            <td align="left">Cities</td>
-            <td align="right">597</td>
-          </tr>
+          <tr><td align="left">Customers</td><td align="right">599</td></tr>
+          <tr><td align="left">Countries</td><td align="right">108</td></tr>
+          <tr><td align="left">Cities</td><td align="right">597</td></tr>
         </tbody>
       </table>
     </td>
-    <td valign="middle" style="padding-left: 20px;">
-      <p><em>The business served a total of 599 customers, located in 597 cities across 108 countries worldwide.</em></p>
+    <td align="center" valign="middle" width="33%">
+      <table>
+        <tbody>
+          <tr><td align="left">Titles in Inventory</td><td align="right">958</td></tr>
+          <tr><td align="left">Categories</td><td align="right">16</td></tr>
+          <tr><td align="left">Ratings</td><td align="right">5</td></tr>
+          <tr><td align="left">Languages</td><td align="right">1 (English)</td></tr>
+          <tr><td align="left">Release Year</td><td align="right">1 (2006)</td></tr>
+        </tbody>
+      </table>
+    </td>
+    <td align="center" valign="middle" width="33%">
+      <table>
+        <tbody>
+          <tr><td align="left">Paid</td><td align="right">60 784,91</td></tr>
+          <tr><td align="left">Accrued</td><td align="right">6 103,48</td></tr>
+          <tr><td align="left"><strong>Total Revenue</strong></td><td align="right"><strong>66 888,39</strong></td></tr>
+        </tbody>
+      </table>
     </td>
   </tr>
-</table>
-
-<table>
   <tr>
-    <td valign="middle">
-      <table>
-        <thead>
-          <tr>
-            <th align="left">Film Catalogue</th>
-            <th align="right">Count</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td align="left">Titles in Inventory</td>
-            <td align="right">958</td>
-          </tr>
-          <tr>
-            <td align="left">Categories</td>
-            <td align="right">16</td>
-          </tr>
-          <tr>
-            <td align="left">Ratings</td>
-            <td align="right">5</td>
-          </tr>
-          <tr>
-            <td align="left">Languages</td>
-            <td align="right">1 (English)</td>
-          </tr>
-          <tr>
-            <td>Release Year</td>
-            <td align="right">1 (2006)</td>
-          </tr>
-        </tbody>
-      </table>
+    <td align="center" valign="top" width="33%">
+      <p style="margin: auto;"><em>The business served a total of 599 customers, located in 597 cities across 108 countries worldwide.</em></p>
     </td>
-    <td valign="middle" style="padding-left: 20px;">
-      <p><em>The catalogue included 958 English-language titles, all released in 2006, spanning 16 categories and five ratings.</em></p>
+    <td align="center" valign="top" width="33%">
+      <p style="margin: auto;"><em>The catalogue included 958 English-language titles, all released in 2006, spanning 16 categories and five ratings.</em></p>
     </td>
-  </tr>
-</table>
-
-<table>
-  <tr>
-    <td valign="middle">
-      <table>
-        <thead>
-          <tr>
-            <th align="left">Revenue</th>
-            <th align="right">Amount (¤)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td align="left">Paid</td>
-            <td align="right">60 784,91</td>
-          </tr>
-          <tr>
-            <td align="left">Accrued</td>
-            <td align="right">6 103,48</td>
-          </tr>
-          <tr>
-            <td align="left">Total Revenue</td>
-            <td align="right">66 888,39</td>
-          </tr>
-        </tbody>
-      </table>
-    </td>
-    <td valign="middle" style="padding-left: 20px;">
-      <p><em>Total revenue amounted to ¤66,888, consisting of ¤60,785 in payments received and ¤6,103 in accrued charges from rentals that were returned but not yet paid.</em></p>
+    <td align="center" valign="top" width="33%">
+      <p style="margin: auto;"><em>Total revenue amounted to ¤66,888, consisting of ¤60,785 in payments received and ¤6,103 in accrued charges from rentals that were returned but not yet paid.</em></p>
     </td>
   </tr>
 </table>
@@ -163,30 +109,87 @@ The distribution of revenue was highly uneven with the top five highest-grossing
 <br>
 
 
-
-
 ### 3. Rental Return Behaviour
 Although each film was assigned a fixed rental term between 3 and 7 days, actual return behaviour showed little variation, ranging from same-day returns to as long as 10 days, with an average of 5 days. Most returns were evenly distributed between 1 and 9 days regardless of the assigned duration, with notably fewer same-day and 10-day returns, suggesting that assigned terms had limited influence on actual return behaviour.
 <br><br>
 
-**Summary Statistics - Actual Rental Duration by Rental Term**
-| Rental Duration (Days) | Number of Transactions | Minimum Actual Duration | Maximum Actual Duration | Average Actual Duration |
-|:---:|:---:|:---:|:---:|:---:|
-| 3 | 3,366 | 0 | 10 | 5 |
-| 4 | 3,213 | 0 | 10 | 5 |
-| 5 | 3,132 | 0 | 10 | 5 |
-| 6 | 3,352 | 0 | 10 | 5 |
-| 7 | 2,798 | 0 | 10 | 5 |
-| All | 15,861 | 0 | 10 | 5 |
-
-<p><em>Returns were evenly distributed across rental terms, with actual durations ranging from 0 to 10 days, with an average of 5 days.</em></p>
-<br><br>
+<table>
+  <thead>
+    <tr>
+      <th colspan="5" style="text-align: center; font-weight: bold; padding: 10px;">
+        Summary Statistics – Actual Rental Duration by Rental Term
+      </th>
+    </tr>
+    <tr>
+      <th style="text-align: center;">Rental Duration (Days)</th>
+      <th style="text-align: center;">Number of Transactions</th>
+      <th style="text-align: center;">Minimum Actual Duration</th>
+      <th style="text-align: center;">Maximum Actual Duration</th>
+      <th style="text-align: center;">Average Actual Duration</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="center">3</td>
+      <td align="center">3,366</td>
+      <td align="center">0</td>
+      <td align="center">10</td>
+      <td align="center">5</td>
+    </tr>
+    <tr>
+      <td align="center">4</td>
+      <td align="center">3,213</td>
+      <td align="center">0</td>
+      <td align="center">10</td>
+      <td align="center">5</td>
+    </tr>
+    <tr>
+      <td align="center">5</td>
+      <td align="center">3,132</td>
+      <td align="center">0</td>
+      <td align="center">10</td>
+      <td align="center">5</td>
+    </tr>
+    <tr>
+      <td align="center">6</td>
+      <td align="center">3,352</td>
+      <td align="center">0</td>
+      <td align="center">10</td>
+      <td align="center">5</td>
+    </tr>
+    <tr>
+      <td align="center">7</td>
+      <td align="center">2,798</td>
+      <td align="center">0</td>
+      <td align="center">10</td>
+      <td align="center">5</td>
+    </tr>
+    <tr>
+      <td align="center"><strong>All</strong></td>
+      <td align="center"><strong>15,861</strong></td>
+      <td align="center">0</td>
+      <td align="center">10</td>
+      <td align="center">5</td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="5" align="center">
+        <em>Returns were evenly distributed across rental terms, with actual durations ranging from 0 to 10 days, with an average of 5 days.</em>
+      </td>
+    </tr>
+  </tfoot>
+</table>
 
 <br>
 
-**Transaction Distribution – Actual Rental Duration per Rental Term**
 <table>
   <thead>
+    <tr>
+      <th colspan="12" style="text-align: center; font-weight: bold; padding: 10px;">
+        Transaction Distribution – Actual Rental Duration per Rental Term
+      </th>
+    </tr>
     <tr>
       <th rowspan="2" style="text-align: center;">Rental Term (Days)</th>
       <th colspan="11" style="text-align: center;">Actual Duration (Days)</th>
@@ -212,9 +215,14 @@ Although each film was assigned a fixed rental term between 3 and 7 days, actual
     <tr><td align="center">6</td><td align="center">22</td><td align="center">342</td><td align="center">371</td><td align="center">354</td><td align="center">356</td><td align="center">383</td><td align="center">372</td><td align="center">430</td><td align="center">355</td><td align="center">345</td><td align="center">22</td></tr>
     <tr><td align="center">7</td><td align="center">17</td><td align="center">301</td><td align="center">318</td><td align="center">283</td><td align="center">301</td><td align="center">310</td><td align="center">300</td><td align="center">315</td><td align="center">313</td><td align="center">316</td><td align="center">24</td></tr>
   </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="12" align="center">
+        <em>Most returns were evenly spread between 1 and 9 days across all rental terms, with relatively few same-day or 10-day returns.</em>
+      </td>
+    </tr>
+  </tfoot>
 </table>
-
-<p><em>Most returns were evenly spread between 1 and 9 days across all rental terms, with relatively few same-day or 10-day returns.</em></p>
 
 <br>
 
