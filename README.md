@@ -39,7 +39,7 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
   <tr>
     <th align="center" width="33%">Customer Base</th>
     <th align="center" width="33%">Film Catalogue</th>
-    <th align="center" width="33%">Revenue</th>
+    <th align="center" width="33%">Revenue Earned</th>
   </tr>
   <tr>
     <td align="center" valign="middle" width="33%">
@@ -54,11 +54,11 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
     <td align="center" valign="middle" width="33%">
       <table>
         <tbody>
-          <tr><td align="left">Titles in Inventory</td><td align="right">958</td></tr>
-          <tr><td align="left">Categories</td><td align="right">16</td></tr>
-          <tr><td align="left">Ratings</td><td align="right">5</td></tr>
-          <tr><td align="left">Languages</td><td align="right">1 (English)</td></tr>
-          <tr><td align="left">Release Year</td><td align="right">1 (2006)</td></tr>
+          <tr><td align="left">Titles in Inventory</td><td align="center">958</td></tr>
+          <tr><td align="left">Categories</td><td align="center">16</td></tr>
+          <tr><td align="left">Ratings</td><td align="center">5</td></tr>
+          <tr><td align="left">Languages</td><td align="center">1 (English)</td></tr>
+          <tr><td align="left">Release Year</td><td align="center">1 (2006)</td></tr>
         </tbody>
       </table>
     </td>
@@ -73,13 +73,13 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
     </td>
   </tr>
   <tr>
-    <td align="center" valign="top" width="33%">
+    <td align="center" valign="middle" width="33%">
       <p style="margin: auto;"><em>The business served a total of 599 customers, located in 597 cities across 108 countries worldwide.</em></p>
     </td>
-    <td align="center" valign="top" width="33%">
+    <td align="center" valign="middle" width="33%">
       <p style="margin: auto;"><em>The catalogue included 958 English-language titles, all released in 2006, spanning 16 categories and five ratings.</em></p>
     </td>
-    <td align="center" valign="top" width="33%">
+    <td align="center" valign="middle" width="33%">
       <p style="margin: auto;"><em>Total revenue amounted to ¤66,888, consisting of ¤60,785 in payments received and ¤6,103 in accrued charges from rentals that were returned but not yet paid.</em></p>
     </td>
   </tr>
@@ -110,7 +110,7 @@ The distribution of revenue was highly uneven with the top five highest-grossing
 
 
 ### 3. Rental Return Behaviour
-Although each film was assigned a fixed rental term between 3 and 7 days, actual return behaviour showed little variation, ranging from same-day returns to as long as 10 days, with an average of 5 days. Most returns were evenly distributed between 1 and 9 days regardless of the assigned duration, with notably fewer same-day and 10-day returns, suggesting that assigned terms had limited influence on actual return behaviour.
+While each film was assigned a fixed rental term between 3 and 7 days, actual return behaviour showed little variation, ranging from same-day returns to as long as 10 days, with an average of 5 days. Most returns were evenly distributed between 1 and 9 days regardless of the assigned duration, with notably fewer same-day and 10-day returns, suggesting that assigned terms had limited influence on actual return behaviour.
 <br><br>
 
 <table>
@@ -180,7 +180,6 @@ Although each film was assigned a fixed rental term between 3 and 7 days, actual
     </tr>
   </tfoot>
 </table>
-
 <br>
 
 <table>
@@ -191,8 +190,8 @@ Although each film was assigned a fixed rental term between 3 and 7 days, actual
       </th>
     </tr>
     <tr>
-      <th rowspan="2" style="text-align: center;">Rental Term (Days)</th>
-      <th colspan="11" style="text-align: center;">Actual Duration (Days)</th>
+      <th rowspan="2" style="text-align: center;">Rental Term</th>
+      <th colspan="11" style="text-align: center;">Actual Duration</th>
     </tr>
     <tr>
       <th style="text-align: center;">0 Days</th>
@@ -209,11 +208,11 @@ Although each film was assigned a fixed rental term between 3 and 7 days, actual
     </tr>
   </thead>
   <tbody>
-    <tr><td align="center">3</td><td align="center">18</td><td align="center">356</td><td align="center">370</td><td align="center">371</td><td align="center">358</td><td align="center">400</td><td align="center">366</td><td align="center">357</td><td align="center">385</td><td align="center">360</td><td align="center">25</td></tr>
-    <tr><td align="center">4</td><td align="center">22</td><td align="center">309</td><td align="center">361</td><td align="center">369</td><td align="center">339</td><td align="center">337</td><td align="center">401</td><td align="center">358</td><td align="center">363</td><td align="center">335</td><td align="center">19</td></tr>
-    <tr><td align="center">5</td><td align="center">26</td><td align="center">336</td><td align="center">375</td><td align="center">337</td><td align="center">327</td><td align="center">331</td><td align="center">344</td><td align="center">361</td><td align="center">346</td><td align="center">335</td><td align="center">14</td></tr>
-    <tr><td align="center">6</td><td align="center">22</td><td align="center">342</td><td align="center">371</td><td align="center">354</td><td align="center">356</td><td align="center">383</td><td align="center">372</td><td align="center">430</td><td align="center">355</td><td align="center">345</td><td align="center">22</td></tr>
-    <tr><td align="center">7</td><td align="center">17</td><td align="center">301</td><td align="center">318</td><td align="center">283</td><td align="center">301</td><td align="center">310</td><td align="center">300</td><td align="center">315</td><td align="center">313</td><td align="center">316</td><td align="center">24</td></tr>
+    <tr><td align="center">3 Days</td><td align="center">18</td><td align="center">356</td><td align="center">370</td><td align="center">371</td><td align="center">358</td><td align="center">400</td><td align="center">366</td><td align="center">357</td><td align="center">385</td><td align="center">360</td><td align="center">25</td></tr>
+    <tr><td align="center">4 Days</td><td align="center">22</td><td align="center">309</td><td align="center">361</td><td align="center">369</td><td align="center">339</td><td align="center">337</td><td align="center">401</td><td align="center">358</td><td align="center">363</td><td align="center">335</td><td align="center">19</td></tr>
+    <tr><td align="center">5 Days</td><td align="center">26</td><td align="center">336</td><td align="center">375</td><td align="center">337</td><td align="center">327</td><td align="center">331</td><td align="center">344</td><td align="center">361</td><td align="center">346</td><td align="center">335</td><td align="center">14</td></tr>
+    <tr><td align="center">6 Days</td><td align="center">22</td><td align="center">342</td><td align="center">371</td><td align="center">354</td><td align="center">356</td><td align="center">383</td><td align="center">372</td><td align="center">430</td><td align="center">355</td><td align="center">345</td><td align="center">22</td></tr>
+    <tr><td align="center">7 Days</td><td align="center">17</td><td align="center">301</td><td align="center">318</td><td align="center">283</td><td align="center">301</td><td align="center">310</td><td align="center">300</td><td align="center">315</td><td align="center">313</td><td align="center">316</td><td align="center">24</td></tr>
   </tbody>
   <tfoot>
     <tr>
@@ -223,23 +222,12 @@ Although each film was assigned a fixed rental term between 3 and 7 days, actual
     </tr>
   </tfoot>
 </table>
-
 <br>
 
 ### 4. Revenue and Customer Distribution by Country
 With 599 customers across 597 cities in 108 countries, activity is concentrated in a few key markets. India, China, and the United States account for nearly a quarter of global customers and total revenue.
 
-<table>
-<tr>
-<td align="center" valign="top" width="100%">
-    <img src="visualisations/map_revenue_customers.png" ><br>
-    <em>India, China, and the United States were the top 3 countries in terms of total revenue and number of customers.</em>
-</td>
-</tr>
-</table>
-<br>
-
-**Top 10 Countries - Total Revenue and Number of Customers**
+Top 10 Countries - Total Revenue and Number of Customers
 | # | Country | Customer Count | Total Revenue |
 |:-:|:-------:|:--------------:|:-------------:|
 | 1 | India | 60 | 6,628.28 |
@@ -255,6 +243,17 @@ With 599 customers across 597 cities in 108 countries, activity is concentrated 
 
 The top 3 countries together account for 149 of global customers and ¤16,400.82 in total revenue.
 <br><br>
+
+<table>
+<tr>
+<td align="center" valign="top" width="100%">
+    <img src="visualisations/map_revenue_customers.png" ><br>
+    <em>India, China, and the United States were the top 3 countries in terms of total revenue and number of customers.</em>
+</td>
+</tr>
+</table>
+<br>
+
 
 ### 5. Customer Lifetime Value by Country
 Réunion, Vatican City, and Nauru had the highest average CLVs, each exceeding ¤140.
