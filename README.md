@@ -34,9 +34,32 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
 <br><br>
 
 ## Key Insights
-### 1. Revenue Contribution by Title
-The catalogue consisted of 958 films which generated ¤66 888 in total revenue. The distribution of revenue was highly uneven with the top five highest-grossing titles each earning over ¤200, while the lowest performers brought in less than ¤8 each.
+### 1. Customer Base, Catalogue, and Revenue Generated
+The business served 599 customers across 597 cities in 108 countries.
+| Customer Base | Count |
+|:--- |:---:|
+| Customers | 599 |
+| Countries | 108 |
+| Cities | 597 |
 
+The catalogue included 958 English-language titles, all released in 2006, spanning 16 categories and five ratings.
+| Catalogue | Count |
+|:---|:---:|
+| Titles in Inventory | 958 |
+| Categories | 16 |
+| Ratings | 5 |
+| Langaugues | 1 (English) |
+| Release Year | 1 (2006) |
+
+Total revenue amounted to ¤66,888, consisting of ¤60,785 in payments received and ¤6,103 in accrued charges from rentals that were returned but not paid for yet.
+| Revenue | Amount (¤) |
+|:---|:---:|
+| Paid | 60 784,91 |
+| Accrued | 6 103,48 |
+| Total Revenue | 66 888,39 |
+
+### 2. Revenue Contribution by Title
+The distribution of revenue was highly uneven with the top five highest-grossing titles each earning over ¤200, while the lowest performers brought in less than ¤8 each.
 <table>
 <tr>
 <td align="center" valign="top" width="100%">
