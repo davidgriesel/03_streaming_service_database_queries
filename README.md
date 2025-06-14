@@ -80,7 +80,7 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
       <p style="margin: auto;"><em>The catalogue included 958 English-language titles, all released in 2006, spanning 16 categories and five ratings.</em></p>
     </td>
     <td align="center" valign="middle" width="33%">
-      <p style="margin: auto;"><em>Total revenue amounted to ¤66,888, consisting of ¤60,785 in payments received and ¤6,103 in accrued charges from rentals that were returned but not yet paid.</em></p>
+      <p style="margin: auto;"><em>Total revenue amounted to ¤66 888, consisting of ¤60 785 in payments received and ¤6 103 in accrued charges from rentals that were returned but not yet paid.</em></p>
     </td>
   </tr>
 </table>
@@ -92,7 +92,7 @@ The distribution of revenue was highly uneven with the top five highest-grossing
 <tr>
 <td align="center" valign="top" width="100%">
     <img src="visualisations/bar_top_films.png"" ><br>
-    <em>The top five titles earned between ¤204.72 and ¤231.73, led by “Telegraph Voyage”, “Wife Turn”, and “Zorro Ark”.</em>
+    <em>The top five titles earned between ¤204,72 and ¤231,73, led by “Telegraph Voyage”, “Wife Turn”, and “Zorro Ark”.</em>
 </td>
 </tr>
 </table>
@@ -102,7 +102,7 @@ The distribution of revenue was highly uneven with the top five highest-grossing
 <tr>
 <td align="center" valign="top" width="100%">
     <img src="visualisations/bar_bottom_films.png" ><br>
-    <em>Seven films shared the bottom five revenue positions, each earning between ¤5.94 and ¤7.93 over the period. “Texas Watch” and “Oklahoma Jumanji” recorded the lowest earnings at ¤5.94.</em>
+    <em>Seven films shared the bottom five revenue positions, each earning between ¤5,94 and ¤7,93 over the period. “Texas Watch” and “Oklahoma Jumanji” recorded the lowest earnings at ¤5,94.</em>
 </td>
 </tr>
 </table>
@@ -131,42 +131,42 @@ While each film was assigned a fixed rental term between 3 and 7 days, actual re
   <tbody>
     <tr>
       <td align="center">3</td>
-      <td align="center">3,366</td>
+      <td align="center">3 366</td>
       <td align="center">0</td>
       <td align="center">10</td>
       <td align="center">5</td>
     </tr>
     <tr>
       <td align="center">4</td>
-      <td align="center">3,213</td>
+      <td align="center">3 213</td>
       <td align="center">0</td>
       <td align="center">10</td>
       <td align="center">5</td>
     </tr>
     <tr>
       <td align="center">5</td>
-      <td align="center">3,132</td>
+      <td align="center">3 132</td>
       <td align="center">0</td>
       <td align="center">10</td>
       <td align="center">5</td>
     </tr>
     <tr>
       <td align="center">6</td>
-      <td align="center">3,352</td>
+      <td align="center">3 352</td>
       <td align="center">0</td>
       <td align="center">10</td>
       <td align="center">5</td>
     </tr>
     <tr>
       <td align="center">7</td>
-      <td align="center">2,798</td>
+      <td align="center">2 798</td>
       <td align="center">0</td>
       <td align="center">10</td>
       <td align="center">5</td>
     </tr>
     <tr>
-      <td align="center"><strong>All</strong></td>
-      <td align="center"><strong>15,861</strong></td>
+      <td align="center">All</td>
+      <td align="center">15 861</td>
       <td align="center">0</td>
       <td align="center">10</td>
       <td align="center">5</td>
@@ -225,7 +225,7 @@ While each film was assigned a fixed rental term between 3 and 7 days, actual re
 <br>
 
 ### 4. Revenue and Customer Distribution by Country
-Customer activity was concentrated in a few key markets, with the 10 countries that had the most customers also generating the most revenue. Out of 599 customers and ¤66,888 in total revenue, these countries accounted for just over half of global totals, while the top 3 alone contributed nearly a quarter.
+Customer activity was concentrated in a few key markets, with the 10 countries that had the most customers also generating the most revenue. Out of 599 customers and ¤66 888 in total revenue, these countries accounted for just over half of global totals, while the top 3 alone contributed nearly a quarter.
 
 <table>
   <thead>
@@ -244,66 +244,66 @@ Customer activity was concentrated in a few key markets, with the 10 countries t
       <td align="center">1</td>
       <td align="left">India</td>
       <td align="center">60</td>
-      <td align="center">6,628.28</td>
+      <td align="center">6 561,52</td>
     </tr>
     <tr>
       <td align="center">2</td>
       <td align="left">China</td>
       <td align="center">53</td>
-      <td align="center">5,798.74</td>
+      <td align="center">5 757,87</td>
     </tr>
     <tr>
       <td align="center">3</td>
       <td align="left">United States</td>
       <td align="center">36</td>
-      <td align="center">4,110.32</td>
+      <td align="center">4 081,43</td>
     </tr>
     <tr>
       <td align="center">4</td>
       <td align="left">Japan</td>
       <td align="center">31</td>
-      <td align="center">3,470.75</td>
+      <td align="center">3 447,84</td>
     </tr>
     <tr>
       <td align="center">5</td>
       <td align="left">Mexico</td>
       <td align="center">30</td>
-      <td align="center">3,307.04</td>
+      <td align="center">3 293,10</td>
     </tr>
     <tr>
       <td align="center">6</td>
       <td align="left">Brazil</td>
       <td align="center">28</td>
-      <td align="center">3,200.52</td>
+      <td align="center">3 177,59</td>
     </tr>
     <tr>
       <td align="center">7</td>
       <td align="left">Russian Federation</td>
       <td align="center">28</td>
-      <td align="center">3,045.87</td>
+      <td align="center">3 037,91</td>
     </tr>
     <tr>
       <td align="center">8</td>
       <td align="left">Philippines</td>
       <td align="center">20</td>
-      <td align="center">2,381.32</td>
+      <td align="center">2 355,42</td>
     </tr>
     <tr>
       <td align="center">9</td>
       <td align="left">Turkey</td>
       <td align="center">15</td>
-      <td align="center">1,662.12</td>
+      <td align="center">1 651,15</td>
     </tr>
     <tr>
       <td align="center">10</td>
       <td align="left">Indonesia</td>
       <td align="center">14</td>
-      <td align="center">1,510.33</td>
+      <td align="center">1 504,35</td>
     </tr>
   </tbody>
   <tfoot>
     <tr>
-      <td colspan="4" align="center"><em>The top 10 countries accounted for 315 (53%) of all customers and ¤35,115.29 (52%) in total revenue, while the top 3 countries alone acounted for 149 (25%) of all customers and ¤16,537.34 (25%) in total revenue.</em></td>
+      <td colspan="4" align="center"><em>The top 10 countries accounted for 315 (53%) of all customers and ¤35 115 (52%) in total revenue, while the top 3 countries alone acounted for 149 (25%) of all customers and ¤16 537 (25%) in total revenue.</em></td>
     </tr>
   </tfoot>
 </table>
