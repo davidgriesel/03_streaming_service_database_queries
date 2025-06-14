@@ -303,7 +303,7 @@ Customer activity was concentrated in a few key markets, with the 10 countries t
   </tbody>
   <tfoot>
     <tr>
-      <td colspan="4" align="center"><em>The top 10 countries accounted for 315 customers and ¤35,115.29 in revenue, while the top 3 countries alone acounted for 149 customers and ¤16,400.82 in revenue.</em></td>
+      <td colspan="4" align="center"><em>The top 10 countries accounted for 315 (53%) of all customers and ¤35,115.29 (52%) in total revenue, while the top 3 countries alone acounted for 149 (25%) of all customers and ¤16,537.34 (25%) in total revenue.</em></td>
     </tr>
   </tfoot>
 </table>
@@ -313,8 +313,7 @@ Customer activity was concentrated in a few key markets, with the 10 countries t
 <tr>
 <td align="center" valign="top" width="100%">
     <img src="visualisations/map_revenue_customers.png" ><br>
-    <em>India, China, and the United States were the top 3 countries in terms of total revenue and number of customers.</em>
-  <em>Global distribution of customer activity, where darker shades of blue indicate higher revenue and larger yellow circles reflect greater customer numbers. India, China, and the United States emerge as dominant markets in both respects.</em>
+    <em>Global distribution of customer activity, with darker shades of blue indicating higher revenue and larger yellow circles reflecting more customers. India, China, and the United States emerge as dominant markets in both respects.</em>
 </td>
 </tr>
 </table>
