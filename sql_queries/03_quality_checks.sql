@@ -1409,6 +1409,9 @@ ORDER BY frequency DESC;
 -- Two spelling errors in country.country - Runion and Kazakstan should be Réunion
 -- and Kazakhstan.
 -- The country Yugoslavia does not exist anymore.
+-- Numerous spelling errors in city.city - For example, Jastrzebie-Zdrj should be
+-- Jastrzębie-Zdrój, guas Lindas de Gois should be Águas Lindas de Goiás, al-Ayn
+-- should be Al-Ayn, and Santa Brbara dOeste should be Santa Bárbara d'Oeste.
 
 -- RECOMMENDATIONS
 -- Remove empty columns (Refer 6.1).
@@ -1420,9 +1423,11 @@ ORDER BY frequency DESC;
 -- activity (Refer 6.1).
 -- Confirm that duplicate city names are valid e.g. relate to different countries.
 -- Communicate duplicate passwords to management as security risk (Reporting).
--- Correct spelling mistakes in the country.country column.
+-- Correct spelling mistakes in the country.country column (Refer 6.1).
 -- Check which cities link to Yugoslavia to determine if the country name can be
--- updated (Refer 6.1).
+-- updated (Refer 4.4).
+-- Perform a comprehensive spell check for the city.city column to determine how
+-- to handle errors (Refer 4.5).
 
 -- ----------------------------------------------------------------------------------
 -- 3.6 - DESCRIPTIVE STATISTICS (Numeric columns)

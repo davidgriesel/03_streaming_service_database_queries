@@ -1,0 +1,600 @@
+customer_id,country,total_revenue
+526,United States,221.55
+148,Réunion,216.54
+144,Belarus,195.58
+137,Netherlands,194.61
+178,Brazil,189.62
+459,Iran,186.62
+469,Spain,177.60
+468,India,175.61
+236,Philippines,174.59
+176,Algeria,173.63
+181,United States,171.67
+50,Sudan,169.65
+259,India,168.68
+522,Philippines,167.67
+403,India,166.65
+410,Canada,164.63
+209,India,161.68
+295,Russian Federation,161.63
+470,Yemen,160.68
+373,Philippines,160.66
+187,Ukraine,159.72
+462,Russian Federation,159.67
+293,Spain,158.69
+372,Indonesia,158.66
+273,Mexico,157.65
+368,Iran,157.65
+550,China,156.69
+346,Russian Federation,155.68
+197,China,154.60
+119,Egypt,153.66
+390,Thailand,152.67
+26,Holy See (Vatican City State),152.66
+21,Bangladesh,152.66
+506,Indonesia,152.65
+532,Vietnam,151.69
+454,Mexico,151.67
+7,Serbia,151.67
+274,India,151.66
+267,China,151.66
+196,Germany,151.65
+439,Italy,151.64
+257,Mozambique,151.63
+360,Puerto Rico,150.66
+371,Philippines,149.65
+513,Nauru,148.69
+86,Thailand,148.67
+309,Italy,147.69
+204,Turkey,147.65
+366,Turkey,147.64
+103,Nigeria,146.69
+211,China,146.67
+348,Taiwan,146.64
+75,Taiwan,146.62
+479,United States,145.70
+362,Brazil,145.68
+172,Turkey,145.67
+436,Canada,144.70
+277,Nigeria,144.68
+237,South Korea,144.67
+66,Sweden,144.66
+363,Kenya,143.71
+5,Taiwan,143.63
+337,Japan,142.72
+289,Hong Kong,142.70
+347,Latvia,142.70
+46,Russian Federation,142.66
+239,Indonesia,142.66
+39,Brazil,141.71
+78,India,141.69
+84,Mexico,141.67
+566,Turkey,141.66
+198,Nigeria,141.63
+87,Colombia,140.71
+494,Ecuador,140.69
+242,China,140.68
+467,Mexico,139.71
+146,United States,139.71
+484,China,139.70
+404,Japan,139.70
+29,Japan,139.65
+482,Mexico,138.71
+120,Colombia,138.69
+306,Malaysia,138.68
+533,China,138.68
+51,United States,138.67
+502,India,138.66
+210,Yemen,137.69
+102,Israel,137.67
+207,Greenland,137.66
+472,Vietnam,136.71
+380,Poland,136.64
+285,Japan,135.74
+3,Greece,135.74
+349,Philippines,135.72
+558,Poland,135.72
+535,Chad,135.68
+125,South Africa,135.68
+591,Brazil,134.73
+80,Nigeria,134.71
+334,Azerbaijan,134.71
+307,Brazil,134.70
+114,Germany,134.68
+89,Argentina,134.68
+569,China,134.68
+520,Vietnam,134.68
+168,China,134.67
+473,Indonesia,134.66
+433,Mozambique,133.75
+200,Turkmenistan,133.74
+59,India,133.73
+504,United States,133.72
+92,Brazil,133.72
+265,Czech Republic,133.71
+179,Russian Federation,133.71
+112,United States,133.70
+576,Taiwan,133.68
+438,Zambia,133.68
+221,Italy,132.72
+316,India,132.71
+319,Mexico,132.70
+300,India,132.70
+13,Turkey,131.73
+448,Germany,131.73
+299,Japan,131.70
+314,Brazil,131.67
+82,Ukraine,130.74
+594,China,130.73
+49,Saudi Arabia,130.72
+56,French Polynesia,130.71
+15,India,130.70
+154,China,130.70
+279,Iran,130.70
+141,Japan,130.68
+342,Brazil,130.68
+589,Ecuador,129.72
+584,Gambia,129.70
+71,Philippines,129.70
+245,South Korea,129.69
+35,France,129.68
+2,United States,128.73
+434,Philippines,128.73
+322,Argentina,128.72
+54,Japan,128.71
+131,Ukraine,128.70
+297,India,128.67
+451,Mexico,128.67
+45,Chile,127.73
+108,Mexico,127.71
+32,India,127.71
+253,Japan,127.71
+302,China,127.71
+339,China,127.70
+128,Poland,127.68
+329,Bangladesh,127.68
+38,Moldova,127.66
+147,Japan,127.66
+508,India,126.76
+426,India,126.73
+206,Brazil,126.73
+515,Chile,126.72
+560,Argentina,126.72
+565,Peru,126.71
+296,India,126.71
+575,Mexico,126.71
+27,Philippines,126.69
+158,United States,126.68
+122,Peru,126.68
+19,South Africa,125.76
+269,United States,125.72
+389,China,124.74
+491,Egypt,124.73
+497,United Kingdom,124.73
+107,Argentina,124.72
+400,United States,124.72
+244,Philippines,124.69
+230,Romania,124.67
+129,China,124.66
+166,Malawi,123.72
+268,India,123.71
+388,Philippines,123.71
+499,Italy,123.70
+30,Taiwan,123.66
+510,Russian Federation,122.74
+331,Argentina,122.73
+276,United States,122.72
+260,China,122.69
+406,"Virgin Islands, U.S.",122.68
+241,China,122.66
+571,Poland,121.76
+149,United States,121.74
+263,Philippines,121.72
+356,India,121.70
+393,Russian Federation,121.69
+416,Pakistan,121.69
+354,Brazil,121.66
+311,Russian Federation,120.77
+225,India,120.74
+105,Tuvalu,120.74
+284,Nigeria,120.74
+423,Egypt,120.74
+573,Kazakhstan,120.71
+495,China,119.75
+487,Russian Federation,119.74
+170,India,119.74
+262,Ecuador,119.72
+173,Austria,119.71
+251,Germany,119.70
+340,Vietnam,119.69
+167,India,119.68
+531,Japan,118.75
+421,India,118.74
+280,Nigeria,118.73
+292,United Arab Emirates,118.73
+16,United Kingdom,118.72
+332,Bangladesh,118.72
+266,Austria,118.72
+529,India,118.71
+336,India,118.71
+1,Japan,118.68
+442,China,118.68
+583,United Kingdom,117.77
+490,Colombia,117.76
+536,South Korea,117.75
+240,Japan,117.74
+577,Taiwan,117.73
+286,Nigeria,117.73
+126,Brazil,117.72
+538,China,117.71
+386,Ukraine,117.71
+595,China,117.70
+321,Nepal,116.78
+432,South Africa,116.77
+23,Latvia,116.71
+408,Sri Lanka,116.70
+446,India,116.69
+254,Brazil,116.68
+41,Armenia,115.76
+304,Peru,115.74
+500,Indonesia,115.72
+588,China,115.71
+485,China,115.71
+25,Pakistan,115.71
+481,Tanzania,115.71
+444,Estonia,115.70
+20,Pakistan,115.70
+503,Japan,115.68
+427,Brazil,114.76
+512,United Kingdom,114.75
+343,Mexico,114.75
+58,Malaysia,114.74
+171,Malaysia,114.74
+163,Japan,114.73
+220,Tanzania,114.73
+57,Liechtenstein,114.72
+338,South Africa,114.72
+287,India,114.72
+323,Mexico,114.69
+294,United States,113.74
+486,Mexico,113.74
+593,United States,113.74
+139,Taiwan,113.73
+317,Faroe Islands,113.73
+447,Russian Federation,113.71
+113,Venezuela,113.71
+214,United States,113.70
+157,North Korea,113.69
+585,Argentina,112.77
+540,Bulgaria,112.76
+63,United States,112.75
+407,South Africa,112.73
+14,United States,112.73
+161,Israel,112.70
+256,Myanmar,112.70
+453,Venezuela,111.77
+528,Angola,111.75
+518,Turkey,111.74
+116,Indonesia,111.73
+396,Japan,111.73
+42,Thailand,111.72
+186,India,111.70
+582,Mexico,110.76
+375,"Congo, The Democratic Republic of the",110.76
+258,Dominican Republic,110.76
+234,Kuwait,110.75
+579,Iraq,110.74
+231,India,110.74
+457,United States,110.74
+40,Morocco,110.73
+90,China,110.72
+592,Hungary,110.72
+376,Russian Federation,110.72
+559,Egypt,110.72
+563,Romania,110.71
+138,China,110.66
+477,United Kingdom,109.78
+493,Turkey,109.78
+590,Bahrain,109.76
+460,Colombia,109.75
+305,United States,109.75
+44,Russian Federation,109.75
+562,Nigeria,109.75
+327,Turkey,109.75
+121,India,109.74
+471,South Africa,109.73
+333,Azerbaijan,109.73
+290,Venezuela,109.72
+574,Japan,109.72
+424,China,109.71
+135,India,109.71
+22,Morocco,108.79
+47,Brazil,108.78
+541,Italy,108.76
+201,Germany,108.75
+572,Poland,108.75
+213,Yemen,108.73
+145,South Africa,108.72
+275,United States,108.70
+405,Argentina,108.69
+28,India,108.69
+91,Brunei,108.66
+249,China,107.77
+246,Brazil,107.77
+127,Russian Federation,107.76
+553,Serbia,107.76
+417,Saudi Arabia,107.76
+587,Mexico,107.75
+261,Philippines,107.74
+109,South Africa,107.74
+441,Algeria,107.73
+581,Mexico,107.73
+53,Japan,107.72
+418,Dominican Republic,107.70
+341,Netherlands,106.77
+345,Paraguay,106.77
+379,India,106.77
+193,Kenya,106.76
+98,United Arab Emirates,106.75
+160,Russian Federation,106.73
+381,Anguilla,106.65
+429,Japan,105.79
+11,Japan,105.77
+150,Mexico,105.75
+517,Taiwan,105.75
+308,United States,105.75
+414,Mexico,105.75
+190,Tanzania,105.74
+96,United States,105.73
+397,Russian Federation,105.71
+247,Mexico,104.78
+466,China,104.77
+409,Nigeria,104.77
+270,Poland,104.75
+425,Mexico,104.74
+312,Saudi Arabia,104.74
+31,India,104.74
+391,Japan,104.70
+65,French Guiana,103.78
+519,Japan,103.77
+365,Japan,103.77
+475,Ukraine,103.76
+546,China,103.75
+202,India,103.74
+74,Brazil,103.73
+383,Angola,103.73
+12,India,103.72
+282,Puerto Rico,102.74
+445,Argentina,102.74
+52,Spain,102.72
+452,United Arab Emirates,102.69
+480,Turkey,101.78
+367,India,101.78
+100,Russian Federation,101.77
+155,Switzerland,101.77
+156,Nigeria,101.75
+385,Japan,101.74
+298,Finland,101.74
+387,"Congo, The Democratic Republic of the",101.74
+509,India,100.80
+55,Russian Federation,100.78
+106,Russian Federation,100.77
+123,India,100.76
+199,Vietnam,100.76
+324,China,100.76
+456,Senegal,100.75
+303,Yemen,100.74
+374,Brazil,100.73
+77,Brazil,100.72
+449,Iran,99.80
+489,Japan,99.79
+67,China,99.78
+437,Dominican Republic,99.77
+547,Japan,99.77
+511,China,99.76
+10,Iran,99.75
+474,Netherlands,99.75
+580,Philippines,99.73
+72,Philippines,99.70
+272,China,98.80
+17,Russian Federation,98.79
+443,Brazil,98.78
+544,Brazil,98.78
+217,India,98.77
+537,United States,98.76
+570,Mexico,98.75
+133,Mexico,98.73
+310,Brazil,97.80
+554,India,97.79
+182,United States,97.74
+498,Oman,97.73
+461,Philippines,97.72
+352,Cameroon,96.78
+578,Mexico,96.78
+359,Argentina,96.76
+83,South Africa,96.76
+326,Saint Vincent and the Grenadines,96.75
+219,Argentina,96.75
+551,Brazil,96.74
+361,Cameroon,96.71
+488,Mexico,95.78
+43,French Polynesia,95.78
+169,China,95.78
+37,China,95.77
+364,Mexico,95.77
+291,United States,95.77
+101,Saudi Arabia,95.77
+264,Japan,95.76
+69,Algeria,95.76
+24,Argentina,95.75
+507,Turkey,95.75
+232,Nigeria,95.75
+561,United States,95.74
+596,Greece,95.73
+132,South Africa,95.72
+64,China,95.68
+542,Indonesia,94.82
+476,Canada,94.79
+238,India,94.79
+175,India,94.78
+68,India,94.78
+192,India,94.78
+73,Taiwan,94.77
+134,Egypt,94.77
+153,Indonesia,94.76
+597,Peru,94.76
+422,China,94.75
+111,Venezuela,94.75
+81,Madagascar,93.78
+180,Colombia,93.78
+189,Canada,93.78
+523,Vietnam,93.78
+415,Netherlands,93.77
+130,Brazil,93.76
+142,United Kingdom,93.75
+235,Colombia,93.75
+377,Iran,93.74
+6,United States,93.72
+505,Philippines,92.80
+174,Venezuela,92.79
+301,Russian Federation,92.79
+431,Bolivia,92.78
+516,Cambodia,92.76
+229,Brazil,92.76
+104,France,92.76
+8,New Zealand,92.76
+36,Iran,92.73
+151,China,92.73
+212,United States,91.80
+399,Pakistan,91.79
+222,Russian Federation,91.79
+325,Brazil,91.78
+18,Nigeria,91.78
+93,China,91.77
+392,Ethiopia,91.77
+564,China,91.76
+330,United States,91.76
+382,United States,91.76
+463,Canada,91.75
+435,China,91.75
+33,Italy,90.80
+552,China,90.79
+539,Venezuela,90.78
+184,Netherlands,90.77
+99,South Korea,90.77
+328,Indonesia,90.77
+215,Bulgaria,90.75
+501,Poland,89.79
+545,Ukraine,89.79
+216,Brazil,89.79
+143,Turkey,89.78
+313,China,89.77
+233,Egypt,89.77
+34,Japan,89.76
+351,Russian Federation,89.76
+188,Philippines,89.76
+419,India,89.75
+384,China,89.75
+357,Slovakia,89.74
+483,Turkey,88.82
+203,Indonesia,88.80
+60,India,88.77
+450,Indonesia,88.75
+228,Cambodia,88.75
+278,Turkey,88.74
+115,Mexico,88.71
+194,Japan,87.82
+524,Indonesia,87.81
+226,Paraguay,87.79
+88,South Korea,87.79
+85,United Kingdom,87.77
+369,Mexico,87.76
+455,Bolivia,87.76
+478,Israel,86.81
+195,Germany,86.81
+165,China,86.79
+283,China,86.72
+496,China,85.80
+567,Russian Federation,85.80
+534,India,85.77
+208,India,85.76
+412,India,84.80
+9,Oman,84.78
+79,Japan,84.78
+62,United States,84.77
+185,Iran,84.77
+140,United States,83.82
+599,China,83.81
+556,United Kingdom,83.79
+440,India,83.79
+598,Switzerland,83.78
+118,United States,82.79
+543,Morocco,82.78
+227,Germany,82.77
+243,Argentina,82.76
+315,Israel,81.84
+4,Myanmar,81.78
+223,Pakistan,80.83
+205,Paraguay,80.82
+70,Saudi Arabia,80.82
+358,India,80.79
+288,Mexico,80.76
+402,France,79.80
+420,United States,79.79
+394,Spain,79.79
+430,Russian Federation,79.78
+398,Brazil,78.84
+548,Philippines,78.82
+428,Russian Federation,78.80
+152,India,78.80
+527,Belarus,78.77
+95,India,77.82
+549,Spain,77.80
+335,Tunisia,77.78
+76,Kazakhstan,77.77
+48,Russian Federation,76.83
+224,India,76.78
+183,Brazil,76.77
+413,India,75.79
+521,China,75.78
+411,Indonesia,75.75
+555,South Africa,74.83
+94,Philippines,74.80
+514,China,74.78
+464,Chile,73.84
+344,Tonga,73.82
+124,Turkey,73.82
+191,Russian Federation,73.81
+250,Nigeria,73.80
+401,Japan,73.79
+530,Argentina,73.78
+350,Russian Federation,73.77
+353,Mexico,72.82
+525,Italy,71.82
+355,Japan,71.81
+378,China,71.81
+117,India,71.81
+320,American Samoa,71.80
+177,Mexico,71.77
+255,Philippines,70.82
+370,India,70.81
+162,France,70.81
+465,Mexico,69.83
+271,India,68.82
+159,Austria,68.79
+557,Lithuania,68.77
+218,Afghanistan,67.82
+164,Turkey,66.84
+458,Indonesia,66.81
+492,India,65.84
+586,Taiwan,64.81
+568,Venezuela,63.80
+136,India,62.85
+110,China,59.86
+252,United Kingdom,59.79
+61,Switzerland,58.86
+97,Mozambique,58.82
+395,Sudan,57.81
+318,Poland,52.88
+281,China,50.86
+248,United States,50.85

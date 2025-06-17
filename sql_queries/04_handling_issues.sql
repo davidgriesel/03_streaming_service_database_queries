@@ -1,5 +1,5 @@
 -- ==================================================================================
--- 4 - CLEANING
+-- 4 - HANDLING ISSUES
 -- ==================================================================================
 
 -- TABLE OF CONTENTS
@@ -16,6 +16,9 @@
 
 -- 4.4 - CITIES LINKED TO YUGOSLAVIA
 -- 4.4.1 - VIEW CITIES LINKED TO FORMER YUGOSLAVIA
+
+-- 4.5 - CITY SPELLING CHECK
+-- 4.5.1 - VIEW ALL CITIES WITH ASSOCIATED COUNTRIES
 
 -- ----------------------------------------------------------------------------------
 -- 4.1 - DUPLICATE RECORDS
@@ -203,3 +206,29 @@ WHERE country.country = 'Yugoslavia';
 -- Update the country name from 'Yugoslavia' to 'Serbia' in the cleaned views to
 -- reflect current geopolitical boundaries and improve data accuracy for regional
 -- analysis (Refer 6.1).
+
+-- ----------------------------------------------------------------------------------
+-- 4.5 - CITY SPELLING CHECK
+-- ----------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------------
+-- 4.5.1 - VIEW ALL CITIES WITH ASSOCIATED COUNTRIES
+-- ----------------------------------------------------------------------------------
+
+-- PURPOSE
+-- Return a complete list of all cities and their associated country names to support
+-- spelling and formatting checks. 
+
+SELECT
+    country.country,
+    city.city
+FROM city
+JOIN country ON city.country_id = country.country_id
+ORDER BY country.country, city.city;
+
+-- INSIGHTS
+-- The list includes multiple instances of cities with potential spelling issues
+-- (e.g. missing accents, incomplete names, or inconsistencies with standard English
+-- place name conventions), which may impact lookups, geocoding, or regional grouping.
+
+-- RECOMMENDATIONS
+-- The city name is not used in the analysis and the column can removed (Refer 6.1).

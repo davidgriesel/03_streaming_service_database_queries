@@ -54,7 +54,6 @@ SELECT
     cu.first_name AS customer_first_name,
     cu.last_name AS customer_last_name,
     a.address AS customer_address,
-    ci.city AS customer_city,
     co.country AS customer_country,
 
     -- Region allocation

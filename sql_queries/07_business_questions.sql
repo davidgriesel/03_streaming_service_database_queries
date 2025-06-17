@@ -262,8 +262,6 @@ ORDER BY f.rental_duration::int;
 -- 7.3 - QUESTION 3: Which countries are customers based in?
 -- ----------------------------------------------------------------------------------
 
--- STEP 1: Calculate the number of customers and total revenue per country.
-
 -- PURPOSE
 -- Generate a list of the number of customers by country, along with total revenue,
 -- sorted from highest to lowest customer count.
@@ -336,6 +334,8 @@ FROM customer_country
 -- 7.4 - QUESTION 4: Where are customers with a high lifetime value based?
 -- ----------------------------------------------------------------------------------
 
+-- STEP 1: 
+
 -- PURPOSE
 -- Identify the customers with the highest lifetime value and where they are based,
 -- using the accrual base of accounting.
@@ -381,7 +381,6 @@ customer_total_revenue AS (
 SELECT
     cu.customer_id,
     co.country,
-    ci.city,
     ROUND(ctr.total_revenue, 2) AS total_revenue
 FROM customer_total_revenue ctr
 JOIN customer_clean cu ON ctr.customer_id = cu.customer_id
@@ -390,13 +389,90 @@ JOIN city_clean ci ON a.city_id = ci.city_id
 JOIN country_clean co ON ci.country_id = co.country_id
 ORDER BY total_revenue DESC;
 
+-- INSIGHTS:
+-- Total revenue per customer (customer lifetime value) ranges between ¤50.85 and
+-- ¤221.55.
+-- The top-ranking customers by customer lifetime value were:
+-- 1. Customer 526 – United States, Cape Coral (¤221.55)
+-- 2. Customer 148 – Réunion, Saint-Denis (¤216.54)
+-- 3. Customer 144 – Belarus, Molodetno (¤195.58)
+-- 4. Customer 137 – Netherlands, Apeldoorn (¤194.61)
+-- 5. Customer 178 – Brazil, Santa Bárbara d’Oeste (¤189.62)
+
+-- ----------------------------------------------------------------------------------
+
+-- STEP 2: 
+
+-- PURPOSE:
+-- Identify the countries with the highest average customer lifetime value (CLV).
+
+WITH combined_revenue AS (
+    SELECT
+        cu.customer_id,
+        SUM(p.amount) AS revenue
+    FROM payment_clean p
+    JOIN customer_clean cu ON p.customer_id = cu.customer_id
+    WHERE p.amount <> 0
+    GROUP BY cu.customer_id
+
+    UNION ALL
+
+    SELECT
+        cu.customer_id,
+        SUM(
+            f.rental_rate +
+            CASE
+                WHEN r.return_date > r.rental_date + f.rental_duration * INTERVAL '1 day'
+                THEN (r.return_date::date - (r.rental_date::date + f.rental_duration))
+                ELSE 0
+            END
+        ) AS revenue
+    FROM rental_clean r
+    JOIN inventory_clean i ON r.inventory_id = i.inventory_id
+    JOIN film_clean f ON i.film_id = f.film_id
+    JOIN customer_clean cu ON r.customer_id = cu.customer_id
+    WHERE
+        r.rental_id NOT IN (SELECT rental_id FROM payment_clean)
+    GROUP BY cu.customer_id
+),
+
+customer_total_revenue AS (
+    SELECT
+        customer_id,
+        SUM(revenue) AS total_revenue
+    FROM combined_revenue
+    GROUP BY customer_id
+),
+
+customer_with_country AS (
+    SELECT
+        ctr.customer_id,
+        co.country,
+        ctr.total_revenue
+    FROM customer_total_revenue ctr
+    JOIN customer_clean cu ON ctr.customer_id = cu.customer_id
+    JOIN address_clean a ON cu.address_id = a.address_id
+    JOIN city_clean ci ON a.city_id = ci.city_id
+    JOIN country_clean co ON ci.country_id = co.country_id
+)
+
+SELECT
+    country,
+    COUNT(*) AS customer_count,
+    ROUND(SUM(total_revenue), 2) AS total_revenue,
+    ROUND(AVG(total_revenue), 2) AS avg_clv
+FROM customer_with_country
+GROUP BY country
+ORDER BY avg_clv DESC;
+
 -- INSIGHTS
+-- The average customer lifetime value per country ranges from ¤67.82 to ¤216.54.
 -- The top-ranking countries by average customer lifetime value were:
--- 1. Reunion
--- 2. Holy See (Vatican City State)
--- 3. Nauru
--- 4. Sweden
--- 5. Hong Kong
+-- 1. Reunion - ¤ 216.54
+-- 2. Holy See (Vatican City State) - ¤152.66
+-- 3. Nauru - ¤148.69
+-- 4. Sweden - ¤144.66
+-- 5. Hong Kong - ¤142.70
 
 -- ----------------------------------------------------------------------------------
 -- 7.5 - QUESTION 5: Do sales figures vary between geographic regions?
@@ -552,7 +628,7 @@ UNION ALL
 
 SELECT
     'Nuber of Cities',
-    COUNT(DISTINCT ci.city)::TEXT
+    COUNT(DISTINCT ci.city_id)::TEXT
 FROM customer_clean cu
     JOIN address_clean a ON cu.address_id = a.address_id
     JOIN city_clean ci ON a.city_id = ci.city_id;

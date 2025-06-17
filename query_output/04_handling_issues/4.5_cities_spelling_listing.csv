@@ -1,0 +1,601 @@
+country,city
+Afghanistan,Kabul
+Algeria,Batna
+Algeria,Bchar
+Algeria,Skikda
+American Samoa,Tafuna
+Angola,Benguela
+Angola,Namibe
+Anguilla,South Hill
+Argentina,Almirante Brown
+Argentina,Avellaneda
+Argentina,Baha Blanca
+Argentina,Crdoba
+Argentina,Escobar
+Argentina,Ezeiza
+Argentina,La Plata
+Argentina,Merlo
+Argentina,Quilmes
+Argentina,San Miguel de Tucumn
+Argentina,Santa F
+Argentina,Tandil
+Argentina,Vicente Lpez
+Armenia,Yerevan
+Australia,Woodridge
+Austria,Graz
+Austria,Linz
+Austria,Salzburg
+Azerbaijan,Baku
+Azerbaijan,Sumqayit
+Bahrain,al-Manama
+Bangladesh,Dhaka
+Bangladesh,Jamalpur
+Bangladesh,Tangail
+Belarus,Mogiljov
+Belarus,Molodetno
+Bolivia,El Alto
+Bolivia,Sucre
+Brazil,Alvorada
+Brazil,Angra dos Reis
+Brazil,Anpolis
+Brazil,Aparecida de Goinia
+Brazil,Araatuba
+Brazil,Bag
+Brazil,Belm
+Brazil,Blumenau
+Brazil,Boa Vista
+Brazil,Braslia
+Brazil,Goinia
+Brazil,Guaruj
+Brazil,guas Lindas de Gois
+Brazil,Ibirit
+Brazil,Juazeiro do Norte
+Brazil,Juiz de Fora
+Brazil,Luzinia
+Brazil,Maring
+Brazil,Po
+Brazil,Poos de Caldas
+Brazil,Rio Claro
+Brazil,Santa Brbara dOeste
+Brazil,Santo Andr
+Brazil,So Bernardo do Campo
+Brazil,So Leopoldo
+Brazil,Sorocaba
+Brazil,Vila Velha
+Brazil,Vitria de Santo Anto
+Brunei,Bandar Seri Begawan
+Bulgaria,Ruse
+Bulgaria,Stara Zagora
+Cambodia,Battambang
+Cambodia,Phnom Penh
+Cameroon,Bamenda
+Cameroon,Yaound
+Canada,Gatineau
+Canada,Halifax
+Canada,Lethbridge
+Canada,London
+Canada,Oshawa
+Canada,Richmond Hill
+Canada,Vancouver
+Chad,NDjamna
+Chile,Antofagasta
+Chile,Coquimbo
+Chile,Rancagua
+China,Baicheng
+China,Baiyin
+China,Binzhou
+China,Changzhou
+China,Datong
+China,Daxian
+China,Dongying
+China,Emeishan
+China,Enshi
+China,Ezhou
+China,Fuyu
+China,Fuzhou
+China,Haining
+China,Hami
+China,Hohhot
+China,Huaian
+China,Jinchang
+China,Jining
+China,Jinzhou
+China,Junan
+China,Korla
+China,Laiwu
+China,Laohekou
+China,Lengshuijiang
+China,Leshan
+China,Liaocheng
+China,Meixian
+China,Nanyang
+China,Pingxiang
+China,Qinhuangdao
+China,Rizhao
+China,Sanya
+China,Shanwei
+China,Shaoguan
+China,Shenzhen
+China,Suihua
+China,Tianjin
+China,Tiefa
+China,Tieli
+China,Tongliao
+China,Weifang
+China,Xiangfan
+China,Xiangtan
+China,Xintai
+China,Xinxiang
+China,Yantai
+China,Yinchuan
+China,Yingkou
+China,Yuncheng
+China,Yuzhou
+China,Zalantun
+China,Zaoyang
+China,Zhoushan
+Colombia,Buenaventura
+Colombia,Dos Quebradas
+Colombia,Florencia
+Colombia,Pereira
+Colombia,Sincelejo
+Colombia,Sogamoso
+"Congo, The Democratic Republic of the",Lubumbashi
+"Congo, The Democratic Republic of the",Mwene-Ditu
+Czech Republic,Olomouc
+Dominican Republic,La Romana
+Dominican Republic,San Felipe de Puerto Plata
+Dominican Republic,Santiago de los Caballeros
+Ecuador,Loja
+Ecuador,Portoviejo
+Ecuador,Robamba
+Egypt,Bilbays
+Egypt,Idfu
+Egypt,Mit Ghamr
+Egypt,Qalyub
+Egypt,Sawhaj
+Egypt,Shubra al-Khayma
+Estonia,Tartu
+Ethiopia,Addis Abeba
+Faroe Islands,Trshavn
+Finland,Oulu
+France,Brest
+France,Le Mans
+France,Toulon
+France,Toulouse
+French Guiana,Cayenne
+French Polynesia,Faaa
+French Polynesia,Papeete
+Gambia,Banjul
+Germany,Duisburg
+Germany,Erlangen
+Germany,Halle/Saale
+Germany,Mannheim
+Germany,Saarbrcken
+Germany,Siegen
+Germany,Witten
+Greece,Athenai
+Greece,Patras
+Greenland,Nuuk
+Holy See (Vatican City State),Citt del Vaticano
+Hong Kong,Kowloon and New Kowloon
+Hungary,Szkesfehrvr
+India,Adoni
+India,Ahmadnagar
+India,Allappuzha (Alleppey)
+India,Ambattur
+India,Amroha
+India,Balurghat
+India,Berhampore (Baharampur)
+India,Bhavnagar
+India,Bhilwara
+India,Bhimavaram
+India,Bhopal
+India,Bhusawal
+India,Bijapur
+India,Chandrapur
+India,Chapra
+India,Dhule (Dhulia)
+India,Etawah
+India,Firozabad
+India,Gandhinagar
+India,Gulbarga
+India,Haldia
+India,Halisahar
+India,Hoshiarpur
+India,Hubli-Dharwad
+India,Jaipur
+India,Jhansi
+India,Jodhpur
+India,Kamarhati
+India,Kanchrapara
+India,Karnal
+India,Katihar
+India,Kumbakonam
+India,Miraj
+India,Munger (Monghyr)
+India,Mysore
+India,Nagaon
+India,Palghat (Palakkad)
+India,Parbhani
+India,Pathankot
+India,Patiala
+India,Pudukkottai
+India,Pune
+India,Purnea (Purnia)
+India,Rae Bareli
+India,Rajkot
+India,Rampur
+India,Ranchi
+India,Sambhal
+India,Satna
+India,Shimoga
+India,Shivapuri
+India,Siliguri (Shiliguri)
+India,Tambaram
+India,Udaipur
+India,Uluberia
+India,Uttarpara-Kotrung
+India,Valparai
+India,Varanasi (Benares)
+India,Vijayawada
+India,Yamuna Nagar
+Indonesia,Cianjur
+Indonesia,Ciomas
+Indonesia,Ciparay
+Indonesia,Gorontalo
+Indonesia,Jakarta
+Indonesia,Lhokseumawe
+Indonesia,Madiun
+Indonesia,Pangkal Pinang
+Indonesia,Pemalang
+Indonesia,Pontianak
+Indonesia,Probolinggo
+Indonesia,Purwakarta
+Indonesia,Surakarta
+Indonesia,Tegal
+Iran,Arak
+Iran,Esfahan
+Iran,Kermanshah
+Iran,Najafabad
+Iran,Qomsheh
+Iran,Shahr-e Kord
+Iran,Sirjan
+Iran,Tabriz
+Iraq,Mosul
+Israel,Ashdod
+Israel,Ashqelon
+Israel,Bat Yam
+Israel,Tel Aviv-Jaffa
+Italy,Alessandria
+Italy,Bergamo
+Italy,Brescia
+Italy,Brindisi
+Italy,Livorno
+Italy,Syrakusa
+Italy,Udine
+Japan,Akishima
+Japan,Fukuyama
+Japan,Higashiosaka
+Japan,Hino
+Japan,Hiroshima
+Japan,Isesaki
+Japan,Iwaki
+Japan,Iwakuni
+Japan,Iwatsuki
+Japan,Izumisano
+Japan,Kakamigahara
+Japan,Kamakura
+Japan,Kanazawa
+Japan,Koriyama
+Japan,Kurashiki
+Japan,Kuwana
+Japan,Matsue
+Japan,Miyakonojo
+Japan,Nagareyama
+Japan,Okayama
+Japan,Okinawa
+Japan,Omiya
+Japan,Onomichi
+Japan,Otsu
+Japan,Sagamihara
+Japan,Sasebo
+Japan,Shimonoseki
+Japan,Tama
+Japan,Tsuyama
+Japan,Ueda
+Japan,Urawa
+Kazakstan,Pavlodar
+Kazakstan,Zhezqazghan
+Kenya,Kisumu
+Kenya,Nyeri
+Kuwait,Jalib al-Shuyukh
+Latvia,Daugavpils
+Latvia,Liepaja
+Liechtenstein,Vaduz
+Lithuania,Vilnius
+Madagascar,Mahajanga
+Malawi,Lilongwe
+Malaysia,Ipoh
+Malaysia,Kuching
+Malaysia,Sungai Petani
+Mexico,Acua
+Mexico,Allende
+Mexico,Atlixco
+Mexico,Carmen
+Mexico,Celaya
+Mexico,Coacalco de Berriozbal
+Mexico,Coatzacoalcos
+Mexico,Cuauhtmoc
+Mexico,Cuautla
+Mexico,Cuernavaca
+Mexico,El Fuerte
+Mexico,Guadalajara
+Mexico,Hidalgo
+Mexico,Huejutla de Reyes
+Mexico,Huixquilucan
+Mexico,Jos Azueta
+Mexico,Jurez
+Mexico,La Paz
+Mexico,Matamoros
+Mexico,Mexicali
+Mexico,Monclova
+Mexico,Nezahualcyotl
+Mexico,Pachuca de Soto
+Mexico,Salamanca
+Mexico,San Felipe del Progreso
+Mexico,San Juan Bautista Tuxtepec
+Mexico,Torren
+Mexico,Uruapan
+Mexico,Valle de Santiago
+Mexico,Zapopan
+Moldova,Chisinau
+Morocco,Beni-Mellal
+Morocco,Nador
+Morocco,Sal
+Mozambique,Beira
+Mozambique,Naala-Porto
+Mozambique,Tete
+Myanmar,Monywa
+Myanmar,Myingyan
+Nauru,Yangor
+Nepal,Birgunj
+Netherlands,Amersfoort
+Netherlands,Apeldoorn
+Netherlands,Ede
+Netherlands,Emmen
+Netherlands,s-Hertogenbosch
+New Zealand,Hamilton
+Nigeria,Benin City
+Nigeria,Deba Habe
+Nigeria,Effon-Alaiye
+Nigeria,Ife
+Nigeria,Ikerre
+Nigeria,Ilorin
+Nigeria,Kaduna
+Nigeria,Ogbomosho
+Nigeria,Ondo
+Nigeria,Owo
+Nigeria,Oyo
+Nigeria,Sokoto
+Nigeria,Zaria
+North Korea,Pyongyang
+Oman,Masqat
+Oman,Salala
+Pakistan,Dadu
+Pakistan,Mandi Bahauddin
+Pakistan,Mardan
+Pakistan,Okara
+Pakistan,Shikarpur
+Paraguay,Asuncin
+Paraguay,Ciudad del Este
+Paraguay,San Lorenzo
+Peru,Callao
+Peru,Hunuco
+Peru,Lima
+Peru,Sullana
+Philippines,Baybay
+Philippines,Bayugan
+Philippines,Bislig
+Philippines,Cabuyao
+Philippines,Cavite
+Philippines,Davao
+Philippines,Gingoog
+Philippines,Hagonoy
+Philippines,Iligan
+Philippines,Imus
+Philippines,Lapu-Lapu
+Philippines,Mandaluyong
+Philippines,Ozamis
+Philippines,Santa Rosa
+Philippines,Taguig
+Philippines,Talavera
+Philippines,Tanauan
+Philippines,Tanza
+Philippines,Tarlac
+Philippines,Tuguegarao
+Poland,Bydgoszcz
+Poland,Czestochowa
+Poland,Jastrzebie-Zdrj
+Poland,Kalisz
+Poland,Lublin
+Poland,Plock
+Poland,Tychy
+Poland,Wroclaw
+Puerto Rico,Arecibo
+Puerto Rico,Ponce
+Romania,Botosani
+Romania,Bucuresti
+Runion,Saint-Denis
+Russian Federation,Atinsk
+Russian Federation,Balaiha
+Russian Federation,Dzerzinsk
+Russian Federation,Elista
+Russian Federation,Ivanovo
+Russian Federation,Jaroslavl
+Russian Federation,Jelets
+Russian Federation,Kaliningrad
+Russian Federation,Kamyin
+Russian Federation,Kirovo-Tepetsk
+Russian Federation,Kolpino
+Russian Federation,Korolev
+Russian Federation,Kurgan
+Russian Federation,Kursk
+Russian Federation,Lipetsk
+Russian Federation,Ljubertsy
+Russian Federation,Maikop
+Russian Federation,Moscow
+Russian Federation,Nabereznyje Telny
+Russian Federation,Niznekamsk
+Russian Federation,Novoterkassk
+Russian Federation,Pjatigorsk
+Russian Federation,Serpuhov
+Russian Federation,Smolensk
+Russian Federation,Syktyvkar
+Russian Federation,Teboksary
+Russian Federation,Usolje-Sibirskoje
+Russian Federation,Zeleznogorsk
+Saint Vincent and the Grenadines,Kingstown
+Saudi Arabia,Abha
+Saudi Arabia,al-Hawiya
+Saudi Arabia,al-Qatif
+Saudi Arabia,Jedda
+Saudi Arabia,Tabuk
+Senegal,Ziguinchor
+Slovakia,Bratislava
+South Africa,Boksburg
+South Africa,Botshabelo
+South Africa,Chatsworth
+South Africa,Johannesburg
+South Africa,Kimberley
+South Africa,Klerksdorp
+South Africa,Newcastle
+South Africa,Paarl
+South Africa,Rustenburg
+South Africa,Soshanguve
+South Africa,Springs
+South Korea,Cheju
+South Korea,Kimchon
+South Korea,Naju
+South Korea,Tonghae
+South Korea,Uijongbu
+Spain,A Corua (La Corua)
+Spain,Donostia-San Sebastin
+Spain,Gijn
+Spain,Ourense (Orense)
+Spain,Santiago de Compostela
+Sri Lanka,Jaffna
+Sudan,al-Qadarif
+Sudan,Omdurman
+Sweden,Malm
+Switzerland,Basel
+Switzerland,Bern
+Switzerland,Lausanne
+Taiwan,Changhwa
+Taiwan,Chiayi
+Taiwan,Chungho
+Taiwan,Fengshan
+Taiwan,Hsichuh
+Taiwan,Lungtan
+Taiwan,Nantou
+Taiwan,Tanshui
+Taiwan,Touliu
+Taiwan,Tsaotun
+Tanzania,Mwanza
+Tanzania,Tabora
+Tanzania,Zanzibar
+Thailand,Nakhon Sawan
+Thailand,Pak Kret
+Thailand,Songkhla
+Tonga,Nukualofa
+Tunisia,Sousse
+Turkey,Adana
+Turkey,Balikesir
+Turkey,Batman
+Turkey,Denizli
+Turkey,Eskisehir
+Turkey,Gaziantep
+Turkey,Inegl
+Turkey,Kilis
+Turkey,Ktahya
+Turkey,Osmaniye
+Turkey,Sivas
+Turkey,Sultanbeyli
+Turkey,Tarsus
+Turkey,Tokat
+Turkey,Usak
+Turkmenistan,Ashgabat
+Tuvalu,Funafuti
+Ukraine,Kamjanets-Podilskyi
+Ukraine,Konotop
+Ukraine,Mukateve
+Ukraine,ostka
+Ukraine,Simferopol
+Ukraine,Sumy
+United Arab Emirates,Abu Dhabi
+United Arab Emirates,al-Ayn
+United Arab Emirates,Sharja
+United Kingdom,Bradford
+United Kingdom,Dundee
+United Kingdom,London
+United Kingdom,Southampton
+United Kingdom,Southend-on-Sea
+United Kingdom,Southport
+United Kingdom,Stockport
+United Kingdom,York
+United States,Akron
+United States,Arlington
+United States,Augusta-Richmond County
+United States,Aurora
+United States,Bellevue
+United States,Brockton
+United States,Cape Coral
+United States,Citrus Heights
+United States,Clarksville
+United States,Compton
+United States,Dallas
+United States,Dayton
+United States,El Monte
+United States,Fontana
+United States,Garden Grove
+United States,Garland
+United States,Grand Prairie
+United States,Greensboro
+United States,Joliet
+United States,Kansas City
+United States,Lancaster
+United States,Laredo
+United States,Lincoln
+United States,Manchester
+United States,Memphis
+United States,Peoria
+United States,Roanoke
+United States,Rockford
+United States,Saint Louis
+United States,Salinas
+United States,San Bernardino
+United States,Sterling Heights
+United States,Sunnyvale
+United States,Tallahassee
+United States,Warren
+Venezuela,Barcelona
+Venezuela,Caracas
+Venezuela,Cuman
+Venezuela,Maracabo
+Venezuela,Ocumare del Tuy
+Venezuela,Valencia
+Venezuela,Valle de la Pascua
+Vietnam,Cam Ranh
+Vietnam,Haiphong
+Vietnam,Hanoi
+Vietnam,Nam Dinh
+Vietnam,Nha Trang
+Vietnam,Vinh
+"Virgin Islands, U.S.",Charlotte Amalie
+Yemen,Aden
+Yemen,Hodeida
+Yemen,Sanaa
+Yemen,Taizz
+Yugoslavia,Kragujevac
+Yugoslavia,Novi Sad
+Zambia,Kitwe

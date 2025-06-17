@@ -67,7 +67,6 @@ LIMIT 10;
 CREATE OR REPLACE VIEW city_clean AS
 SELECT
     city_id,
-    city,
     country_id
 FROM city;
 

@@ -218,7 +218,7 @@ SELECT * FROM sales_by_store LIMIT 5;
 -- The customer table contains two columns of different data types with seemingly
 -- similar functions (active and activebool.
 -- The film table contains dense categorical columns with non-standard data types
--- (description of type text, fulltext of type tsvector, rating of type mpaa_rating)..
+-- (description of type text, fulltext of type tsvector, rating of type mpaa_rating).
 -- The film_actor and film_category tables contain only composite keys functioning
 -- purely as join tables.
 -- The inventory table records physical stock per store with duplicate titles
@@ -232,6 +232,8 @@ SELECT * FROM sales_by_store LIMIT 5;
 -- city.city) in column names.
 -- View tables provide entity listings substituting foreign keys with descriptive
 -- values, and aggregated sales data per category and store.
+-- The address, customer, and staff tables contain personally identifiable
+-- information (PII), such as first_name, last_name, address, phone, and email.
 
 -- RECOMMENDATIONS
 -- Remove any columns containing NULLs, optional information, duplicate functions,
@@ -246,3 +248,12 @@ SELECT * FROM sales_by_store LIMIT 5;
 -- Confirm if the database has a static timestamp (Refer 3.7.1).
 -- Standardise inconsistent or ambiguous column names (Refer 6.1).
 -- View tables will not be used in the analysis and can be ignored going forward.
+
+-- NOTE
+-- Personally identifiable information (PII) should always be handled in accordance
+-- with the applicable data protection policies, terms of use, and any agreed-upon
+-- confidentiality agreements.
+-- Sensitive fields should be anonymised, masked, or excluded as appropriate to
+-- ensure privacy and compliance. 
+-- As the analysis uses a fictitious database and these columns may demonstrate
+-- certain profiling or cleaning principles, they have been retained.
