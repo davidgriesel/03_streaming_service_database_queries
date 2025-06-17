@@ -186,8 +186,7 @@ While each film was assigned a fixed rental term between 3 and 7 days, actual re
 <table>
   <thead>
     <tr>
-      <th colspan="12" style="text-align: center; font-weight: bold;">
-        Transaction Distribution – Actual Rental Duration per Rental Term
+      <th colspan="12" style="text-align: center; font-weight: bold;">Transaction Distribution – Actual Rental Duration per Rental Term
       </th>
     </tr>
     <tr>
@@ -232,7 +231,7 @@ Customer activity was highly concentrated, with just 10 out of 108 countries acc
 <table>
   <thead>
     <tr>
-      <th colspan="4" align="center"><strong>Top 10 Countries – Total Revenue and Number of Customers</strong></th>
+      <th colspan="4" align="center">Top 10 Countries – Total Revenue and Number of Customers</th>
     </tr>
     <tr>
       <th align="center">#</th>
@@ -301,6 +300,12 @@ Customer activity was highly concentrated, with just 10 out of 108 countries acc
       <td align="left">Indonesia</td>
       <td align="center">14</td>
       <td align="center">1 504,35</td>
+    </tr>
+    <tr>
+      <td align="center">Total</td>
+      <td align="left"></td>
+      <td align="center">315</td>
+      <td align="center">34 868,18</td>
     </tr>
   </tbody>
   <tfoot>
