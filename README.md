@@ -118,7 +118,7 @@ While each film was assigned a fixed rental term between 3 and 7 days, actual re
   <thead>
     <tr>
       <th colspan="5" style="text-align: center; font-weight: bold;">
-        Summary Statistics – Actual Rental Duration by Rental Term
+        Summary Statistics – Actual Rental Duration per Rental Term
       </th>
     </tr>
     <tr>
