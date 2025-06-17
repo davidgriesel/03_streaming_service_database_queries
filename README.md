@@ -35,6 +35,7 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
 
 ## Key Insights
 ### 1. Customer Base, Catalogue, and Revenue Generated
+
 <table>
   <tr>
     <th align="center" width="33%">Customer Base</th>
@@ -67,7 +68,7 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
         <tbody>
           <tr><td align="left">Paid</td><td align="right">60 784,91</td></tr>
           <tr><td align="left">Accrued</td><td align="right">6 103,48</td></tr>
-          <tr><td align="left"><strong>Total Revenue</strong></td><td align="right"><strong>66 888,39</strong></td></tr>
+          <tr><td align="left">Total Revenue</td><td align="right">66 888,39</td></tr>
         </tbody>
       </table>
     </td>
@@ -80,7 +81,7 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
       <p style="margin: auto;"><em>The catalogue included 958 English-language titles, all released in 2006, spanning 16 categories and five ratings.</em></p>
     </td>
     <td align="center" valign="middle" width="33%">
-      <p style="margin: auto;"><em>Total revenue amounted to ¤66,888, consisting of ¤60,785 in payments received and ¤6,103 in accrued charges from rentals that were returned but not yet paid.</em></p>
+      <p style="margin: auto;"><em>Total revenue amounted to ¤66 888, consisting of ¤60 785 in payments received and ¤6 103 in accrued charges from rentals that were returned but not yet paid.</em></p>
     </td>
   </tr>
 </table>
@@ -88,11 +89,12 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
 
 ### 2. Revenue Contribution by Title
 The distribution of revenue was highly uneven with the top five highest-grossing titles each earning over ¤200, while the lowest performers brought in less than ¤8 each.
+
 <table>
 <tr>
 <td align="center" valign="top" width="100%">
     <img src="visualisations/bar_top_films.png"" ><br>
-    <em>The top five titles earned between ¤204.72 and ¤231.73, led by “Telegraph Voyage”, “Wife Turn”, and “Zorro Ark”.</em>
+    <em>The top five titles earned between ¤204,72 and ¤231,73, led by “Telegraph Voyage”, “Wife Turn”, and “Zorro Ark”.</em>
 </td>
 </tr>
 </table>
@@ -102,12 +104,11 @@ The distribution of revenue was highly uneven with the top five highest-grossing
 <tr>
 <td align="center" valign="top" width="100%">
     <img src="visualisations/bar_bottom_films.png" ><br>
-    <em>Seven films shared the bottom five revenue positions, each earning between ¤5.94 and ¤7.93 over the period. “Texas Watch” and “Oklahoma Jumanji” recorded the lowest earnings at ¤5.94.</em>
+    <em>Seven films shared the bottom five revenue positions, each earning between ¤5,94 and ¤7,93 over the period. “Texas Watch” and “Oklahoma Jumanji” recorded the lowest earnings at ¤5,94.</em>
 </td>
 </tr>
 </table>
 <br>
-
 
 ### 3. Rental Return Behaviour
 While each film was assigned a fixed rental term between 3 and 7 days, actual return behaviour showed little variation, ranging from same-day returns to as long as 10 days, with an average of 5 days. Most returns were evenly distributed between 1 and 9 days regardless of the assigned duration, with notably fewer same-day and 10-day returns, suggesting that assigned terms had limited influence on actual return behaviour.
@@ -116,8 +117,8 @@ While each film was assigned a fixed rental term between 3 and 7 days, actual re
 <table>
   <thead>
     <tr>
-      <th colspan="5" style="text-align: center; font-weight: bold; padding: 10px;">
-        Summary Statistics – Actual Rental Duration by Rental Term
+      <th colspan="5" style="text-align: center; font-weight: bold;">
+        Summary Statistics – Actual Rental Duration per Rental Term
       </th>
     </tr>
     <tr>
@@ -130,43 +131,43 @@ While each film was assigned a fixed rental term between 3 and 7 days, actual re
   </thead>
   <tbody>
     <tr>
-      <td align="center">3</td>
-      <td align="center">3,366</td>
+      <td align="center">3 Days</td>
+      <td align="center">3 366</td>
       <td align="center">0</td>
       <td align="center">10</td>
       <td align="center">5</td>
     </tr>
     <tr>
-      <td align="center">4</td>
-      <td align="center">3,213</td>
+      <td align="center">4 Days</td>
+      <td align="center">3 213</td>
       <td align="center">0</td>
       <td align="center">10</td>
       <td align="center">5</td>
     </tr>
     <tr>
-      <td align="center">5</td>
-      <td align="center">3,132</td>
+      <td align="center">5 Days</td>
+      <td align="center">3 132</td>
       <td align="center">0</td>
       <td align="center">10</td>
       <td align="center">5</td>
     </tr>
     <tr>
-      <td align="center">6</td>
-      <td align="center">3,352</td>
+      <td align="center">6 Days</td>
+      <td align="center">3 352</td>
       <td align="center">0</td>
       <td align="center">10</td>
       <td align="center">5</td>
     </tr>
     <tr>
-      <td align="center">7</td>
-      <td align="center">2,798</td>
+      <td align="center">7 Days</td>
+      <td align="center">2 798</td>
       <td align="center">0</td>
       <td align="center">10</td>
       <td align="center">5</td>
     </tr>
     <tr>
-      <td align="center"><strong>All</strong></td>
-      <td align="center"><strong>15,861</strong></td>
+      <td align="center">All Terms</td>
+      <td align="center">15 861</td>
       <td align="center">0</td>
       <td align="center">10</td>
       <td align="center">5</td>
@@ -175,7 +176,7 @@ While each film was assigned a fixed rental term between 3 and 7 days, actual re
   <tfoot>
     <tr>
       <td colspan="5" align="center">
-        <em>Returns were evenly distributed across rental terms, with actual durations ranging from 0 to 10 days, with an average of 5 days.</em>
+        <em>Returns were evenly distributed across rental terms, with actual durations ranging from 0 to 10 days and averaging 5 days.</em>
       </td>
     </tr>
   </tfoot>
@@ -185,8 +186,7 @@ While each film was assigned a fixed rental term between 3 and 7 days, actual re
 <table>
   <thead>
     <tr>
-      <th colspan="12" style="text-align: center; font-weight: bold; padding: 10px;">
-        Transaction Distribution – Actual Rental Duration per Rental Term
+      <th colspan="12" style="text-align: center; font-weight: bold;">Transaction Distribution – Actual Rental Duration per Rental Term
       </th>
     </tr>
     <tr>
@@ -213,6 +213,7 @@ While each film was assigned a fixed rental term between 3 and 7 days, actual re
     <tr><td align="center">5 Days</td><td align="center">26</td><td align="center">336</td><td align="center">375</td><td align="center">337</td><td align="center">327</td><td align="center">331</td><td align="center">344</td><td align="center">361</td><td align="center">346</td><td align="center">335</td><td align="center">14</td></tr>
     <tr><td align="center">6 Days</td><td align="center">22</td><td align="center">342</td><td align="center">371</td><td align="center">354</td><td align="center">356</td><td align="center">383</td><td align="center">372</td><td align="center">430</td><td align="center">355</td><td align="center">345</td><td align="center">22</td></tr>
     <tr><td align="center">7 Days</td><td align="center">17</td><td align="center">301</td><td align="center">318</td><td align="center">283</td><td align="center">301</td><td align="center">310</td><td align="center">300</td><td align="center">315</td><td align="center">313</td><td align="center">316</td><td align="center">24</td></tr>
+    <tr><td align="center">All Terms</td><td align="center">105</td><td align="center">1 644</td><td align="center">1 795</td><td align="center">1 714</td><td align="center">1 681</td><td align="center">1 761</td><td align="center">1 783</td><td align="center">1 821</td><td align="center">1 762</td><td align="center">1 691</td><td align="center">104</td></tr>
   </tbody>
   <tfoot>
     <tr>
@@ -225,30 +226,101 @@ While each film was assigned a fixed rental term between 3 and 7 days, actual re
 <br>
 
 ### 4. Revenue and Customer Distribution by Country
-With 599 customers across 597 cities in 108 countries, activity is concentrated in a few key markets. India, China, and the United States account for nearly a quarter of global customers and total revenue.
+Customer activity was highly concentrated, with just 10 out of 108 countries accounting for 53% of all customers (315 of 599) and 51% of total revenue (¤35 155 of ¤66 888). Notably, the 10 countries with the most customers were also the 10 highest revenue-generating markets in identical order, indicating a strong alignment between customer volume and sales contribution.
 
-Top 10 Countries - Total Revenue and Number of Customers
-| # | Country | Customer Count | Total Revenue |
-|:-:|:-------:|:--------------:|:-------------:|
-| 1 | India | 60 | 6,628.28 |
-| 2 | China | 53 | 5,798.74 |
-| 3 | United States | 36 | 4,110.32 |
-| 4 | Japan | 31 | 3,470.75 |
-| 5 | Mexico | 30 | 3,307.04 |
-| 6 | Brazil | 28 | 3,200.52 |
-| 7 | Russian Federation | 28 | 3,045.87 |
-| 8 | Philippines | 20 | 2,381.32 |
-| 9 | Turkey | 15 | 1,662.12 |
-| 10 | Indonesia | 14 | 1,510.33 |
-
-The top 3 countries together account for 149 of global customers and ¤16,400.82 in total revenue.
-<br><br>
+<table>
+  <thead>
+    <tr>
+      <th colspan="4" align="center">Top 10 Countries – Total Revenue and Number of Customers</th>
+    </tr>
+    <tr>
+      <th align="center">#</th>
+      <th align="left">Country</th>
+      <th align="center">Customer Count</th>
+      <th align="center">Total Revenue (¤)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="center">1</td>
+      <td align="left">India</td>
+      <td align="center">60</td>
+      <td align="center">6 561,52</td>
+    </tr>
+    <tr>
+      <td align="center">2</td>
+      <td align="left">China</td>
+      <td align="center">53</td>
+      <td align="center">5 757,87</td>
+    </tr>
+    <tr>
+      <td align="center">3</td>
+      <td align="left">United States</td>
+      <td align="center">36</td>
+      <td align="center">4 081,43</td>
+    </tr>
+    <tr>
+      <td align="center">4</td>
+      <td align="left">Japan</td>
+      <td align="center">31</td>
+      <td align="center">3 447,84</td>
+    </tr>
+    <tr>
+      <td align="center">5</td>
+      <td align="left">Mexico</td>
+      <td align="center">30</td>
+      <td align="center">3 293,10</td>
+    </tr>
+    <tr>
+      <td align="center">6</td>
+      <td align="left">Brazil</td>
+      <td align="center">28</td>
+      <td align="center">3 177,59</td>
+    </tr>
+    <tr>
+      <td align="center">7</td>
+      <td align="left">Russian Federation</td>
+      <td align="center">28</td>
+      <td align="center">3 037,91</td>
+    </tr>
+    <tr>
+      <td align="center">8</td>
+      <td align="left">Philippines</td>
+      <td align="center">20</td>
+      <td align="center">2 355,42</td>
+    </tr>
+    <tr>
+      <td align="center">9</td>
+      <td align="left">Turkey</td>
+      <td align="center">15</td>
+      <td align="center">1 651,15</td>
+    </tr>
+    <tr>
+      <td align="center">10</td>
+      <td align="left">Indonesia</td>
+      <td align="center">14</td>
+      <td align="center">1 504,35</td>
+    </tr>
+    <tr>
+      <td align="center">Total</td>
+      <td align="left"></td>
+      <td align="center">315</td>
+      <td align="center">34 868,18</td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="4" align="center"><em>The top 10 countries accounted for 315 of the 599 global customers and generated ¤35 155 of the ¤66 888 in total revenue, with both metrics ranked in identical order.</em></td>
+    </tr>
+  </tfoot>
+</table>
+<br>
 
 <table>
 <tr>
 <td align="center" valign="top" width="100%">
     <img src="visualisations/map_revenue_customers.png" ><br>
-    <em>India, China, and the United States were the top 3 countries in terms of total revenue and number of customers.</em>
+    <em>India, China, and the United States emerged as dominant markets in both customer numbers and total revenue.</em>
 </td>
 </tr>
 </table>
