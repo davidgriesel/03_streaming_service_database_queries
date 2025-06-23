@@ -205,7 +205,7 @@ FROM (
     UNION ALL
 
     SELECT
-        'All' AS rental_duration,
+        'All Terms' AS rental_duration,
         COUNT(*) AS rental_count,
         MIN(r.return_date - r.rental_date) AS min_duration,
         MAX(r.return_date - r.rental_date) AS max_duration,
@@ -216,9 +216,9 @@ FROM (
 ) AS summary
 
 ORDER BY 
-    CASE WHEN rental_duration = 'All' THEN 1 ELSE 0 END,
+    CASE WHEN rental_duration = 'All Terms' THEN 1 ELSE 0 END,
     CASE 
-        WHEN rental_duration = 'All' THEN NULL
+        WHEN rental_duration = 'All Terms' THEN NULL
         ELSE rental_duration::int
     END;
 
@@ -235,24 +235,47 @@ ORDER BY
 -- Break down the frequency of each actual rental duration (1 to 10 days)
 -- by rental term to better understand behavioural patterns.
 
-SELECT
-    f.rental_duration::text AS rental_duration,
-    COUNT(*) FILTER (WHERE (r.return_date - r.rental_date) = 0) AS d0,
-    COUNT(*) FILTER (WHERE (r.return_date - r.rental_date) = 1) AS d1,
-    COUNT(*) FILTER (WHERE (r.return_date - r.rental_date) = 2) AS d2,
-    COUNT(*) FILTER (WHERE (r.return_date - r.rental_date) = 3) AS d3,
-    COUNT(*) FILTER (WHERE (r.return_date - r.rental_date) = 4) AS d4,
-    COUNT(*) FILTER (WHERE (r.return_date - r.rental_date) = 5) AS d5,
-    COUNT(*) FILTER (WHERE (r.return_date - r.rental_date) = 6) AS d6,
-    COUNT(*) FILTER (WHERE (r.return_date - r.rental_date) = 7) AS d7,
-    COUNT(*) FILTER (WHERE (r.return_date - r.rental_date) = 8) AS d8,
-    COUNT(*) FILTER (WHERE (r.return_date - r.rental_date) = 9) AS d9,
-    COUNT(*) FILTER (WHERE (r.return_date - r.rental_date) = 10) AS d10
-FROM film_clean f
-    JOIN inventory_clean i ON f.film_id = i.film_id
-    JOIN rental_clean r ON i.inventory_id = r.inventory_id
-GROUP BY f.rental_duration
-ORDER BY f.rental_duration::int;
+SELECT *
+FROM (
+    SELECT
+        f.rental_duration::text AS rental_duration,
+        COUNT(*) FILTER (WHERE (r.return_date - r.rental_date) = 0) AS d0,
+        COUNT(*) FILTER (WHERE (r.return_date - r.rental_date) = 1) AS d1,
+        COUNT(*) FILTER (WHERE (r.return_date - r.rental_date) = 2) AS d2,
+        COUNT(*) FILTER (WHERE (r.return_date - r.rental_date) = 3) AS d3,
+        COUNT(*) FILTER (WHERE (r.return_date - r.rental_date) = 4) AS d4,
+        COUNT(*) FILTER (WHERE (r.return_date - r.rental_date) = 5) AS d5,
+        COUNT(*) FILTER (WHERE (r.return_date - r.rental_date) = 6) AS d6,
+        COUNT(*) FILTER (WHERE (r.return_date - r.rental_date) = 7) AS d7,
+        COUNT(*) FILTER (WHERE (r.return_date - r.rental_date) = 8) AS d8,
+        COUNT(*) FILTER (WHERE (r.return_date - r.rental_date) = 9) AS d9,
+        COUNT(*) FILTER (WHERE (r.return_date - r.rental_date) = 10) AS d10
+    FROM film_clean f
+        JOIN inventory_clean i ON f.film_id = i.film_id
+        JOIN rental_clean r ON i.inventory_id = r.inventory_id
+    GROUP BY f.rental_duration
+
+    UNION ALL
+
+    SELECT
+        'All Terms' AS rental_duration,
+        COUNT(*) FILTER (WHERE (r.return_date - r.rental_date) = 0),
+        COUNT(*) FILTER (WHERE (r.return_date - r.rental_date) = 1),
+        COUNT(*) FILTER (WHERE (r.return_date - r.rental_date) = 2),
+        COUNT(*) FILTER (WHERE (r.return_date - r.rental_date) = 3),
+        COUNT(*) FILTER (WHERE (r.return_date - r.rental_date) = 4),
+        COUNT(*) FILTER (WHERE (r.return_date - r.rental_date) = 5),
+        COUNT(*) FILTER (WHERE (r.return_date - r.rental_date) = 6),
+        COUNT(*) FILTER (WHERE (r.return_date - r.rental_date) = 7),
+        COUNT(*) FILTER (WHERE (r.return_date - r.rental_date) = 8),
+        COUNT(*) FILTER (WHERE (r.return_date - r.rental_date) = 9),
+        COUNT(*) FILTER (WHERE (r.return_date - r.rental_date) = 10)
+    FROM film_clean f
+        JOIN inventory_clean i ON f.film_id = i.film_id
+        JOIN rental_clean r ON i.inventory_id = r.inventory_id
+) AS full_result
+ORDER BY
+    CASE WHEN rental_duration = 'All Terms' THEN 999 ELSE rental_duration::int END;
 
 -- INSIGHTS
 -- The frequency distribution shows that customers behaviour is evenly spread across
@@ -528,7 +551,7 @@ ORDER BY avg_clv DESC;
 
     SELECT
         region,
-        ROUND(SUM(revenue), 0) AS total_revenue,
+        SUM(revenue) AS total_revenue,
         COUNT(*) AS customer_count,
         ROUND(AVG(revenue), 0) AS avg_lifetime_value
     FROM (
