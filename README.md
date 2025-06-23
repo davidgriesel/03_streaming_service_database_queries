@@ -28,7 +28,7 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
 ## Links
 - [**Entity Relationship Diagram**](deliverables/erd_dbvisualiser.png)
 - [**Data Dictionary**](deliverables/data_dictionary.pdf)
-- [**Interactive Tableau Dashboard**](https://public.tableau.com/views/StreamingService_17486375379040/Dashboard1?:language=en-GB&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
+- [**Interactive Tableau Dashboard**](https://public.tableau.com/views/StreamingService_17486375379040/Revenue_Customers?:language=en-GB&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
 - [**Presentation**](deliverables/presentation.pdf)
 <br><br>
 
