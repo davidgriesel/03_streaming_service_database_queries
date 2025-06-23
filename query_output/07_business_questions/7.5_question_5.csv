@@ -1,6 +1,6 @@
-region,total_revenue,customer_count,avg_lifetime_value
-Asia-Pacific,26233,235,112
-Europe,12182,109,112
-Middle East and Africa,11912,106,112
-North America,8544,76,112
-Latin America,8017,73,110
+region,customer_count,total_revenue,average_revenue
+Asia-Pacific,235,26233.24,112
+Europe,109,12182.34,112
+Middle East and Africa,106,11911.99,112
+North America,76,8543.66,112
+Latin America,73,8017.16,110

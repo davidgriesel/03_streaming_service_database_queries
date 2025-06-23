@@ -357,8 +357,6 @@ FROM customer_country
 -- 7.4 - QUESTION 4: Where are customers with a high lifetime value based?
 -- ----------------------------------------------------------------------------------
 
--- STEP 1: 
-
 -- PURPOSE
 -- Identify the customers with the highest lifetime value and where they are based,
 -- using the accrual base of accounting.
@@ -423,18 +421,19 @@ ORDER BY total_revenue DESC;
 -- 5. Customer 178 – Brazil, Santa Bárbara d’Oeste (¤189.62)
 
 -- ----------------------------------------------------------------------------------
+-- 7.5 - QUESTION 5: Do sales figures vary between geographic regions?
+-- ----------------------------------------------------------------------------------
 
--- STEP 2: 
-
--- PURPOSE:
--- Identify the countries with the highest average customer lifetime value (CLV).
+-- PURPOSE
+-- Compare revenue performance across geographic regions by aggregating customer 
+-- lifetime value per continent using the accrual basis of accounting.
 
 WITH combined_revenue AS (
     SELECT
         cu.customer_id,
         SUM(p.amount) AS revenue
     FROM payment_clean p
-    JOIN customer_clean cu ON p.customer_id = cu.customer_id
+        JOIN customer_clean cu ON p.customer_id = cu.customer_id
     WHERE p.amount <> 0
     GROUP BY cu.customer_id
 
@@ -451,130 +450,54 @@ WITH combined_revenue AS (
             END
         ) AS revenue
     FROM rental_clean r
-    JOIN inventory_clean i ON r.inventory_id = i.inventory_id
-    JOIN film_clean f ON i.film_id = f.film_id
-    JOIN customer_clean cu ON r.customer_id = cu.customer_id
+        JOIN inventory_clean i ON r.inventory_id = i.inventory_id
+        JOIN film_clean f ON i.film_id = f.film_id
+        JOIN customer_clean cu ON r.customer_id = cu.customer_id
     WHERE
         r.rental_id NOT IN (SELECT rental_id FROM payment_clean)
-    GROUP BY cu.customer_id
+        AND return_date IS NOT NULL -- exclude records with null return dates
+        GROUP BY cu.customer_id
 ),
 
-customer_total_revenue AS (
+country_revenue AS (
     SELECT
-        customer_id,
-        SUM(revenue) AS total_revenue
-    FROM combined_revenue
-    GROUP BY customer_id
-),
-
-customer_with_country AS (
-    SELECT
-        ctr.customer_id,
         co.country,
-        ctr.total_revenue
-    FROM customer_total_revenue ctr
-    JOIN customer_clean cu ON ctr.customer_id = cu.customer_id
-    JOIN address_clean a ON cu.address_id = a.address_id
-    JOIN city_clean ci ON a.city_id = ci.city_id
-    JOIN country_clean co ON ci.country_id = co.country_id
+        COUNT(DISTINCT cr.customer_id) AS customer_count,
+        SUM(cr.revenue) AS total_revenue
+    FROM combined_revenue cr
+        JOIN customer_clean cu ON cr.customer_id = cu.customer_id
+        JOIN address_clean a ON cu.address_id = a.address_id
+        JOIN city_clean ci ON a.city_id = ci.city_id
+        JOIN country_clean co ON ci.country_id = co.country_id
+    GROUP BY co.country
 )
 
 SELECT
-    country,
+    region,
     COUNT(*) AS customer_count,
-    ROUND(SUM(total_revenue), 2) AS total_revenue,
-    ROUND(AVG(total_revenue), 2) AS avg_clv
-FROM customer_with_country
-GROUP BY country
-ORDER BY avg_clv DESC;
-
--- INSIGHTS
--- The average customer lifetime value per country ranges from ¤67.82 to ¤216.54.
--- The top-ranking countries by average customer lifetime value were:
--- 1. Reunion - ¤ 216.54
--- 2. Holy See (Vatican City State) - ¤152.66
--- 3. Nauru - ¤148.69
--- 4. Sweden - ¤144.66
--- 5. Hong Kong - ¤142.70
-
--- ----------------------------------------------------------------------------------
--- 7.5 - QUESTION 5: Do sales figures vary between geographic regions?
--- ----------------------------------------------------------------------------------
-
--- PURPOSE
--- Compare revenue performance across geographic regions by aggregating customer 
--- lifetime value per continent using the accrual basis of accounting.
-
-    WITH combined_revenue AS (
-        SELECT
-            cu.customer_id,
-            SUM(p.amount) AS revenue
-        FROM payment_clean p
-            JOIN customer_clean cu ON p.customer_id = cu.customer_id
-        WHERE p.amount <> 0
-        GROUP BY cu.customer_id
-
-        UNION ALL
-
-        SELECT
-            cu.customer_id,
-            SUM(
-                f.rental_rate +
-                CASE
-                    WHEN r.return_date > r.rental_date + f.rental_duration * INTERVAL '1 day'
-                    THEN (r.return_date::date - (r.rental_date::date + f.rental_duration))
-                    ELSE 0
-                END
-            ) AS revenue
-        FROM rental_clean r
-            JOIN inventory_clean i ON r.inventory_id = i.inventory_id
-            JOIN film_clean f ON i.film_id = f.film_id
-            JOIN customer_clean cu ON r.customer_id = cu.customer_id
-        WHERE
-            r.rental_id NOT IN (SELECT rental_id FROM payment_clean)
-            AND return_date IS NOT NULL -- exclude records with null return dates
-            GROUP BY cu.customer_id
-    ),
-
-    country_revenue AS (
-        SELECT
-            co.country,
-            COUNT(DISTINCT cr.customer_id) AS customer_count,
-            SUM(cr.revenue) AS total_revenue
-        FROM combined_revenue cr
-            JOIN customer_clean cu ON cr.customer_id = cu.customer_id
-            JOIN address_clean a ON cu.address_id = a.address_id
-            JOIN city_clean ci ON a.city_id = ci.city_id
-            JOIN country_clean co ON ci.country_id = co.country_id
-        GROUP BY co.country
-    )
-
+    SUM(revenue) AS total_revenue,
+    ROUND(AVG(revenue), 0) AS average_revenue
+FROM (
     SELECT
-        region,
-        SUM(revenue) AS total_revenue,
-        COUNT(*) AS customer_count,
-        ROUND(AVG(revenue), 0) AS avg_lifetime_value
-    FROM (
-        SELECT
-            cr.customer_id,
-            SUM(cr.revenue) AS revenue,
-    CASE
-        WHEN co.country IN ('Canada', 'Mexico', 'United States', 'Puerto Rico', 'Virgin Islands, U.S.', 'Saint Vincent and the Grenadines', 'Anguilla') THEN 'North America'
-        WHEN co.country IN ('Argentina', 'Bolivia', 'Brazil', 'Chile', 'Colombia', 'Dominican Republic', 'Ecuador', 'Paraguay', 'Peru', 'Venezuela', 'French Guiana') THEN 'Latin America'
-        WHEN co.country IN ('Austria', 'Belarus', 'Bulgaria', 'Czech Republic', 'Estonia', 'Faroe Islands', 'Finland', 'France', 'Germany', 'Greece', 'Hungary', 'Italy', 'Latvia', 'Liechtenstein', 'Lithuania', 'Moldova', 'Netherlands', 'Poland', 'Portugal', 'Romania', 'Russian Federation', 'Slovakia', 'Spain', 'Sweden', 'Switzerland', 'Ukraine', 'United Kingdom', 'Vatican City', 'Holy See (Vatican City State)', 'Greenland', 'Serbia') THEN 'Europe'
-        WHEN co.country IN ('Afghanistan', 'Bahrain', 'Iran', 'Iraq', 'Israel', 'Kuwait', 'Oman', 'Saudi Arabia', 'Syria', 'Turkey', 'United Arab Emirates', 'Yemen', 'Algeria', 'Angola', 'Cameroon', 'Chad', 'Congo, The Democratic Republic of the', 'Egypt', 'Ethiopia', 'Gambia', 'Kenya', 'Madagascar', 'Malawi', 'Morocco', 'Mozambique', 'Nigeria', 'Senegal', 'South Africa', 'Sudan', 'Tanzania', 'Tunisia', 'Zambia', 'Réunion') THEN 'Middle East and Africa'
-        WHEN co.country IN ('Armenia', 'Azerbaijan', 'Bangladesh', 'Brunei', 'Cambodia', 'China', 'Hong Kong', 'India', 'Indonesia', 'Japan', 'Kazakhstan', 'Malaysia', 'Myanmar', 'Nepal', 'North Korea', 'Pakistan', 'Philippines', 'South Korea', 'Sri Lanka', 'Taiwan', 'Thailand', 'Turkmenistan', 'Vietnam', 'American Samoa', 'French Polynesia', 'Nauru', 'New Zealand', 'Tonga', 'Tuvalu', 'Australia') THEN 'Asia-Pacific'
-        ELSE 'Other'
-    END AS region
-        FROM combined_revenue cr
-            JOIN customer_clean cu ON cr.customer_id = cu.customer_id
-            JOIN address_clean a ON cu.address_id = a.address_id
-            JOIN city_clean ci ON a.city_id = ci.city_id
-            JOIN country_clean co ON ci.country_id = co.country_id
-        GROUP BY cr.customer_id, co.country
-    ) regional
-    GROUP BY region
-    ORDER BY total_revenue DESC;
+        cr.customer_id,
+        SUM(cr.revenue) AS revenue,
+CASE
+    WHEN co.country IN ('Canada', 'Mexico', 'United States', 'Puerto Rico', 'Virgin Islands, U.S.', 'Saint Vincent and the Grenadines', 'Anguilla') THEN 'North America'
+    WHEN co.country IN ('Argentina', 'Bolivia', 'Brazil', 'Chile', 'Colombia', 'Dominican Republic', 'Ecuador', 'Paraguay', 'Peru', 'Venezuela', 'French Guiana') THEN 'Latin America'
+    WHEN co.country IN ('Austria', 'Belarus', 'Bulgaria', 'Czech Republic', 'Estonia', 'Faroe Islands', 'Finland', 'France', 'Germany', 'Greece', 'Hungary', 'Italy', 'Latvia', 'Liechtenstein', 'Lithuania', 'Moldova', 'Netherlands', 'Poland', 'Portugal', 'Romania', 'Russian Federation', 'Slovakia', 'Spain', 'Sweden', 'Switzerland', 'Ukraine', 'United Kingdom', 'Vatican City', 'Holy See (Vatican City State)', 'Greenland', 'Serbia') THEN 'Europe'
+    WHEN co.country IN ('Afghanistan', 'Bahrain', 'Iran', 'Iraq', 'Israel', 'Kuwait', 'Oman', 'Saudi Arabia', 'Syria', 'Turkey', 'United Arab Emirates', 'Yemen', 'Algeria', 'Angola', 'Cameroon', 'Chad', 'Congo, The Democratic Republic of the', 'Egypt', 'Ethiopia', 'Gambia', 'Kenya', 'Madagascar', 'Malawi', 'Morocco', 'Mozambique', 'Nigeria', 'Senegal', 'South Africa', 'Sudan', 'Tanzania', 'Tunisia', 'Zambia', 'Réunion') THEN 'Middle East and Africa'
+    WHEN co.country IN ('Armenia', 'Azerbaijan', 'Bangladesh', 'Brunei', 'Cambodia', 'China', 'Hong Kong', 'India', 'Indonesia', 'Japan', 'Kazakhstan', 'Malaysia', 'Myanmar', 'Nepal', 'North Korea', 'Pakistan', 'Philippines', 'South Korea', 'Sri Lanka', 'Taiwan', 'Thailand', 'Turkmenistan', 'Vietnam', 'American Samoa', 'French Polynesia', 'Nauru', 'New Zealand', 'Tonga', 'Tuvalu', 'Australia') THEN 'Asia-Pacific'
+    ELSE 'Other'
+END AS region
+    FROM combined_revenue cr
+        JOIN customer_clean cu ON cr.customer_id = cu.customer_id
+        JOIN address_clean a ON cu.address_id = a.address_id
+        JOIN city_clean ci ON a.city_id = ci.city_id
+        JOIN country_clean co ON ci.country_id = co.country_id
+    GROUP BY cr.customer_id, co.country
+) regional
+GROUP BY region
+ORDER BY total_revenue DESC;
 
 -- INSIGHTS
 -- Sales figures vary significantly by region with Asia having generated the highest
