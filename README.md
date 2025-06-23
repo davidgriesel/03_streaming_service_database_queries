@@ -55,7 +55,7 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
     <td align="center" valign="middle" width="33%">
       <table>
         <tbody>
-          <tr><td align="left">Titles in Inventory</td><td align="center">958</td></tr>
+          <tr><td align="left">Titles (Inventory)</td><td align="center">958</td></tr>
           <tr><td align="left">Categories</td><td align="center">16</td></tr>
           <tr><td align="left">Ratings</td><td align="center">5</td></tr>
           <tr><td align="left">Languages</td><td align="center">1 (English)</td></tr>
@@ -81,14 +81,14 @@ This analysis uses a modified version of the DVD Rental dataset originally provi
       <p style="margin: auto;"><em>The catalogue included 958 English-language titles, all released in 2006, spanning 16 categories and five ratings.</em></p>
     </td>
     <td align="center" valign="middle" width="33%">
-      <p style="margin: auto;"><em>Total revenue amounted to ¤66 888, consisting of ¤60 785 in payments received and ¤6 103 in accrued charges from rentals that were returned but not yet paid.</em></p>
+      <p style="margin: auto;"><em>Total revenue amounted to ¤66 888,39 which included ¤6 103,48 in outstanding payments.</em></p>
     </td>
   </tr>
 </table>
 <br>
 
 ### 2. Revenue Contribution by Title
-The distribution of revenue was highly uneven with the top five highest-grossing titles each earning over ¤200, while the lowest performers brought in less than ¤8 each.
+Film-level earnings varied significantly, with the top five highest-grossing titles each earning over ¤200, while the lowest performers brought in less than ¤8 each.
 
 <table>
 <tr>
@@ -111,7 +111,7 @@ The distribution of revenue was highly uneven with the top five highest-grossing
 <br>
 
 ### 3. Rental Return Behaviour
-While each film was assigned a fixed rental term between 3 and 7 days, actual return behaviour showed little variation, ranging from same-day returns to as long as 10 days, with an average of 5 days. Most returns were evenly distributed between 1 and 9 days regardless of the assigned duration, with notably fewer same-day and 10-day returns, suggesting that assigned terms had limited influence on actual return behaviour.
+While each film was assigned a fixed rental term between 3 and 7 days, actual return behaviour showed little variation, ranging from same-day returns to as long as 10 days, with an average of 5 days. Most returns were evenly distributed between 1 and 9 days regardless of the assigned duration, with notably fewer same-day and 10-day returns, suggesting that specified terms had limited influence on actual return behaviour.
 <br><br>
 
 <table>
@@ -186,12 +186,8 @@ While each film was assigned a fixed rental term between 3 and 7 days, actual re
 <table>
   <thead>
     <tr>
-      <th colspan="12" style="text-align: center; font-weight: bold;">Transaction Distribution – Actual Rental Duration per Rental Term
-      </th>
-    </tr>
-    <tr>
       <th rowspan="2" style="text-align: center;">Rental Term</th>
-      <th colspan="11" style="text-align: center;">Actual Duration</th>
+      <th colspan="11" style="text-align: center;">Number of Transactions - Actual Rental Duration</th>
     </tr>
     <tr>
       <th style="text-align: center;">0 Days</th>
@@ -226,7 +222,7 @@ While each film was assigned a fixed rental term between 3 and 7 days, actual re
 <br>
 
 ### 4. Revenue and Customer Distribution by Country
-Customer activity was highly concentrated, with just 10 out of 108 countries accounting for 53% of all customers (315 of 599) and 51% of total revenue (¤35 155 of ¤66 888). Notably, the 10 countries with the most customers were also the 10 highest revenue-generating markets in identical order, indicating a strong alignment between customer volume and sales contribution.
+Customer activity was highly concentrated in a small number of high-volume markets. Just 10 out of 108 countries accounted for 53% of all customers (315 of 599) and 52% of total revenue (¤34 868,18 of ¤66 888,39). Notably, these countries also ranked identically in both metrics, indicating a strong alignment between customer volume and sales contribution.
 
 <table>
   <thead>
@@ -310,7 +306,7 @@ Customer activity was highly concentrated, with just 10 out of 108 countries acc
   </tbody>
   <tfoot>
     <tr>
-      <td colspan="4" align="center"><em>The top 10 countries accounted for 315 of the 599 global customers and generated ¤35 155 of the ¤66 888 in total revenue, with both metrics ranked in identical order.</em></td>
+      <td colspan="4" align="center"><em>The top 10 countries accounted for 315 customers and generated ¤34 868,18 in total revenue, with both metrics ranked in identical order.</em></td>
     </tr>
   </tfoot>
 </table>
@@ -320,7 +316,7 @@ Customer activity was highly concentrated, with just 10 out of 108 countries acc
 <tr>
 <td align="center" valign="top" width="100%">
     <img src="visualisations/map_revenue_customers.png" ><br>
-    <em>India, China, and the United States emerged as dominant markets in both customer numbers and total revenue.</em>
+    <em>India and China emerged as dominant markets, each with over 50 customers generating more than ¤5 750,00 in revenue.</em>
 </td>
 </tr>
 </table>
