@@ -22,7 +22,6 @@ A legacy movie rental company is planning to re-enter the market with a new onli
 
 ## Data
 This analysis uses a modified version of the DVD Rental dataset originally provided as a sample database for learning and testing SQL with PostgreSQL. The dataset was adapted and provided by CareerFoundry as part of their Data Analytics Programme.
-
 - [**Dataset**](http://www.postgresqltutorial.com/wp-content/uploads/2019/05/dvdrental.zip) – Film, inventory, customer, payment, and rental records
 <br><br>
 
@@ -233,7 +232,7 @@ Customer activity was highly concentrated in a small number of high-volume marke
       <th align="center">#</th>
       <th align="left">Country</th>
       <th align="center">Customer Count</th>
-      <th align="center">Total Revenue (¤)</th>
+      <th align="right">Total Revenue (¤)</th>
     </tr>
   </thead>
   <tbody>
@@ -241,67 +240,67 @@ Customer activity was highly concentrated in a small number of high-volume marke
       <td align="center">1</td>
       <td align="left">India</td>
       <td align="center">60</td>
-      <td align="center">6 561,52</td>
+      <td align="right">6 561,52</td>
     </tr>
     <tr>
       <td align="center">2</td>
       <td align="left">China</td>
       <td align="center">53</td>
-      <td align="center">5 757,87</td>
+      <td align="right">5 757,87</td>
     </tr>
     <tr>
       <td align="center">3</td>
       <td align="left">United States</td>
       <td align="center">36</td>
-      <td align="center">4 081,43</td>
+      <td align="right">4 081,43</td>
     </tr>
     <tr>
       <td align="center">4</td>
       <td align="left">Japan</td>
       <td align="center">31</td>
-      <td align="center">3 447,84</td>
+      <td align="right">3 447,84</td>
     </tr>
     <tr>
       <td align="center">5</td>
       <td align="left">Mexico</td>
       <td align="center">30</td>
-      <td align="center">3 293,10</td>
+      <td align="right">3 293,10</td>
     </tr>
     <tr>
       <td align="center">6</td>
       <td align="left">Brazil</td>
       <td align="center">28</td>
-      <td align="center">3 177,59</td>
+      <td align="right">3 177,59</td>
     </tr>
     <tr>
       <td align="center">7</td>
       <td align="left">Russian Federation</td>
       <td align="center">28</td>
-      <td align="center">3 037,91</td>
+      <td align="right">3 037,91</td>
     </tr>
     <tr>
       <td align="center">8</td>
       <td align="left">Philippines</td>
       <td align="center">20</td>
-      <td align="center">2 355,42</td>
+      <td align="right">2 355,42</td>
     </tr>
     <tr>
       <td align="center">9</td>
       <td align="left">Turkey</td>
       <td align="center">15</td>
-      <td align="center">1 651,15</td>
+      <td align="right">1 651,15</td>
     </tr>
     <tr>
       <td align="center">10</td>
       <td align="left">Indonesia</td>
       <td align="center">14</td>
-      <td align="center">1 504,35</td>
+      <td align="right">1 504,35</td>
     </tr>
     <tr>
       <td align="center">Total</td>
       <td align="left"></td>
       <td align="center">315</td>
-      <td align="center">34 868,18</td>
+      <td align="right">34 868,18</td>
     </tr>
   </tbody>
   <tfoot>
@@ -324,29 +323,94 @@ Customer activity was highly concentrated in a small number of high-volume marke
 
 
 ### 5. Customer Lifetime Value by Country
-Réunion, Vatican City, and Nauru had the highest average CLVs, each exceeding ¤140.
-<table>
-<tr>
-<td align="center" valign="top" width="100%">
-    <img src="visualisations/map_avg_clv_customers.png" ><br>
-    <em>Countries with larger customer bases showed less variation in average CLV, while those with only one or two customers recorded the highest CLVs.</em>
-</td>
-</tr>
-</table>
-<br>
+Top-spending customers were not limited to high-volume markets. They came from a diverse mix of countries, including major markets such as the United States and India, as well as smaller ones like Réunion and Belarus.
 
-| # | Country | Customer Count | Total Revenue | Avg Lifetime Value |
-|:-:|:-------:|:--------------:|:-------------:|:------------------:|
-| 1 | Réunion | 1 | 216.54 | 216.54 |
-| 2 | Vatican City | 1 | 152.66 | 152.66 |
-| 3 | Nauru | 1 | 148.69 | 148.69 |
-| 4 | Sweden | 1 | 144.66 | 144.66 |
-| 5 | Hong Kong | 1 | 142.70 | 142.70 |
-| 6 | Thailand | 3 | 419.04 | 139.68 |
-| 7 | Belarus | 2 | 277.34 | 138.67 |
-| 8 | Greenland | 1 | 137.66 | 137.66 |
-| 9 | Turkmenistan | 1 | 136.73 | 136.73 |
-| 10 | Chad | 1 | 135.68 | 135.68 |
+<table style="width: 100%;">
+  <thead>
+    <tr>
+      <th colspan="4" style="text-align: center; font-weight: bold;">Top 10 Customers</th>
+    </tr>
+    <tr>
+      <th align="center">Rank</th>
+      <th align="center">Customer ID</th>
+      <th align="center">Country</th>
+      <th align="right">Total Spent (¤)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="center">1</td>
+      <td align="center">526</td>
+      <td align="center">United States</td>
+      <td align="right">221,55</td>
+    </tr>
+    <tr>
+      <td align="center">2</td>
+      <td align="center">148</td>
+      <td align="center">Réunion</td>
+      <td align="right">216,54</td>
+    </tr>
+    <tr>
+      <td align="center">3</td>
+      <td align="center">144</td>
+      <td align="center">Belarus</td>
+      <td align="right">195,58</td>
+    </tr>
+    <tr>
+      <td align="center">4</td>
+      <td align="center">137</td>
+      <td align="center">Netherlands</td>
+      <td align="right">194,61</td>
+    </tr>
+    <tr>
+      <td align="center">5</td>
+      <td align="center">178</td>
+      <td align="center">Brazil</td>
+      <td align="right">189,62</td>
+    </tr>
+    <tr>
+      <td align="center">6</td>
+      <td align="center">459</td>
+      <td align="center">Iran</td>
+      <td align="right">186,62</td>
+    </tr>
+    <tr>
+      <td align="center">7</td>
+      <td align="center">469</td>
+      <td align="center">Spain</td>
+      <td align="right">177,60</td>
+    </tr>
+    <tr>
+      <td align="center">8</td>
+      <td align="center">468</td>
+      <td align="center">India</td>
+      <td align="right">175.61</td>
+    </tr>
+    <tr>
+      <td align="center">9</td>
+      <td align="center">236</td>
+      <td align="center">Philippines</td>
+      <td align="right">174,59</td>
+    </tr>
+    <tr>
+      <td align="center">10</td>
+      <td align="center">176</td>
+      <td align="center">Algeria</td>
+      <td align="right">173,63</td>
+    </tr>
+    <tr>
+      <td align="center">Total</td>
+      <td align="center"></td>
+      <td align="center"></td>
+      <td align="right">1 905,95</td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="4" style="text-align: center;"><em>Despite their high individual spending, the combined contribution of the top 10 customers amounted to just ¤1 905,95 (3% of the ¤66 888,39 total revenue).</em></td>
+    </tr>
+  </tfoot>
+</table>
 <br>
 
 ### 6. Regional Sales Performance and Customer Numbers
