@@ -7,7 +7,7 @@ A legacy movie rental company is planning to re-enter the market with a new onli
 
 ## Tools
 - **Word** - Documentation
-- **PostgreSQL** - Relational Database
+- **PostgreSQL** - Relational Database & Query Environment
 - **Excel** - Output
 - **Tableau** - Visualisation
 - **PowerPoint** - Presentation
