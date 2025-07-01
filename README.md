@@ -6,15 +6,15 @@ A legacy movie rental company is planning to re-enter the market with a new onli
 <br><br>
 
 ## Tools
-- **Word** - Documentation
-- **PostgreSQL** - Relational Database & Query Environment
-- **Excel** - Output
+- **PostgreSQL** - Relational Database Querying & Schema Exploration
+- **Word** - Structural Documentation
+- **Excel** - Output Delivery
 - **Tableau** - Visualisation
 - **PowerPoint** - Presentation
 <br><br>
 
 ## Process
-- **Understanding** - ERD Creation | Data Dictionary Documentation
+- **Structural Documentation** - Entity-Relationship Diagram Creation | Data Dictionary Preparation
 - **Data Preparation** - Profiling | Integrity Checks | Quality Checks | Cleaning | Business Rule Validation | Integration
 - **Analysis** - Descriptive Statistics | Trend Analysis
 - **Communication** - Visualisation | Presentation
