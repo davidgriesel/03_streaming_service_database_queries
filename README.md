@@ -15,8 +15,8 @@ A legacy movie rental company is planning to re-enter the market with a new onli
 
 ## Process
 - **Understanding** - ERD Creation | Data Dictionary Documentation
-- **Data Preparation** - Profiling | Integrity Checks | Quality Checks | Cleaning | Integration
-- **Analysis** - Business Rule Validation | Ad Hoc Querying
+- **Data Preparation** - Profiling | Integrity Checks | Quality Checks | Cleaning | Business Rule Validation | Integration
+- **Analysis** - Descriptive Statistics | Trend Analysis
 - **Communication** - Visualisation | Presentation
 <br><br>
 
