@@ -91,18 +91,12 @@ Film-level earnings varied significantly, with the top five highest-grossing tit
 
 <table>
 <tr>
-<td align="center" valign="top" width="100%">
-    <img src="visualisations/bar_top_films.png"" ><br>
+<td align="center" valign="top" width="50%">
+    <img src="visualisations/bar_top_films.png"><br>
     <em>The top five titles earned between ¤204,72 and ¤231,73, led by “Telegraph Voyage”, “Wife Turn”, and “Zorro Ark”.</em>
 </td>
-</tr>
-</table>
-<br>
-
-<table>
-<tr>
-<td align="center" valign="top" width="100%">
-    <img src="visualisations/bar_bottom_films.png" ><br>
+<td align="center" valign="top" width="50%">
+    <img src="visualisations/bar_bottom_films.png"><br>
     <em>Seven films shared the bottom five revenue positions, each earning between ¤5,94 and ¤7,93 over the period. “Texas Watch” and “Oklahoma Jumanji” recorded the lowest earnings at ¤5,94.</em>
 </td>
 </tr>
