@@ -408,12 +408,12 @@ Top-spending customers were not limited to high-volume markets. They came from a
 <br>
 
 ### 6. Regional Sales Performance and Customer Numbers
-Sales figures vary considerably across geographic regions, with the Asia-Pacific market emerging as the clear leader. This region accounted for the highest number of customers (235) and the greatest total revenue (¤26,468), more than double that of any other region.
+Sales performance varies markedly by region, with Asia-Pacific emerging as the clear leader in both customer volume and total revenue. The chart suggests a strong positive relationship between the number of customers and total revenue across regions, reinforcing the importance of market penetration for driving sales outcomes.
 <table>
 <tr>
 <td align="center" valign="top" width="100%">
     <img src="visualisations/bar_regional_performance.png" ><br>
-    <em>...</em>
+    <em>Asia-Pacific stands out with 235 customers and a total revenue of ¤26,233 — more than double the revenue of any other region. Europe and the Middle East and Africa follow with similar customer counts (109 and 106) and total revenues (¤12,182 and ¤11,912 respectively). North America and Latin America report lower figures, with fewer than 80 customers each and total revenues under ¤8,600.</em>
 </td>
 </tr>
 </table>
