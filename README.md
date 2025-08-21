@@ -14,8 +14,8 @@ A legacy movie rental company is planning to re-enter the market with a new onli
 <br><br>
 
 ## Process
-- **Structural Documentation** - Entity-Relationship Diagram Creation | Data Dictionary Preparation
-- **Data Preparation** - Profiling | Integrity Checks | Quality Checks | Cleaning | Business Rule Validation | Integration
+- **Documentation** - Entity-Relationship Diagram Creation | Data Dictionary Preparation
+- **Preparation** - Profiling | Integrity Checks | Quality Checks | Cleaning | Business Rule Validation | Integration
 - **Analysis** - Descriptive Statistics | Trend Analysis
 - **Communication** - Visualisation | Presentation
 <br><br>
