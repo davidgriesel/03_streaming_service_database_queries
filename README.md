@@ -91,11 +91,11 @@ Film-level earnings varied significantly, with the top five highest-grossing tit
 <table>
 <tr>
 <td align="center" valign="top" width="50%">
-    <img src="visualisations/bar_top_films.png"><br>
+    <img src="images/bar_top_films.png"><br>
     <em>The top five titles earned between ¤204,72 and ¤231,73, led by “Telegraph Voyage”, “Wife Turn”, and “Zorro Ark”.</em>
 </td>
 <td align="center" valign="top" width="50%">
-    <img src="visualisations/bar_bottom_films.png"><br>
+    <img src="images/bar_bottom_films.png"><br>
     <em>Seven films shared the bottom five revenue positions, each earning between ¤5,94 and ¤7,93 over the period. “Texas Watch” and “Oklahoma Jumanji” recorded the lowest earnings at ¤5,94.</em>
 </td>
 </tr>
@@ -307,7 +307,7 @@ Customer activity was highly concentrated in a small number of high-volume marke
 <table>
 <tr>
 <td align="center" valign="top" width="100%">
-    <img src="visualisations/map_revenue_customers.png" ><br>
+    <img src="images/map_revenue_customers.png" ><br>
     <em>India and China emerged as dominant markets, each with over 50 customers generating more than ¤5 750,00 in revenue.</em>
 </td>
 </tr>
@@ -411,7 +411,7 @@ Sales performance varies markedly by region, with Asia-Pacific emerging as the c
 <table>
 <tr>
 <td align="center" valign="top" width="100%">
-    <img src="visualisations/bar_regional_performance.png" ><br>
+    <img src="images/bar_regional_performance.png" ><br>
     <em>Asia-Pacific stands out with 235 customers and a total revenue of ¤26,233 — more than double the revenue of any other region. Europe and the Middle East and Africa follow with similar customer counts (109 and 106) and total revenues (¤12,182 and ¤11,912 respectively). North America and Latin America report lower figures, with fewer than 80 customers each and total revenues under ¤8,600.</em>
 </td>
 </tr>
